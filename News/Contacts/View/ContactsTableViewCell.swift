@@ -26,14 +26,14 @@ class ContactsTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        self.nameLabel.frame = CGRectMake(70, 8, 100, 20)
+        self.nameLabel.frame = CGRectMake(self.bounds.height/2+20/2, 8, 100, 20)
         self.nameLabel.font = UIFont(name: MY_FONT, size: 15)
         self.nameLabel.textColor = UIColor.blackColor()
-        duanxinBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 72, 26, 17, 17)
+        duanxinBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 72, 10, 17, 17)
        
-        ipBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 50, 26, 17, 17)
+        ipBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 50, 10, 17, 17)
         
-        phoneBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 30, 26, 17, 17)
+        phoneBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 30, 10, 17, 17)
     
         duanxinBtn.setImage(UIImage(named: "发消息"), forState: .Normal)
         ipBtn.setImage(UIImage(named: "电话"), forState: .Normal)
