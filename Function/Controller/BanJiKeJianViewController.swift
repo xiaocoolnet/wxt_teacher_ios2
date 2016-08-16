@@ -34,9 +34,9 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func DropDownUpdate(){
-        self.kejianTableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.kejianTableview.reloadData()
-        self.kejianTableview.headerView?.beginRefreshing()
+//        self.kejianTableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
+//        self.kejianTableview.reloadData()
+//        self.kejianTableview.headerView?.beginRefreshing()
     }
     
     func GetDate(){

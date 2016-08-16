@@ -7,12 +7,14 @@
 //
 
 import UIKit
-
+import Alamofire
+import MBProgressHUD
 class XinWenListViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
-
+var SchoolNoticesSource = SchoolNoticesModel()
     let XinWenList = UITableView()
     override func viewDidLoad() {
         super.viewDidLoad()
+        GetNoticesDate()
         self.view.backgroundColor = UIColor.whiteColor()
         XinWenList.delegate = self
         XinWenList.dataSource = self
@@ -22,47 +24,76 @@ class XinWenListViewController: UIViewController,UITableViewDataSource,UITableVi
         self.view.addSubview(XinWenList)
         // Do any additional setup after loading the view.
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 90
+    //MARK: - 获取校园通知接口
+    func GetNoticesDate(){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"getSchoolNotices"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param=[
+            
+            "schoolid":schoolid
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+            }
+            else{
+                
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        self.SchoolNoticesSource = SchoolNoticesModel(status.data!)
+                        self.XinWenList.reloadData()
+                    }
+                    
+                    
+                    
+                })
+            }
+        }
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return SchoolNoticesSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        cell.accessoryType = .DisclosureIndicator
-        cell.selectionStyle = .None
-        cell.imageView?.image = UIImage(named: "teacherPic")
-        cell.textLabel?.text = "新闻标题"
-        cell.textLabel?.frame.origin.y = 5
+        let newsinfo = SchoolNoticesSource.objectlist[indexPath.row]
+        
+        let cell = SchoolListCell.cellWithTableView(tableView)
+        cell.iconIV.image=UIImage(named: "宝宝秀场")
+        cell.titleL.text=newsinfo.post_title
+        cell.contentL.text=newsinfo.post_excerpt
+        cell.timeL.text=newsinfo.post_date
+        tableView.rowHeight=100
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+         let newsinfo = SchoolNoticesSource.objectlist[indexPath.row]
         let teacherinfo = XinWenInfoViewController()
+        teacherinfo.id=newsinfo.id!
+        teacherinfo.ziduan="notice"
         self.navigationController?.pushViewController(teacherinfo, animated: true)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
 }

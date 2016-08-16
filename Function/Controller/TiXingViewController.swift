@@ -33,7 +33,7 @@ class TiXingViewController: UIViewController,UIImagePickerControllerDelegate,UIN
         finishBtn.addTarget(self, action: #selector(TiXingViewController.PaiShe), forControlEvents: .TouchUpInside)
         self.view.addSubview(photoView)
         self.view.addSubview(finishBtn)
-        // Do any additional setup after loading the view.
+        
     }
     
     func PaiShe(){

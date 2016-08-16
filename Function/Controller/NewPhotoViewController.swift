@@ -81,6 +81,8 @@ class NewPhotoViewController: UIViewController {
             return
         }
         let uploadPic = UpLoadeViewController()
+        uploadPic.photoName=nameContent.text!
+        uploadPic.photoContent=miaoshuContent.text!
         self.navigationController?.pushViewController(uploadPic, animated: true)
     }
     

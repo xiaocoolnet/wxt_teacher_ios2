@@ -72,7 +72,7 @@ class BlogCommentViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let pingLunInfo = pingLunSource.PingLunlist[indexPath.row]
-        let string:NSString = pingLunInfo.content!
+        let string:NSString = pingLunInfo.content ?? ""
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
         if(boundingRect.height < 50){
@@ -85,7 +85,7 @@ class BlogCommentViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let pingLunInfo = pingLunSource.PingLunlist[indexPath.row]
-        let string:NSString = pingLunInfo.content!
+        let string:NSString = pingLunInfo.content ?? ""
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
         let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width - 70, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
         let contentLabel = UILabel()
@@ -100,7 +100,7 @@ class BlogCommentViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.selectionStyle = .None
             let pingLunInfo = pingLunSource.PingLunlist[indexPath.row]
             cell.textLabel?.text = pingLunInfo.userName!
-            contentLabel.text = pingLunInfo.content!
+            contentLabel.text = pingLunInfo.content ?? ""
             cell.contentView.addSubview(contentLabel)
             return cell
         }

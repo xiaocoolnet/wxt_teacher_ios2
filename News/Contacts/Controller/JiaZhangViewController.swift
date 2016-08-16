@@ -21,6 +21,7 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor=UIColor.whiteColor()
         //加载数据
         loadData()
         //加载视图
@@ -81,6 +82,7 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     func loadSubviews() -> Void {
         tableView = FlexibleTableView(frame: CGRectMake(0, -30, self.view.bounds.width, self.view.bounds.height - 114), delegate: self)
         self.tableView.registerClass(ContactsTableViewCell.self, forCellReuseIdentifier: "ContactsCell")
+        
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.addSubview(tableView)
     }
@@ -88,9 +90,9 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     
     
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(JiaZhangViewController.GetDate))
-        self.tableView.refreshData()
-        self.tableView.headerView?.beginRefreshing()
+//        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(JiaZhangViewController.GetDate))
+//        self.tableView.refreshData()
+//        self.tableView.headerView?.beginRefreshing()
     }
     
     
@@ -149,7 +151,8 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
 
     
         var cell = tableView.dequeueReusableCellWithIdentifier("ContactsCell", forIndexPath: indexPath.ns) as? ContactsTableViewCell
-     
+     cell?.iconIV.image=UIImage(named: "宝宝头像")
+         cell?.iconIV.layer.cornerRadius=25
         if cell==nil {
             cell = ContactsTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "ContactsCell")
         }
@@ -158,8 +161,12 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
             cell!.nameLabel.text = self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].name
         }
         
-        cell?.phoneBtn.tag = Int((self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone)!)!
-        cell?.phoneBtn.addTarget(self, action: Selector("phone:"), forControlEvents: UIControlEvents.TouchUpInside)
+//        cell?.ipBtn.tag = Int((self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone)!)!
+        if (self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone) != nil {
+                 cell?.ipBtn.titleLabel?.text=(self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone)!
+        }
+ 
+        cell?.ipBtn.addTarget(self, action: #selector(JiaZhangViewController.phone(_:)), forControlEvents: UIControlEvents.TouchUpInside)
     
         return cell!
     }
@@ -181,12 +188,22 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     //MARK: - 点击事件
     func phone(button:UIButton) -> Void {
         print("dianhua")
-        let tel = String(button.tag)
+        
+        let tel = String(button.titleLabel?.text)
         print(tel)
         let url = NSURL(string: "tel://"+tel)
-        UIApplication.sharedApplication().openURL(url!)
+        if button.titleLabel?.text != nil {
+             UIApplication.sharedApplication().openURL(url!)
+        }
+       
         
         
+    }
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=false
     }
     
     /*

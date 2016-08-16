@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ACommentCell" rowHeight="260" id="KGk-i7-Jjw" customClass="ACommentTableViewCell" customModule="WXT_Teacher" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="416" height="260"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="416" height="259"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ash-qr-ZbZ">
+                        <rect key="frame" x="10" y="10" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="Z0C-z6-bQn"/>
+                            <constraint firstAttribute="height" constant="50" id="eMG-Ph-5pf"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用户名称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OBW-mj-8eq">
+                        <rect key="frame" x="70" y="10" width="120" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="3a3-i2-sFJ"/>
+                            <constraint firstAttribute="width" constant="120" id="shR-x1-ZuO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016-03-02 12:20" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gkc-BC-Ihw">
+                        <rect key="frame" x="256" y="10" width="150" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="150" id="8yN-5L-IkM"/>
+                            <constraint firstAttribute="height" constant="20" id="C8H-RB-yND"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="0.67000000000000004" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容回复内容" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiD-rh-Obg">
+                        <rect key="frame" x="70" y="40" width="336" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Gg3-Lc-0pw"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.3766506577" green="0.3766506577" blue="0.3766506577" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="卡通" translatesAutoresizingMaskIntoConstraints="NO" id="nVx-L5-J2g">
+                        <rect key="frame" x="70" y="86" width="336" height="150"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="9jj-Bk-dR5"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="OBW-mj-8eq" firstAttribute="leading" secondItem="Ash-qr-ZbZ" secondAttribute="trailing" constant="10" id="0NZ-3n-2ZA"/>
+                    <constraint firstItem="xiD-rh-Obg" firstAttribute="top" secondItem="OBW-mj-8eq" secondAttribute="bottom" constant="10" id="Dd8-gM-FKf"/>
+                    <constraint firstAttribute="trailing" secondItem="xiD-rh-Obg" secondAttribute="trailing" constant="10" id="G3B-a8-CUW"/>
+                    <constraint firstItem="Ash-qr-ZbZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="GfW-ql-blQ"/>
+                    <constraint firstItem="nVx-L5-J2g" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="70" id="MAx-VV-Shp"/>
+                    <constraint firstItem="Ash-qr-ZbZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="SrH-7q-trh"/>
+                    <constraint firstItem="Gkc-BC-Ihw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="UtJ-5p-QxC"/>
+                    <constraint firstItem="OBW-mj-8eq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="XTs-dw-pca"/>
+                    <constraint firstAttribute="trailing" secondItem="Gkc-BC-Ihw" secondAttribute="trailing" constant="10" id="bYV-Md-wDo"/>
+                    <constraint firstItem="nVx-L5-J2g" firstAttribute="top" secondItem="xiD-rh-Obg" secondAttribute="bottom" constant="10" id="t9Y-Jh-CAR"/>
+                    <constraint firstAttribute="trailing" secondItem="nVx-L5-J2g" secondAttribute="trailing" constant="10" id="x7R-bw-tWo"/>
+                    <constraint firstItem="xiD-rh-Obg" firstAttribute="leading" secondItem="Ash-qr-ZbZ" secondAttribute="trailing" constant="10" id="zdx-hX-KoA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="contentLbl" destination="xiD-rh-Obg" id="bQi-3w-GdN"/>
+                <outlet property="headImageView" destination="Ash-qr-ZbZ" id="7RJ-1T-XLs"/>
+                <outlet property="nameLbl" destination="OBW-mj-8eq" id="1XZ-th-rTW"/>
+                <outlet property="photoImageView" destination="nVx-L5-J2g" id="DjA-Aa-bwS"/>
+                <outlet property="timeLbl" destination="Gkc-BC-Ihw" id="WkC-Ul-cCt"/>
+            </connections>
+            <point key="canvasLocation" x="269" y="266"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="Logo" width="120" height="120"/>
+        <image name="卡通" width="309" height="201"/>
+    </resources>
+</document>

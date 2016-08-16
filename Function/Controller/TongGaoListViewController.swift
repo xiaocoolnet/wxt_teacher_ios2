@@ -14,10 +14,11 @@ import XWSwiftRefresh
 class TongGaoListViewController:UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     var TongGaoList = UITableView()
-    var gongGaoSource = GongGaoList()
+    var schoolListSource = SchoolListModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        GetNewsDate()
         self.view.backgroundColor = UIColor.whiteColor()
         TongGaoList.delegate = self
         TongGaoList.dataSource = self
@@ -27,90 +28,78 @@ class TongGaoListViewController:UIViewController,UITableViewDataSource,UITableVi
         self.view.addSubview(TongGaoList)
         // Do any additional setup after loading the view.
         
-        self.DropDownUpdate()
+       
     }
-    
-    func DropDownUpdate(){
-        self.TongGaoList.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.TongGaoList.reloadData()
-        self.TongGaoList.headerView?.beginRefreshing()
-    }
-    
-    func GetDate(){
-        let url = apiUrl+"SchoolNotice"
-        
-        let param = [
-            "schoolid":1
+    //MARK: - 获取新闻动态接口
+    func GetNewsDate(){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"getSchoolNews"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param=[
+            
+            "schoolid":schoolid
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            print(request)
             if(error != nil){
             }
             else{
-                print("request是")
-                print(request!)
-                print("====================")
+                
                 let status = Http(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    self.gongGaoSource = GongGaoList(status.data!)
-                    self.TongGaoList.reloadData()
-                    self.TongGaoList.headerView?.endRefreshing()
-                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        self.schoolListSource = SchoolListModel(status.data!)
+                        self.TongGaoList.reloadData()
+                    }
+                    
+                    
+                    
+                })
             }
         }
     }
-
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 90
+     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 100
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("\(gongGaoSource.count)")
-        return gongGaoSource.count
+        
+        return schoolListSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        cell.accessoryType = .DisclosureIndicator
-        cell.selectionStyle = .None
+ 
+        let newsinfo = schoolListSource.objectlist[indexPath.row]
         
-        let gonggaoInfo = gongGaoSource.objectlist[indexPath.row]
-        
-        cell.imageView?.image = UIImage(named: "teacherPic")
-        cell.textLabel?.text = gonggaoInfo.notice_title
-        cell.textLabel?.frame.origin.y = 5
+        let cell = SchoolListCell.cellWithTableView(tableView)
+        cell.iconIV.image=UIImage(named: "宝宝秀场")
+        cell.titleL.text=newsinfo.post_title
+        cell.contentL.text=newsinfo.post_excerpt
+        cell.timeL.text=newsinfo.post_date
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let dataInfo = gongGaoSource.objectlist[indexPath.row]
-        
-        let teacherinfo = TongGaoInfoViewController()
-        self.navigationController?.pushViewController(teacherinfo, animated: true)
-        
-        teacherinfo.contentLabel.text = dataInfo.notice_content
-        teacherinfo.nameLabel.text = "教师：" + dataInfo.releasename!
-        teacherinfo.timeLabel.text = "时间：" + dataInfo.notice_time!
-        teacherinfo.noticeTitle.text = dataInfo.notice_title
-        
+        let newsinfo = schoolListSource.objectlist[indexPath.row]
+        let xinweninfo = XinWenInfoViewController()
+        xinweninfo.id=newsinfo.id!
+        xinweninfo.ziduan="news"
+        self.navigationController?.pushViewController(xinweninfo, animated: true)
     }
     
 }

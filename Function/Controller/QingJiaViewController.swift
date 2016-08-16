@@ -13,237 +13,391 @@ import IQKeyboardManagerSwift
 
 class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    var dataTableView = UITableView()
-    let lastDayBtn = UIButton()
-    let nextDayBtn = UIButton()
-    let timeLabel = UILabel()
-    let lastMonthBtn = UIButton()
-    let nextMonthBtn = UIButton()
-    let weekLabel = UILabel()
-    let dataTextView = BRPlaceholderTextView()
+    var tableview = UITableView()
+    var QingJiaSource = QingjiaModel()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "在线请假"
+        loadData()
         self.view.backgroundColor = UIColor.whiteColor()
-        IQKeyboardManager.sharedManager().enable = true
-        dataTableView = UITableView(frame:CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height) , style: UITableViewStyle.Grouped)
-        self.automaticallyAdjustsScrollViewInsets = false
-        dataTableView.delegate = self
-        dataTableView.dataSource = self
-        XKeyBoard.registerKeyBoardHide(self)
-        XKeyBoard.registerKeyBoardShow(self)
-        let rightItem = UIBarButtonItem(title: "发送", style: .Done, target: self, action: #selector(QingJiaViewController.PutMessage))
-        self.navigationItem.rightBarButtonItem = rightItem
-        self.tabBarController?.tabBar.hidden = true
-        self.view.addSubview(self.dataTableView)
+        tableview.frame=CGRectMake(0, 0, frame.width, frame.height-64)
+        tableview.delegate=self
+        tableview.dataSource=self
+        self.view.addSubview(tableview)
     }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
-            return 1
-        }
-        if section == 1{
-            return 4
-        }
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0.1
-    }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.section == 0{
-            return 40
-        }
-        if indexPath.section == 1{
-            return 50
-        }
-        return 300
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        cell.selectionStyle = .None
-        if indexPath.section == 0{
-            lastDayBtn.frame = CGRectMake(50, 10, 20, 20)
-            lastDayBtn.setImage(UIImage(named: "上一天"), forState: .Normal)
-            lastDayBtn.addTarget(self, action: #selector(QingJiaViewController.LastDay), forControlEvents: .TouchUpInside)
-            nextDayBtn.frame = CGRectMake(0, 10, 20, 20)
-            nextDayBtn.frame.origin.x = self.view.bounds.width - 70
-            nextDayBtn.setImage(UIImage(named: "下一天"), forState: .Normal)
-            nextDayBtn.addTarget(self, action: #selector(QingJiaViewController.NextDay), forControlEvents: .TouchUpInside)
-            lastMonthBtn.frame = CGRectMake(30, 10, 20, 20)
-            lastMonthBtn.setImage(UIImage(named: "上个月"), forState: .Normal)
-            lastMonthBtn.addTarget(self, action: #selector(QingJiaViewController.LastMonth), forControlEvents: .TouchUpInside)
-            nextMonthBtn.frame = CGRectMake(0, 10, 20, 20)
-            nextMonthBtn.setImage(UIImage(named: "下个月"), forState: .Normal)
-            nextMonthBtn.frame.origin.x = self.view.bounds.width - 50
-            nextMonthBtn.addTarget(self, action: #selector(QingJiaViewController.NextMonth), forControlEvents: .TouchUpInside)
-            timeLabel.frame = CGRectMake(0, 10, 150, 20)
-            timeLabel.textColor = UIColor.grayColor()
-            timeLabel.center.x = self.view.center.x
-            timeLabel.font = UIFont.systemFontOfSize(15)
-            let today:NSDate = NSDate()
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-            let allday = dateFormatter.stringFromDate(today)
-            timeLabel.text = allday
-            cell.contentView.addSubview(timeLabel)
-            cell.contentView.addSubview(nextMonthBtn)
-            cell.contentView.addSubview(lastMonthBtn)
-            cell.contentView.addSubview(nextDayBtn)
-            cell.contentView.addSubview(lastDayBtn)
-            return cell
-        }
-        if indexPath.section == 1{
-            cell.accessoryType = .None
-            cell.textLabel?.text = "王院长"
-            return cell
-        }
-        self.dataTextView.frame = CGRectMake(15, 10, self.view.bounds.width - 30, 250)
-        self.dataTextView.font = UIFont.systemFontOfSize(15)
-        self.dataTextView.placeholder = "请输入原因～不能超过200字啦"
-        self.dataTextView.addMaxTextLengthWithMaxLength(200) { (contentTextView) -> Void in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "超过200字啦"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 3)
-        }
-        cell.contentView.addSubview(dataTextView)
-        return cell
-    }
-    
-    func NextDay(){
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
-        let theDayAfterTomorrow = stringday!.dateByAddingTimeInterval(24*60*60)
-        let tomorrow = dateFormatter.stringFromDate(theDayAfterTomorrow)
-        timeLabel.text = tomorrow
-    }
-    
-    func LastDay(){
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
-        let theYesterday = stringday!.dateByAddingTimeInterval(-24*60*60)
-        let yesterday = dateFormatter.stringFromDate(theYesterday)
-        timeLabel.text = yesterday
-    }
-    
-    func LastMonth(){
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
-        let theLastMonth = stringday!.dateByAddingTimeInterval(-24*60*60*30)
-        let lastMonth = dateFormatter.stringFromDate(theLastMonth)
-        timeLabel.text = lastMonth
-    }
-    
-    func NextMonth(){
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
-        let theNextMonth = stringday!.dateByAddingTimeInterval(24*60*60*30)
-        let nextMonth = dateFormatter.stringFromDate(theNextMonth)
-        timeLabel.text = nextMonth
-    }
-    
-    func PutMessage(){
-        let today:NSDate = NSDate()
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
-        let theDay = stringday!.dateByAddingTimeInterval(24*60*60)
-        if today == theDay{
-            print("成功")
-        }
-        else{
-            let earlierOne = today.earlierDate(theDay)
-            if earlierOne == theDay{
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text
-                hud.labelText = "选择正确的时间"
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 2)
+    //MARK: -    获取数据
+    func loadData(){
+        
+        //http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getleavelist&teacherid=599
+        
+        //下面两句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        
+        let userid = defalutid.stringForKey("userid")
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getleavelist"
+        let param = [
+            "teacherid":userid,
+          
+        ]
+        Alamofire.request(.GET, url, parameters: param as?[String:String]).response { request, response, json, error in
+            if(error != nil){
             }
             else{
-                print("成功＋1")
-                
-                let url = apiUrl+"OnlineLeave"
-                let param = [
-                    "userid":599,
-                    "teacherid":1,
-                    "content":dataTextView.text
-                ]
-                Alamofire.request(.POST, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-                    if(error != nil){
-                    }
-                    else{
-                        print("request是")
-                        print(request!)
-                        print("====================")
-                        let status = MineModel(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
-                        if(status.status == "error"){
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = status.errorData
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
-                        }
-                        if(status.status == "success"){
-                            print("Success")
-                            self.navigationController?.popToRootViewControllerAnimated(true)
-                        }
-                    }
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.QingJiaSource=QingjiaModel(status.data!)
+                    self.tableview.reloadData()
+                    self.tableview.headerView?.endRefreshing()
                 }
             }
         }
     }
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return QingJiaSource.count
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let qingjiainfo = QingJiaSource.parentsExhortList[indexPath.row]
+        
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        let icon = UIImageView(frame: CGRectMake(10, 5, 50, 50))
+        
+        icon.image=UIImage(named: "4")
+        icon.layer.masksToBounds=true
+        icon.layer.cornerRadius=25
+        cell.contentView.addSubview(icon)
+        let nameL = UILabel(frame: CGRectMake(70,10,frame.width-100,20))
+        nameL.text=qingjiainfo.studentname
+        cell.contentView.addSubview(nameL)
+        let banjiL = UILabel(frame: CGRectMake(70,35,frame.width-100,20))
+        banjiL.textColor=UIColor.grayColor()
+        banjiL.text=qingjiainfo.classname
+        banjiL.font=UIFont.systemFontOfSize(13)
+        cell.contentView.addSubview(banjiL)
+        let contentL = UILabel(frame: CGRectMake(10,80,frame.width-20,20))
+        contentL.text=qingjiainfo.reason
+        let content_h = calculateHeight(contentL.text!, size: 17, width: frame.width-20)
+        contentL.frame.size.height=content_h
+        cell.contentView.addSubview(contentL)
+        
+        
+        var blogimage:UIImageView?
+        var image_h = CGFloat()
+        
+        //判断图片张数显示
+        if(qingjiainfo.picCount>0&&qingjiainfo.picCount<=3){
+            image_h=80
+            for i in 1...qingjiainfo.picCount{
+                var x = 8
+                let pciInfo = qingjiainfo.pic[i-1]
+                let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                print(imgUrl)
+                
+                //let image = self.imageCache[imgUrl] as UIImage?
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        x = x+((i-1)*85)
+                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
+                        let imgTmp = UIImage(data: data!)
+                        //self.imageCache[imgUrl] = imgTmp
+                        blogimage!.image = imgTmp
+                        if blogimage?.image==nil{
+                            blogimage?.image=UIImage(named: "Logo")
+                        }
+                        cell.contentView.addSubview(blogimage!)
+                        
+                    }
+                })
+                
+            }
+        }
+        if(qingjiainfo.picCount>3&&qingjiainfo.picCount<=6){
+            image_h=170
+            for i in 1...qingjiainfo.picCount{
+                if i <= 3 {
+                    var x = 8
+                    let pciInfo = qingjiainfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        
+                        
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*85)
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage!.image = imgTmp
+                                if blogimage?.image==nil{
+                                    blogimage?.image=UIImage(named: "Logo")
+                                }
+                                
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                    }}else{
+                    var x = 8
+                    let pciInfo = qingjiainfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*85)
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+content_h+10, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage!.image = imgTmp
+                                if blogimage?.image==nil{
+                                    blogimage?.image=UIImage(named: "Logo")
+                                }
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    }
+                }
+            }}
+        if(qingjiainfo.picCount>6&&qingjiainfo.picCount<=9){
+            image_h=260
+            for i in 1...qingjiainfo.picCount{
+                if i <= 3 {
+                    var x = 8
+                    let pciInfo = qingjiainfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*85)
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage!.image = imgTmp
+                                if blogimage?.image==nil{
+                                    blogimage?.image=UIImage(named: "Logo")
+                                }
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 8
+                    let pciInfo = qingjiainfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*85)
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+content_h+10, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage!.image = imgTmp
+                                if blogimage?.image==nil{
+                                    blogimage?.image=UIImage(named: "Logo")
+                                }
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 8
+                    let pciInfo = qingjiainfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*85)
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+85, 80+content_h+10, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage!.image = imgTmp
+                                if blogimage?.image==nil{
+                                    blogimage?.image=UIImage(named: "Logo")
+                                }
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    }
+                    
+                }
+                
+            }}
+        
+        
+       //MARK: -  下面的评论视图
+        
+                let senderL = UILabel(frame: CGRectMake(10,80+image_h+15+content_h,frame.width-50,20))
+                if qingjiainfo.teachername != nil {
+                    senderL.text="受理人："+qingjiainfo.teachername!
+                }
+                senderL.font=UIFont.systemFontOfSize(15)
+                cell.contentView.addSubview(senderL)
+                let timeL = UILabel(frame: CGRectMake(frame.width-150,80+image_h+5+content_h,140,20))
+                timeL.textAlignment = .Right
+                timeL.textColor=timeColor
+                timeL.font=UIFont.systemFontOfSize(15)
+                timeL.text=changeTimeTwo(qingjiainfo.begintime!)+"到"+changeTimeTwo(qingjiainfo.endtime!)
+                cell.contentView.addSubview(timeL)
+        let textField = UITextField(frame: CGRectMake(10,90+image_h+40+content_h,frame.width-20,30))
+        textField.layer.masksToBounds=true
+        textField.layer.cornerRadius=4
+        textField.tag=Int(qingjiainfo.id!)!
+        textField.backgroundColor=UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        cell.contentView.addSubview(textField)
+        let yesBT = UIButton(frame: CGRectMake(80,90+image_h+40+content_h+40,60,30))
+        yesBT.backgroundColor=UIColor.init(red: 253/255, green: 166/255, blue: 57/255, alpha: 1)
+        yesBT.setTitle("不通过", forState: .Normal)
+        yesBT.titleLabel?.font=UIFont.systemFontOfSize(15)
+        yesBT.layer.cornerRadius=5
+        
+        yesBT.tag=Int(qingjiainfo.id!)!
+        yesBT.addTarget(self, action: #selector(nopass(_:)), forControlEvents: .TouchUpInside)
+        cell.contentView.addSubview(yesBT)
+        let noBT = UIButton(frame: CGRectMake(frame.width-140,90+image_h+40+content_h+40,60,30))
+        noBT.backgroundColor=UIColor.init(red: 157/255, green: 203/255, blue: 107/255, alpha: 1)
+        noBT.setTitle("批准", forState: .Normal)
+        noBT.titleLabel?.font=UIFont.systemFontOfSize(15)
+        noBT.layer.cornerRadius=5
+        noBT.tag=Int(qingjiainfo.id!)!
+        noBT.addTarget(self, action: #selector(pass(_:)), forControlEvents: .TouchUpInside)
+        cell.contentView.addSubview(noBT)
+        switch qingjiainfo.status! {
+        case "1":
+            yesBT.userInteractionEnabled=false
+            yesBT.backgroundColor=UIColor.grayColor()
+            noBT.userInteractionEnabled=false
+            noBT.backgroundColor=UIColor.grayColor()
+            noBT.setTitle("已批准", forState: .Normal)
+        case "2":
+            yesBT.userInteractionEnabled=false
+            noBT.userInteractionEnabled=false
+            yesBT.backgroundColor=UIColor.grayColor()
+            noBT.backgroundColor=UIColor.grayColor()
+            yesBT.setTitle("已拒绝", forState: .Normal)
+        default:
+            break
+        }
+        tableview.rowHeight=90+image_h+40+content_h+90
+        cell.selectionStyle = .None
+        return cell
+    }
+    //MARK: - 不通过的方法
+    func nopass(sender:UIButton){
+        let textfield = self.view.viewWithTag(sender.tag) as? UITextField
+        let content = textfield?.text
+        Getdata(String(sender.tag), status: "2", content: content!)
+        textfield?.text=""
+        sender.setTitle("已拒", forState: .Normal)
+        sender.userInteractionEnabled=false
+ 
+    }
+    //MARK: - 通过的方法
+    func pass(sender:UIButton){
+        let textfield = self.view.viewWithTag(sender.tag) as? UITextField
+        let content = textfield?.text
+        Getdata(String(sender.tag), status: "1", content: content!)
+        textfield?.text=""
+        sender.setTitle("已通过", forState: .Normal)
+        sender.userInteractionEnabled=false
+
+    }
+    //MARK: - 回复接口
+    func Getdata(id:String,status:String,content:String){
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath){
-        let  selectedCell = tableView.cellForRowAtIndexPath(indexPath)
-        selectedCell?.tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
-        if indexPath.section == 1{
-            if (selectedCell!.accessoryType == UITableViewCellAccessoryType.None){
-                selectedCell!.accessoryType = .Checkmark
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=replyleave"
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        
+        let param = [
+            
+            "leaveid":id,
+            "teacherid":uid,
+            "feedback":content,
+            "status":status
+            
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
+            if(error != nil){
             }
             else{
-                selectedCell!.accessoryType = .None
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 3)
+                }
+                if(status.status == "success"){
+                    print("成功")
+                    self.tableview.reloadData()
+                }
             }
         }
-    }
-    
-    func keyboardWillShowNotification(notification:NSNotification){
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.dataTableView.frame.origin.y = -100
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func keyboardWillHideNotification(notification:NSNotification){
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.dataTableView.frame.origin.y = 64
-            self.view.layoutIfNeeded()
-        }
-        
-    }
 
+    }
+    //MARK: - 视图将要出现／消失
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=true
+    }
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=false
+    }
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

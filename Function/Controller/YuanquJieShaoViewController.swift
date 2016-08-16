@@ -8,51 +8,86 @@
 
 import UIKit
 
-class YuanquJieShaoViewController: UIViewController {
-
-    let schoolImage = UIImageView()
-    let content1Label = UILabel()
-    let content2Label = UILabel()
+import Alamofire
+import MBProgressHUD
+class YuanquJieShaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
+    private var tableview=UITableView()
+    private var TeacherSoure=TeacherModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-        let string:NSString = "壮苗幼儿园始建于2000年,原校址位于东大道,13年7月正式迁至西大街,新学校占地1300平方米、建筑面积800平方米。"
-        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width - 150, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        self.title = "园区介绍"
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.schoolImage.frame = CGRectMake(0, 5, 140, 100)
-        self.schoolImage.frame.origin.x = self.view.bounds.width - 145
-        self.schoolImage.image = UIImage(named: "Schoolimage")
-        self.content1Label.frame = CGRectMake(5, 5, self.view.bounds.width - 150, boundingRect.height)
-        self.content1Label.numberOfLines = 0
-        self.content1Label.font = UIFont.systemFontOfSize(17)
-        self.content1Label.text = string as String!
-        let boundingRect2 = string.boundingRectWithSize(CGSizeMake(screenBounds.width - 10, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        self.content2Label.frame = CGRectMake(5, 146, self.view.bounds.width - 10, boundingRect2.height)
-        self.content2Label.numberOfLines = 0
-        self.content2Label.font = UIFont.systemFontOfSize(17)
-        self.content2Label.text = string as String!
-        self.view.addSubview(self.content2Label)
-        self.view.addSubview(self.content1Label)
-        self.view.addSubview(self.schoolImage)
+        
+        self.title="园区介绍"
+        tableview.frame=CGRectMake(0, 0, frame.width, frame.height)
+        tableview.delegate=self
+        tableview.dataSource=self
+        tableview.rowHeight=80
+        getTeacherList()
+        self.view.addSubview(tableview)
+        
     }
-
+    func getTeacherList(){
+        
+        let url = schoolUrl+"getWebSchoolInfos"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param = [
+            "schoolid":schoolid
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print(request)
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.TeacherSoure = TeacherModel(status.data!)
+                    self.tableview.reloadData()
+                }
+                
+            }
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return TeacherSoure.count
+    }
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let cell = TeacherTableViewCell.cellWithTableView(tableView)
+        let teacherlistinfo = TeacherSoure.objectlist[indexPath.row]
+        
+        
+        cell.titleL.text=teacherlistinfo.post_title
+        cell.iconIV.image=UIImage(named: "宝宝秀场")
+        cell.timeL.text=teacherlistinfo.post_date
+        cell.contentL.text=teacherlistinfo.post_excerpt
+        
+        return cell
+        
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = TeacherInfoViewController()
+        let teacherlistinfo = TeacherSoure.objectlist[indexPath.row]
+        vc.a="school"
+        vc.id=teacherlistinfo.id!
+        
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

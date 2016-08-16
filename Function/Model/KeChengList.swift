@@ -31,16 +31,34 @@ class KeChengList: JSONJoy {
     }
 }
 class KeChengInfo: JSONJoy{
-    var syllabus_date:String?
-    var syllabus_name: String?
+    var syllabus_id : String?
+    var schoolid : String?
+    var classid : String?
+    var  monday : String?
+    var tuesday : String?
+    var wednesday : String?
+    var  thursday : String?
+    var friday : String?
+    var saturday : String?
+    var sunday : String?
+  
     var syllabus_no:String?
     
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        syllabus_date = decoder["syllabus_date"].string
-        syllabus_name = decoder["syllabus_name"].string
+        syllabus_id=decoder["syllabus_id"].string
+        schoolid=decoder["schoolid"].string
+        classid=decoder["classid"].string
+        monday=decoder["monday"].string
+        tuesday=decoder["tuesday"].string
+        wednesday=decoder["wednesday"].string
+        thursday=decoder["thursday"].string
+        friday=decoder["friday"].string
+        saturday=decoder["saturday"].string
+        sunday=decoder["sunday"].string
+  
         syllabus_no = decoder["syllabus_no"].string
         
     }

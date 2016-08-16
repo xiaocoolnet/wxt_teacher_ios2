@@ -159,7 +159,7 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
     }
     
     func PutBlog(){
-        let url = apiUrl+"WriteMicroblog"
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=WriteMicroblog"
         let schoolid = NSUserDefaults.standardUserDefaults()
         let scid = schoolid.stringForKey("schoolid")
         let classid = NSUserDefaults.standardUserDefaults()
@@ -174,7 +174,8 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
             "classid":clid!,
             "userid":uid!,
             "content":self.contentTextView.text!,
-            "picurl":imageUrl!
+            "picurl":imageUrl!,
+            "type":"1"
         ]
         Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             if(error != nil){

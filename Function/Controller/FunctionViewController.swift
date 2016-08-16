@@ -587,7 +587,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func DaiJieView(){
-        let DaiJie = DaiJieViewController()
+        let DaiJie = DJViewController()
         self.navigationController?.pushViewController(DaiJie, animated: true)
     }
     
@@ -617,7 +617,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func ShiPuView(){
-        let shipu = ShiPuViewController()
+        let shipu = FoodMenuViewController()
         self.navigationController?.pushViewController(shipu, animated: true)
     }
     

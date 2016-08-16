@@ -37,9 +37,9 @@ class TeacherDianPingViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     func DropDownUpdate(){
-        self.DianPingView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.DianPingView.reloadData()
-        self.DianPingView.headerView?.beginRefreshing()
+//        self.DianPingView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
+//        self.DianPingView.reloadData()
+//        self.DianPingView.headerView?.beginRefreshing()
     }
     
     func GetDate(){

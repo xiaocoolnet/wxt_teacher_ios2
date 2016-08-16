@@ -7,51 +7,86 @@
 //
 
 import UIKit
+import Alamofire
+class TeacherInfoViewController: UIViewController {
+    let webView = UIWebView()
+    let shareBT = UIButton()
+    
+    var a = String()
 
-class TeacherInfoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    let teacherTableView = UITableView()
+    var id = String()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "教师风采"
-        self.teacherTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height)
-        self.teacherTableView.delegate = self
-        self.teacherTableView.dataSource = self
-        self.teacherTableView.tableFooterView = UIView(frame:CGRectZero)
-        self.view.addSubview(self.teacherTableView)
-        // Do any additional setup after loading the view.
+     
+        webView.frame = CGRectMake(0, 0, frame.width, frame.height-104)
+        shareBT.frame=CGRectMake(0, frame.height-104, frame.width, 40)
+        shareBT.setTitle("分享", forState: .Normal)
+        shareBT.backgroundColor=UIColor(red: 155.0 / 255.0, green: 229.0 / 255.0, blue: 180.0 / 255.0, alpha: 1.0)
+         self.view.addSubview(shareBT)
+        shareBT.addTarget(self, action: #selector(share), forControlEvents: .TouchUpInside)
+        let url = h5Url+a
+        let param = [
+            "id":id
+            
+            ]
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            
+        self.webView.loadRequest(request!)
+        }
+        self.view.addSubview(webView)
+       
+        
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
-    }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
-        cell.imageView?.image = UIImage(named: "教师风采-1")
-        cell.textLabel?.text = "王老师"
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //singleTeacherViewController
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        let single = singleTeacherViewController()
-        single.title = cell?.textLabel?.text!
-        self.navigationController?.pushViewController(single, animated: true)
-    }
+    func share(){
+        print("分享")
+        //  进行分享的操作
+        print("分享")
+        //
+        // 1.创建分享参数
+        let shareParames = NSMutableDictionary()
+        //
+        let url = "http://wxt.xiaocool.net/index.php?g=portal&m=article&a=teacher&id=" + id
+        shareParames.SSDKSetupShareParamsByText(url,
+                                                images : UIImage(named: "1.png"),
+                                                url : NSURL(string:url),
+                                                title : "老师风采",
+                                                type : SSDKContentType.Auto)
+        
+        //  判断微信是否安装了
+        if WXApi.isWXAppInstalled() {
+            
+            //微信朋友圈分享
+            ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+                
+                switch state{
+                    
+                case SSDKResponseState.Success:
+                    print("分享成功")
+                    
+                    let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+                    alert.show()
+                    
+                case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+                case SSDKResponseState.Cancel:  print("分享取消")
+                    
+                default:
+                    break
+                }
+            }
+        }else{
+            let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+            alertView.show()
+        }
 
-    override func didReceiveMemoryWarning() {
+    }
+    
+      override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

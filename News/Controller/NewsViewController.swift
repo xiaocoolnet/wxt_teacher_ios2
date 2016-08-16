@@ -18,7 +18,7 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "消息"
-        dataTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 44)
+        dataTableView.frame = CGRectMake(0, -55, self.view.bounds.width, self.view.bounds.height - 44)
         dataTableView.delegate = self
         dataTableView.dataSource = self
         dataTableView.registerClass(NewsTableViewCell.self, forCellReuseIdentifier: "NewsCell")
@@ -96,7 +96,7 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0){
-            return 6
+            return 8
         }
        if(section == 1){
             return newsSource.count
@@ -143,7 +143,16 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 cell.nameLabel.text = "园丁沟通"
                 cell.avatorImage.image = UIImage(named:"园丁沟通" )
                 return cell
+            }else if indexPath.row==6{
+                cell.contextLabel.text = "小张妈妈回复了一条信息"
+                cell.nameLabel.text = "通讯录"
+                cell.avatorImage.image = UIImage(named:"园丁沟通" )
+            }else if indexPath.row==7{
+                cell.contextLabel.text = "小张妈妈回复了一条信息"
+                cell.nameLabel.text = "作业"
+                cell.avatorImage.image = UIImage(named:"园丁沟通" )
             }
+            
         }
         if(indexPath.section == 1){
             let newsInfo = newsSource.objectlist[indexPath.row]
@@ -160,18 +169,22 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
             if indexPath.row == 0{
                 let newsInfo = ZuiXinNewsViewController()
                 self.navigationController?.pushViewController(newsInfo, animated: true)
-                newsInfo.newsInfo = self.newsSource.objectlist[0]
                 newsInfo.tabBarController?.tabBar.hidden = true
             }
             if indexPath.row == 1{
-                let newsInfo = XiaoXiQunFaViewController()
+                let newsInfo = QFListViewController()
                 self.navigationController?.pushViewController(newsInfo, animated: true)
-                newsInfo.newsInfo = self.newsSource.objectlist[0]
+
                 newsInfo.tabBarController?.tabBar.hidden = true
             }
+            if indexPath.row == 2 {
+                let JZvc = JZdingzhuViewController()
+                self.navigationController?.pushViewController(JZvc, animated: true)
+                JZvc.tabBarController?.tabBar.hidden=true
+                
+            }
             if indexPath.row == 3{
-                let tongZhi = TongZhiGonggaoViewController()
-                tongZhi.newsInfo = self.newsSource.objectlist[0]
+                let tongZhi = AnnounceViewController()
                 self.navigationController?.pushViewController(tongZhi, animated: true)
                 tongZhi.tabBarController?.tabBar.hidden = true
             }
@@ -179,6 +192,19 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 let daiBan = DaiBanViewController()
                 self.navigationController?.pushViewController(daiBan, animated: true)
                 daiBan.tabBarController?.tabBar.hidden = true
+            }else if indexPath.row==5{
+                
+              
+                
+            }else if indexPath.row==6{
+                
+                let vc=AddressBookViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+            }else if indexPath.row==7{
+                let vc = HomeworkViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+                
             }
         }
         if(indexPath.section == 1){
@@ -213,14 +239,5 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
             
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

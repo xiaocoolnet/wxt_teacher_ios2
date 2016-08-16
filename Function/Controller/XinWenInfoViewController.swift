@@ -10,40 +10,29 @@ import UIKit
 
 class XinWenInfoViewController: UIViewController {
 
-    let teacherImage = UIImageView()
-    let contentLabel = UILabel()
+    let webView = UIWebView()
+    var id = String()
+    var ziduan = String()
+    
+    
     override func viewDidLoad() {
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "新闻详情"
         super.viewDidLoad()
-        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-        let string:NSString = "壮苗幼儿园始建于2000年,原校址位于东大道,13年7月正式迁至西大街,新学校占地1300平方米、建筑面积800平方米。"
-        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width - 10, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        self.teacherImage.frame = CGRectMake(5, 5, self.view.bounds.width - 10, 200)
-        self.contentLabel.frame = CGRectMake(5, 205, self.view.bounds.width - 10, boundingRect.height)
-        self.contentLabel.font = UIFont.systemFontOfSize(17)
-        self.contentLabel.numberOfLines = 0
-        self.contentLabel.text = string as String
-        self.teacherImage.image = UIImage(named: "teacherPic")
-        self.view.addSubview(self.teacherImage)
-        self.view.addSubview(self.contentLabel)
+        //http://wxt.xiaocool.net/index.php?g=portal&m=article&a=notice&id=16
+        webView.frame=CGRectMake(0, 0, frame.width, frame.height)
+        let str = "http://wxt.xiaocool.net/index.php?g=portal&m=article&a="+ziduan+"&id="+id
+        let url = NSURL(string: str)
+        let requ = NSURLRequest(URL: url!)
+        webView.loadRequest(requ)
+  
+        self.view.addSubview(webView)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

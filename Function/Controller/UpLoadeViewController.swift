@@ -23,6 +23,10 @@ class UpLoadeViewController: UIViewController,UICollectionViewDataSource,UIColle
     var addPictureBtn = UIButton()
     var picture = UIImageView()
     let contentTextView = BRPlaceholderTextView()
+    var photoName = String()
+    var photoContent = String()
+    
+    
     var itemCount = 0
     var collectV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
@@ -148,17 +152,23 @@ class UpLoadeViewController: UIViewController,UICollectionViewDataSource,UIColle
     
     func UpdatePic(){
         for i in 0..<self.imageData.count{
+            let userid = NSUserDefaults.standardUserDefaults()
+            let uid = userid.stringForKey("userid")
             let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.stringFromDate(NSDate())
+            let imageName = uid! + RanNumber + dateStr
+
             isuploading = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(RanNumber, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                ConnectModel.uploadWithImageName(imageName, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
                     print("返回值")
                     print(data)
                 })}
             //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
-            let userid = NSUserDefaults.standardUserDefaults()
-            let uid = userid.stringForKey("userid")
-            self.imagePath.addObject(uid! + RanNumber + ".png")
+            
+            self.imagePath.addObject(imageName + ".png")
         }
         self.imageUrl = self.imagePath.componentsJoinedByString(",")
         print(self.imageUrl!)
@@ -186,7 +196,8 @@ class UpLoadeViewController: UIViewController,UICollectionViewDataSource,UIColle
             "schoolid":scid!,
             "classid":clid!,
             "userid":uid!,
-            "content":self.contentTextView.text!,
+            "type":"2",
+            "content":photoContent,
             "picurl":imageUrl!
         ]
         Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in

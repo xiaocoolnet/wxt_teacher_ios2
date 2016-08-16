@@ -5,33 +5,7 @@
 //  Created by 李春波 on 16/2/28.
 //  Copyright © 2016年 北京校酷网络科技有限公司. All rights reserved.
 //
-/**
-*                #####################################################
-*                #                                                   #
-*                #                       _oo0oo_                     #
-*                #                      o8888888o                    #
-*                #                      88" . "88                    #
-*                #                      (| -_- |)                    #
-*                #                      0\  =  /0                    #
-*                #                    ___/`---'\___                  #
-*                #                  .' \\|     |# '.                 #
-*                #                 / \\|||  :  |||# \                #
-*                #                / _||||| -:- |||||- \              #
-*                #               |   | \\\  -  #/ |   |              #
-*                #               | \_|  ''\---/''  |_/ |             #
-*                #               \  .-\__  '-'  ___/-. /             #
-*                #             ___'. .'  /--.--\  `. .'___           #
-*                #          ."" '<  `.___\_<|>_/___.' >' "".         #
-*                #         | | :  `- \`.;`\ _ /`;.`/ - ` : | |       #
-*                #         \  \ `_.   \_ __\ /__ _/   .-` /  /       #
-*                #     =====`-.____`.___ \_____/___.-`___.-'=====    #
-*                #                       `=---='                     #
-*                #     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   #
-*                #                                                   #
-*                #               佛祖保佑         永无BUG            #
-*                #                                                   #
-*                #####################################################
-*/
+
 import UIKit
 import IQKeyboardManagerSwift
 
@@ -40,7 +14,69 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+   
+         UIApplication.sharedApplication().statusBarStyle = .LightContent
+        
+        // Override point for customization after application launch.
+        //  微信分享功能 (第一个参数不知道是什么意思)
+        ShareSDK.registerApp("14395b7a1ae3c", activePlatforms: [SSDKPlatformType.TypeWechat.rawValue], onImport: {(platform : SSDKPlatformType) -> Void in
+            
+            switch platform{
+                //  第三个参数为需要连接社交平台SDK时触发，在此事件中写入连接代码
+                
+            case SSDKPlatformType.TypeWechat:
+                ShareSDKConnector.connectWeChat(WXApi.classForCoder())
+                
+            default:
+                break
+            }
+            }, onConfiguration: {(platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
+                switch platform {
+    
+                case SSDKPlatformType.TypeWechat:
+                    //设置微信应用信息
+                    appInfo.SSDKSetupWeChatByAppId("wxc8f7561ad972b1ae", appSecret: "a3b3411604fdeeeb773402f44f665cfc")
+                    break
+     
+                default:
+                    break
+                    
+                }
+        })
+        
+
         NSThread.sleepForTimeInterval(2.0)
+        //            检测登录
+//        if self.loginCheck() {
+//            //        环信登录
+//            let easeMob:EaseMob = EaseMob()
+//            easeMob.registerSDKWithAppKey("xiaocool#zhixiaoyuan", apnsCertName: "wxtpush_dev")
+//            easeMob.application(application, didFinishLaunchingWithOptions: launchOptions)
+//            //        账号
+//            let userid = NSUserDefaults.standardUserDefaults()
+//            //        接口调用注册
+//            easeMob.chatManager.asyncRegisterNewAccount(userid.valueForKey("userid")! as! String, password:userid.valueForKey("userid")! as! String)
+//            //        //        设置自动登录
+//            easeMob.chatManager.asyncLoginWithUsername(userid.valueForKey("userid")! as! String, password: userid.valueForKey("userid")! as! String)
+//            //        检测是否设置了自动登录
+//            let isAutoLogin:Bool = easeMob.chatManager.isAutoLoginEnabled!
+//            if(!isAutoLogin){
+//                easeMob.chatManager.asyncLoginWithUsername(userid.valueForKey("userid")! as! String,password:userid.valueForKey("userid")! as! String)
+//            }
+//            //                        182.92.20.117
+//            easeMob.registerSDKWithAppKey("xiaocool#zhixiaoyuan", apnsCertName: "wxtpush_dev")
+//            //iOS8 注册APNS
+//            if(application.respondsToSelector(#selector(UIApplication.registerForRemoteNotifications))){
+//                application.registerForRemoteNotifications()
+//                let notificationTypes:UIUserNotificationType = UIUserNotificationType(arrayLiteral: .Alert,.Badge,.Sound)
+//                let settings:UIUserNotificationSettings = UIUserNotificationSettings.init(forTypes: notificationTypes, categories: nil)
+//                application.registerUserNotificationSettings(settings)
+//            }else{
+//                let notificationTypes:UIRemoteNotificationType = UIRemoteNotificationType(arrayLiteral: .Alert,.Badge,.Sound)
+//                application.registerForRemoteNotificationTypes(notificationTypes)
+//            }
+//        }
+
         self.loginCheck()
         UITabBar.appearance().tintColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
         UINavigationBar.appearance().barTintColor = UIColor(red: 155.0 / 255.0, green: 229.0 / 255.0, blue: 180.0 / 255.0, alpha: 1.0)
@@ -56,12 +92,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //IQKeyboardManager.sharedManager().enable = true
         return true
     }
-    func loginCheck(){
+    func loginCheck()->Bool{
         let userid = NSUserDefaults.standardUserDefaults()
         var segueId = "MainView"
         if((userid.valueForKey("userid") == nil) || (userid.valueForKey("userid")?.length == 0 )){
             segueId = "LoginView"
             self.window?.rootViewController = self.window?.rootViewController?.storyboard?.instantiateViewControllerWithIdentifier(segueId)
+            return false
         }
         else{
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -69,29 +106,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let tableBarItem = tableBarController.tabBar.items![2]
             tableBarItem.badgeValue = nil
             self.window?.rootViewController = tableBarController
+            return true
         }
     }
 
     func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        
     }
 
     func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+ 
     }
 
     func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+
     }
 
 

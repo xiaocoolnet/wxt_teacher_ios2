@@ -29,11 +29,15 @@ class UserInfo: JSONJoy {
     var id:String?
     var schoolid:String?
     var classid:String?
+    var photo : String?
+    
     init(){
     }
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string
         classid = decoder["classid"].string
         schoolid = decoder["schoolid"].string
+        photo=decoder["photo"].string
+        
     }
 }

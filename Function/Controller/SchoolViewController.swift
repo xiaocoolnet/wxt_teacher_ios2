@@ -21,6 +21,15 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     let xiaoyfcLabel = UILabel()
     let bbxcBtn = UIButton()
     let bbxcLabel = UILabel()
+    let zhaopinBT = UIButton()
+    let zhaopinL = UILabel()
+    let xinxiangBT = UIButton()
+    let xinxiangL = UILabel()
+    let xingquBT = UIButton()
+    let xingquL = UILabel()
+    let baomingBT = UIButton()
+    let baomingL = UILabel()
+
     let yqgg = UIImageView()
     let yqggLabel1 = UILabel()
     let yqggLabel2 = UILabel()
@@ -36,61 +45,37 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     let yedtLabel2 = UILabel()
     let teacherPic2 = UIImageView()
     let contentText2 = UILabel()
+    var schoolListSource = SchoolListModel()
+    var SchoolNoticesSource = SchoolNoticesModel()
     
     var yuErList = YuErList()
     
-    var gongGaoList = GongGaoList()
+    
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //加载数据
         loadData()
         //加载视图
         loadSubviews()
+        
         
     }
     
     //MARK: - 加载数据
     func loadData() -> Void {
         
-        getYuErData()
-        GongGaoDate()
+//        getYuErData()
+        
+        GetNewsDate()
+        GetNoticesDate()
+        
         
     }
-    //获取院所公告
-    func GongGaoDate(){
-        let url = apiUrl+"SchoolNotice"
-        
-        let param = [
-            "schoolid":1
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    self.gongGaoList = GongGaoList(status.data!)
-                    self.schoolTableView.reloadData()
-                    self.schoolTableView.headerView?.endRefreshing()
-                }
-            }
-        }
-    }
-
+    
+  
     //获取育儿知识
     func getYuErData() -> Void {
         let url = apiUrl+"ParentingKnowledge"
@@ -115,7 +100,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    print("0")
+                    
                 }
                 if(status.status == "success"){
                     print(status.data)
@@ -130,7 +115,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     //MARK: - 加载视图
     func loadSubviews() -> Void {
         self.title = "学校官网"
-        self.schoolTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height)
+        self.schoolTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height-64)
         self.automaticallyAdjustsScrollViewInsets = false
         self.schoolTableView.delegate = self
         self.schoolTableView.dataSource = self
@@ -140,11 +125,88 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.view.addSubview(self.schoolTableView)
     }
     
-    
+  //MARK: - 滚动式图添加图片
     func ScrollViewImage(){
         scrollImageView.slideshowInterval = 5.0
         scrollImageView.setImageInputs([AFURLSource(urlString: "http://pic2.ooopic.com/01/03/51/25b1OOOPIC19.jpg")!, AFURLSource(urlString: "http://ppt360.com/background/UploadFiles_6733/201012/2010122016291897.jpg")!, AFURLSource(urlString: "http://img.taopic.com/uploads/allimg/130501/240451-13050106450911.jpg")!])
     }
+    //MARK: - 获取新闻动态接口
+    func GetNewsDate(){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"getSchoolNews"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param=[
+        
+        "schoolid":schoolid
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+            }
+            else{
+                
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        self.schoolListSource = SchoolListModel(status.data!)
+                        self.schoolTableView.reloadData()
+                    }
+                    
+                    
+                    
+                })
+            }
+        }
+    }
+    //MARK: - 获取校园通知接口
+    func GetNoticesDate(){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"getSchoolNotices"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param=[
+            
+            "schoolid":schoolid
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+            }
+            else{
+                
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        self.SchoolNoticesSource = SchoolNoticesModel(status.data!)
+                        self.schoolTableView.reloadData()
+                    }
+                    
+                    
+                    
+                })
+            }
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -156,25 +218,25 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
             if indexPath.row == 0{
                 return 150
             }
-            return 80
+            return 200
         }
         if indexPath.section == 1{
             if indexPath.row == 0{
                 return 30
             }
-            return 95
+            return 100
         }
         if indexPath.section == 2{
             if indexPath.row == 0{
                 return 30
             }
-            return 95
+            return 100
         }
         if indexPath.section == 3{
             if indexPath.row == 0{
                 return 30
             }
-            return 95
+            return 100
         }
 
         return 0
@@ -189,7 +251,16 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return 2
+        switch section {
+        case 1:
+            return SchoolNoticesSource.count+1
+        case 2:
+            return schoolListSource.count+1
+        case 3:
+            return 2
+        default:
+            return 2
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -225,7 +296,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.xiaoyfcBtn.setImage(UIImage(named: "校园风采"), forState: .Normal)
                 self.xiaoyfcBtn.addTarget(self, action: #selector(SchoolViewController.schoolFengCai), forControlEvents: .TouchUpInside)
                 self.xiaoyfcLabel.frame = CGRectMake(0, 66, 50, 12)
-                self.xiaoyfcLabel.text = "校园风采"
+                self.xiaoyfcLabel.text = "每日食谱"
                 self.xiaoyfcLabel.center.x = self.view.bounds.width/8*5
                 self.xiaoyfcLabel.font = UIFont.systemFontOfSize(12)
                 self.xiaoyfcLabel.textAlignment = .Center
@@ -238,6 +309,42 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 self.bbxcLabel.font = UIFont.systemFontOfSize(12)
                 self.bbxcLabel.center.x = self.view.bounds.width/8*7
                 self.bbxcLabel.textAlignment = .Center
+                self.zhaopinBT.frame = CGRectMake(0, 103, 60, 60)
+                self.zhaopinBT.center.x = self.view.bounds.width/8
+                self.zhaopinBT.setImage(UIImage(named: "园区介绍"), forState: .Normal)
+                self.zhaopinBT.addTarget(self, action: #selector(SchoolViewController.zhaopin), forControlEvents: .TouchUpInside)
+                self.zhaopinL.frame = CGRectMake(0, 166, 50, 12)
+                self.zhaopinL.font = UIFont.systemFontOfSize(12)
+                self.zhaopinL.center.x = self.view.bounds.width/8
+                self.zhaopinL.text = "校园招聘"
+                self.zhaopinL.textAlignment = .Center
+                self.xinxiangBT.frame = CGRectMake(0, 103, 60, 60)
+                self.xinxiangBT.center.x = self.view.bounds.width/8*3
+                self.xinxiangBT.setImage(UIImage(named: "教师风采"), forState: .Normal)
+                self.xinxiangBT.addTarget(self, action: #selector(SchoolViewController.xinxiang), forControlEvents: .TouchUpInside)
+                self.xinxiangL.frame = CGRectMake(0, 166, 50, 12)
+                self.xinxiangL.font = UIFont.systemFontOfSize(12)
+                self.xinxiangL.center.x = self.view.bounds.width/8*3
+                self.xinxiangL.textAlignment = .Center
+                self.xinxiangL.text = "园长信箱"
+                self.xingquBT.frame = CGRectMake(0, 103, 60, 60)
+                self.xingquBT.center.x = self.view.bounds.width/8*5
+                self.xingquBT.setImage(UIImage(named: "校园风采"), forState: .Normal)
+                self.xingquBT.addTarget(self, action: #selector(SchoolViewController.xingqu), forControlEvents: .TouchUpInside)
+                self.xingquL.frame = CGRectMake(0, 166, 50, 12)
+                self.xingquL.text = "兴趣班"
+                self.xingquL.center.x = self.view.bounds.width/8*5
+                self.xingquL.font = UIFont.systemFontOfSize(12)
+                self.xingquL.textAlignment = .Center
+                self.baomingBT.frame = CGRectMake(0, 103, 60, 60)
+                self.baomingBT.setImage(UIImage(named: "宝宝秀场"), forState: .Normal)
+                self.baomingBT.addTarget(self, action: #selector(SchoolViewController.baoming), forControlEvents: .TouchUpInside)
+                self.baomingBT.center.x = self.view.bounds.width/8*7
+                self.baomingL.frame = CGRectMake(0, 166, 50, 12)
+                self.baomingL.text = "在线报名"
+                self.baomingL.font = UIFont.systemFontOfSize(12)
+                self.baomingL.center.x = self.view.bounds.width/8*7
+                self.baomingL.textAlignment = .Center
                 cell.contentView.addSubview(self.yuanquBtn)
                 cell.contentView.addSubview(self.yuanquLabel)
                 cell.contentView.addSubview(self.jiaoshiBtn)
@@ -246,10 +353,19 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell.contentView.addSubview(self.xiaoyfcLabel)
                 cell.contentView.addSubview(self.bbxcLabel)
                 cell.contentView.addSubview(self.bbxcBtn)
+                cell.contentView.addSubview(self.zhaopinBT)
+                cell.contentView.addSubview(self.zhaopinL)
+                cell.contentView.addSubview(self.xinxiangBT)
+                cell.contentView.addSubview(self.xinxiangL)
+                cell.contentView.addSubview(self.xingquBT)
+                cell.contentView.addSubview(self.xingquL)
+                cell.contentView.addSubview(self.baomingBT)
+                cell.contentView.addSubview(self.baomingL)
                 return cell
             }
         }
-        if indexPath.section == 1{
+        //MARK: - 新闻动态列表
+        if indexPath.section == 2{
             if indexPath.row == 0{
                 cell.accessoryType = .DisclosureIndicator
                 self.yqgg.frame = CGRectMake(10, 7, 15, 17)
@@ -266,27 +382,26 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell.contentView.addSubview(self.yqggLabel1)
                 cell.contentView.addSubview(self.yqgg)
                 return cell
-            }
-            if indexPath.row == 1{
-                self.teacherPic.frame = CGRectMake(5, 5, 80, 80)
-                self.teacherPic.image = UIImage(named: "teacherPic")
-                cell.contentView.addSubview(self.teacherPic)
-                self.contentText.frame = CGRectMake(88, 5, self.view.bounds.width - 90, 80)
-                self.contentText.numberOfLines = 0
-                self.contentText.text = "通知内容通知内容通知内容"
-                self.contentText.font = UIFont.systemFontOfSize(15)
-                cell.contentView.addSubview(self.contentText)
+            }else{
+                let newsinfo = schoolListSource.objectlist[indexPath.row-1]
+                
+                let cell = SchoolListCell.cellWithTableView(tableView)
+                cell.iconIV.image=UIImage(named: "宝宝秀场")
+                cell.titleL.text=newsinfo.post_title
+                cell.contentL.text=newsinfo.post_excerpt
+                cell.timeL.text=newsinfo.post_date
                 return cell
             }
         }
-        if indexPath.section == 2{
+        //MARK: - 校园通知cell
+        if indexPath.section == 1{
             if indexPath.row == 0{
                 cell.accessoryType = .DisclosureIndicator
                 self.xwdt.frame = CGRectMake(10, 7, 15, 17)
                 self.xwdt.image = UIImage(named: "学校官网_07")
                 self.xwdtLabel1.frame = CGRectMake(36, 9, 59, 13)
                 self.xwdtLabel1.font = UIFont.systemFontOfSize(14)
-                self.xwdtLabel1.text = "园所公告"
+                self.xwdtLabel1.text = "校园通知"
                 self.xwdtLabel2.frame = CGRectMake(0, 8, 28, 14)
                 self.xwdtLabel2.text = "更多"
                 self.xwdtLabel2.frame.origin.x = self.view.bounds.width - 55
@@ -296,21 +411,15 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 cell.contentView.addSubview(self.xwdtLabel2)
                 cell.contentView.addSubview(self.xwdt)
                 return cell
-            }
-            if indexPath.row == 1{
-                self.teacherPic1.frame = CGRectMake(5, 5, 80, 80)
-                self.teacherPic1.image = UIImage(named: "teacherPic")
-                cell.contentView.addSubview(self.teacherPic1)
-                self.contentText1.frame = CGRectMake(88, 5, self.view.bounds.width - 90, 80)
-                self.contentText1.numberOfLines = 0
-                if self.gongGaoList.objectlist.count>0 {
-                    self.contentText1.text = self.gongGaoList.objectlist[0].notice_title
-
-                }
-                self.contentText1.font = UIFont.systemFontOfSize(15)
-                cell.contentView.addSubview(self.contentText1)
-                return cell
-            }
+            }else{
+                let newsinfo = SchoolNoticesSource.objectlist[indexPath.row-1]
+                
+                let cell = SchoolListCell.cellWithTableView(tableView)
+                cell.iconIV.image=UIImage(named: "宝宝秀场")
+                cell.titleL.text=newsinfo.post_title
+                cell.contentL.text=newsinfo.post_excerpt
+                cell.timeL.text=newsinfo.post_date
+                return cell            }
         }
         if indexPath.section == 3{
             if indexPath.row == 0{
@@ -347,35 +456,37 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
 
         return cell
     }
-    
+  //MARK: - 点击事件
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //MARK: - 校园通知点击事件
         if indexPath.section == 1{
             if indexPath.row == 0{
                 let xinwenlist = XinWenListViewController()
                 self.navigationController?.pushViewController(xinwenlist, animated: true)
-            }
-            if indexPath.row == 1{
+            }else{
+                let newsinfo = SchoolNoticesSource.objectlist[indexPath.row-1]
                 let xinweninfo = XinWenInfoViewController()
+                xinweninfo.id=newsinfo.id!
+                xinweninfo.ziduan="notice"
                 self.navigationController?.pushViewController(xinweninfo, animated: true)
             }
         }
+        //MARK: - 新闻动态点击事件
         if indexPath.section == 2{
             if indexPath.row == 0{
                 let tonggaolist = TongGaoListViewController()
                 self.navigationController?.pushViewController(tonggaolist, animated: true)
-            }
-            if indexPath.row == 1{
-                let tonggaoinfo = TongGaoInfoViewController()
-                self.navigationController?.pushViewController(tonggaoinfo, animated: true)
+            }else{
+                let newsinfo = schoolListSource.objectlist[indexPath.row-1]
+                let xinweninfo = XinWenInfoViewController()
+                xinweninfo.id=newsinfo.id!
+                xinweninfo.ziduan="news"
+                self.navigationController?.pushViewController(xinweninfo, animated: true)
                 
-                let dataInfo = gongGaoList.objectlist[0]
-
-                tonggaoinfo.contentLabel.text = dataInfo.notice_content
-                tonggaoinfo.nameLabel.text = "教师：" + dataInfo.releasename!
-                tonggaoinfo.timeLabel.text = "时间：" + dataInfo.notice_time!
-                tonggaoinfo.noticeTitle.text = dataInfo.notice_title
+              
             }
         }
+        //MARK: - 育儿知识点击事件
         if indexPath.section == 3{
             if indexPath.row == 0{
                 let yuErList = YuErListTableViewController()
@@ -390,24 +501,43 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
 
     }
-    
+    //MARK: - 上方按钮点击事件
     func yuanquJieShao(){
         let yqjs = YuanquJieShaoViewController()
         self.navigationController?.pushViewController(yqjs, animated: true)
     }
     
     func jiaoshifengcai(){
-        let jsfc = TeacherInfoViewController()
+        let jsfc = TeacherLIstViewController()
         self.navigationController?.pushViewController(jsfc, animated: true)
     }
     
     func schoolFengCai(){
-        let jsfc = SchoolFengCaiViewController()
+        let jsfc = FoodMenuViewController()
         self.navigationController?.pushViewController(jsfc, animated: true)
     }
     
     func babyShows(){
         let jsfc = BBShowsViewController()
         self.navigationController?.pushViewController(jsfc, animated: true)
+    }
+    func zhaopin(){
+        let vc = ZhaoPinViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    func xinxiang(){
+        let vc = XinXiangViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    func xingqu(){
+        let vc = XingQuViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        
+    }
+    func baoming(){
+        
     }
 }

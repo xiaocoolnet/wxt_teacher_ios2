@@ -247,12 +247,12 @@ public class FlexibleTableView : UITableView, UITableViewDelegate, UITableViewDa
             if flexibleTableViewDelegate.respondsToSelector(#selector(FlexibleTableViewDelegate.tableView(_:heightForRowAtIndexPath:))) {
                 return flexibleTableViewDelegate.tableView!(self, heightForRowAtIndexPath:correspondingIndexPath.ns)
             }
-            return 44.0;
+            return 60.0;
         } else {
             if flexibleTableViewDelegate.respondsToSelector(#selector(FlexibleTableViewDelegate.tableView(_:heightForSubRowAtIndexPath:))) {
                 return flexibleTableViewDelegate.tableView!(self, heightForSubRowAtIndexPath:correspondingIndexPath.ns)
             }
-            return 44.0;
+            return 60.0;
         }
     }
     public func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

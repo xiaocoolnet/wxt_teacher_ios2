@@ -15,6 +15,7 @@ class ReviceMessagesViewController: UIViewController,UITableViewDelegate,UITable
 
     let newsInfoTableView = UITableView()
     var newsInfo = NewsInfo()
+    
     let contentTextView = BRPlaceholderTextView()
 
     override func viewDidLoad() {

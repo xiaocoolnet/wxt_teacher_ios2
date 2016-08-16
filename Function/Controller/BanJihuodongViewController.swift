@@ -15,7 +15,12 @@ import XWSwiftRefresh
 
 class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
-    var huoDongSource = HuoDongList()
+    var activitySource = ActivityList()
+    var activity_listSource = activity_listList()
+    var apply_countSource = apply_countList()
+    var picSource = picList()
+    var user_Source = user_List()
+    let arrayPeople = NSMutableArray()
 
     let huoDongTableView = UITableView()
     override func viewDidLoad() {
@@ -36,25 +41,27 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addSubview(huoDongTableView)
         
         self.DropDownUpdate()
+        GetDate()
+        
     }
     
     func DropDownUpdate(){
-        self.huoDongTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.huoDongTableView.reloadData()
-        self.huoDongTableView.headerView?.beginRefreshing()
+//        self.huoDongTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
+//        self.huoDongTableView.reloadData()
+//        self.huoDongTableView.headerView?.beginRefreshing()
     }
     
+    //    获取活动列表
     func GetDate(){
-        let url = apiUrl+"ClassActivity"
-        let schoolid = 1
-        let classid = 1
         
-        let param = [
-            "schoolid":schoolid,
-            "classid":classid
-            
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        //        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getactivitylist&receiverid=597
+        
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let uid = defalutid.stringForKey("userid")
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getactivitylist&receiverid="+uid!
+
+        Alamofire.request(.GET, url, parameters: nil).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -66,66 +73,450 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                 print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    print("0")
                 }
                 if(status.status == "success"){
-                    self.huoDongSource = HuoDongList(status.data!)
+                    self.activitySource = ActivityList(status.data!)
                     self.huoDongTableView.reloadData()
-                    self.huoDongTableView.headerView?.endRefreshing()
-                    print("1")
+//                    self.huoDongTableView.headerView?.endRefreshing()
                 }
             }
         }
+        
     }
-
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return huoDongSource.count
+        return self.activitySource.count
     }
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
-    }
+
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
         cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
+        let activityInfo = self.activitySource.activityList[indexPath.row]
+        self.activity_listSource = activity_listList(activityInfo.activity_list!)
+        self.apply_countSource = apply_countList(activityInfo.apply_count!)
+        self.picSource = picList(activityInfo.pic!)
         
-        let huoDongInfo = huoDongSource.objectlist[indexPath.row]
+        //  得到活动中的内容
+        let activity_listModel = self.activity_listSource.activityList[0]
+        
+        //  活动标题
+        let titleLbl = UILabel()
+        titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
+        titleLbl.textAlignment = NSTextAlignment.Center
+        titleLbl.text = activity_listModel.title
+        cell.contentView.addSubview(titleLbl)
+        //  活动内容
+        let contentLbl = UILabel()
+        contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 20)
+        contentLbl.font = UIFont.systemFontOfSize(16)
+        contentLbl.textColor = UIColor.lightGrayColor()
+        contentLbl.text = activity_listModel.content
+        cell.contentView.addSubview(contentLbl)
+        
+        //  活动图片
+        
+        let pic = self.picSource.activityList
+        //        print(picModel.count)
         
         
-        //let urlStr = "http://www.xiaocool.cn:8016/uploads/ClassAction/chunyou.jpg"
         
-        //cell.imageView?.yy_imageURL = NSURL(fileURLWithPath: urlStr)
-        //定义NSURL对象
-        let url = NSURL(string: "http://www.xiaocool.cn:8016/uploads/ClassAction/" + huoDongInfo.activity_pic!)
-        //从网络获取数据流
-        let data = NSData(contentsOfURL: url!)
-        //通过数据流初始化图片
-        let newImage = UIImage(data: data!)
+        //  图片
+        var image_h = CGFloat()
+        var button:UIButton?
+        
+        
+        //判断图片张数显示
+        if pic.count == 1 {
+            image_h=(WIDTH - 40)/3.0
+            let pciInfo = pic[0]
+            let imgUrl = pictureUrl+(pciInfo.picture_url)!
+            let avatarUrl = NSURL(string: imgUrl)
+            let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                if(data != nil){
+                    button = UIButton()
+                    button!.frame = CGRectMake(12, 80, WIDTH - 24, (WIDTH - 40)/3.0)
+                    let imgTmp = UIImage(data: data!)
+                    
+                    button!.setImage(imgTmp, forState: .Normal)
+                    if button?.imageView?.image == nil{
+                        //                        button!.setImage(UIImage(named: "园所公告背景.png"), forState: .Normal)
+                        button?.setBackgroundImage(UIImage(named: "4"), forState: .Normal)
+                    }
+                    button?.tag = indexPath.row
+                    button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                    cell.contentView.addSubview(button!)
+                    
+                }
+            })
+            
+        }
+        if(pic.count>1&&pic.count<=3){
+            image_h=(WIDTH - 40)/3.0
+            for i in 1...pic.count{
+                var x = 12
+                let pciInfo = pic[i-1]
+                let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                print(imgUrl)
+                
+                //let image = self.imageCache[imgUrl] as UIImage?
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                        //                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 150, 110, 80))
+                        button = UIButton()
+                        button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        let imgTmp = UIImage(data: data!)
+                        
+                        button!.setImage(imgTmp, forState: .Normal)
+                        if button?.imageView?.image == nil{
+                            //                            button!.setImage(UIImage(named: "Logo"), forState: .Normal)
+                            button?.setBackgroundImage(UIImage(named: "4"), forState: .Normal)
+                        }
+                        button?.tag = indexPath.row
+                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                        cell.contentView.addSubview(button!)
+                        
+                    }
+                })
+                
+            }
+        }
+        if(pic.count>3&&pic.count<=6){
+            image_h=(WIDTH - 40)/3.0*2 + 10
+            for i in 1...pic.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        
+                        
+                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                    }}else{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                }
+            }}
+        if(pic.count>6&&pic.count<=9){
+            image_h=(WIDTH - 40)/3.0*3+20
+            for i in 1...pic.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                    
+                }
+                
+            }}
+        if pic.count > 9 {
+            image_h=(WIDTH - 40)/3.0*3 + 20
+            for i in 1...pic.count{
+                if i <= 3 {
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
+                                print(x)
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 12
+                    let pciInfo = pic[i-1]
+                    if pciInfo.picture_url != "" {
+                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*Int((WIDTH - 40)/3.0 + 10))
+                                button = UIButton()
+                                button!.frame = CGRectMake(CGFloat(x), 80+(WIDTH - 40)/3.0 + 5+(WIDTH - 40)/3.0 + 5, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                                let imgTmp = UIImage(data: data!)
+                                
+                                button!.setImage(imgTmp, forState: .Normal)
+                                if button?.imageView?.image == nil{
+                                    button!.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                button?.tag = indexPath.row
+                                button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(button!)
+                            }
+                        })
+                        
+                    }
+                    
+                }
+                
+            }}
+        tableView.rowHeight = 80 + image_h + 100
+        
+        let imageView = UIImageView()
+        imageView.frame = CGRectMake(10, 80 + image_h + 10, 21, 21)
+        imageView.image = UIImage.init(named: "ic_fasong")
+        cell.contentView.addSubview(imageView)
+        
+        let senderLbl = UILabel()
+        senderLbl.frame = CGRectMake(40, 80 + image_h + 10, 60, 20)
+        senderLbl.font = UIFont.systemFontOfSize(16)
+        self.user_Source = user_List(activity_listModel.user_info!)
+        if self.user_Source.activityList.count != 0 {
+            let userModel = self.user_Source.activityList[0]
+            senderLbl.textColor = UIColor.lightGrayColor()
+            senderLbl.text = userModel.name
+            cell.contentView.addSubview(senderLbl)
+            print("aaaaaaaaaaa")
+            print(senderLbl.text)
+        }
+  
 
-        cell.imageView?.frame = CGRectMake(15, 15, 70, 70)
-        cell.imageView?.image = newImage
+
+        //  活动时间
+        let dateformate = NSDateFormatter()
+        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.create_time!)!)
+        let str:String = dateformate.stringFromDate(date)
+        let timeLbl = UILabel()
+        timeLbl.frame = CGRectMake(110, 80+image_h+10, WIDTH - 120, 20)
+        timeLbl.textAlignment = NSTextAlignment.Right
+        timeLbl.font = UIFont.systemFontOfSize(15)
+        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.text = str
+        cell.contentView.addSubview(timeLbl)
+        
+        let line = UILabel()
+        line.frame = CGRectMake(1, 119.5 + image_h, WIDTH - 2, 0.5)
+        line.backgroundColor = UIColor.lightGrayColor()
+        cell.addSubview(line)
+        
+        let baoming = UILabel()
+        baoming.frame = CGRectMake(15, 130 + image_h, WIDTH - 30, 20)
+        baoming.text = "已报名\(self.apply_countSource.activityList.count)"
+        baoming.textColor = UIColor.orangeColor()
+        cell.addSubview(baoming)
+        
+        let view = UIView()
+        view.frame = CGRectMake(0, 160 + image_h, WIDTH, 20)
+        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        cell.addSubview(view)
         
         
-        cell.imageView?.layer.cornerRadius = 20
-        cell.imageView?.layer.masksToBounds = true
-        cell.textLabel?.text = huoDongInfo.activity_title
+        
+        //  已报名
+        //        cell.signUpLbl.text = "已报名\(activityInfo.readcount!)"
+        
         return cell
     }
 
-    
+    func clickBtn(sender:UIButton){
+        //            let activityInfo = self.activitySource.activityList[sender.tag]
+        //            let detailsVC = PicDetailViewController()
+        //
+        //            detailsVC.activitySource = activityInfo
+        //            detailsVC.activity_listSource = activity_listList(activityInfo.activity_list!)
+        //            detailsVC.apply_countSource = apply_countList(activityInfo.apply_count!)
+        //            detailsVC.picSource = picList(activityInfo.pic!)
+        //            self.navigationController?.pushViewController(detailsVC, animated: true)
+    }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let huodongxq = HuoDongXqViewController()
-        self.navigationController?.pushViewController(huodongxq, animated: true)
+        let activityInfo = self.activitySource.activityList[indexPath.row]
+        //  进行传值
+        let detailsVC = QCDetailsClassActiveVC()
+        detailsVC.id = activityInfo.activity_id
+        detailsVC.activitySource = activityInfo
+        detailsVC.activity_listSource = activity_listList(activityInfo.activity_list!)
+        detailsVC.apply_countSource = apply_countList(activityInfo.apply_count!)
+        detailsVC.picSource = picList(activityInfo.pic!)
+        //        detailsVC.user_Source = user_List(activity_listModel.user_info!)
+        self.navigationController?.pushViewController(detailsVC, animated: true)
+        
+
     }
 
     //MARK: - 增加班级活动事件

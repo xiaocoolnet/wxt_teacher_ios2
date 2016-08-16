@@ -22,11 +22,14 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
     let nextMonthBtn = UIButton()
     let weekLabel = UILabel()
     let ketangTableView = UITableView()
-    var zhouyi = Array<KeChengInfo>()
-    var zhouer = Array<KeChengInfo>()
-    var zhousan = Array<KeChengInfo>()
-    var zhousi = Array<KeChengInfo>()
-    var zhouwu = Array<KeChengInfo>()
+    var yi = NSMutableArray()
+    var er = NSMutableArray()
+    var san = NSMutableArray()
+    var si = NSMutableArray()
+    var wu = NSMutableArray()
+    var liu = NSMutableArray()
+    var qi = NSMutableArray()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,16 +55,17 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func GetDate(){
-        let url = apiUrl+"ClassSyllabus"
-        let schoolid = 1
-        let classid = 1
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"ClassSyllabus"
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let classid = defalutid.stringForKey("classid")
+        let schoolid = defalutid.stringForKey("schoolid")
         
         let param = [
             "schoolid":schoolid,
             "classid":classid
             
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as?[String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -81,31 +85,26 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
                 }
                 if(status.status == "success"){
                     self.keBiaoSource = KeChengList(status.data!)
-                    print("1")
                     print(self.keBiaoSource.count)
                     //将课程分组
                     for kechen in self.keBiaoSource.objectlist {
-                        if Int(kechen.syllabus_date!)! == 1{
-                            self.zhouyi.append(kechen)
-                        }
-                        if Int(kechen.syllabus_date!)! == 2{
-                            self.zhouer.append(kechen)
-                        }
-                        if Int(kechen.syllabus_date!)! == 3{
-                            self.zhousan.append(kechen)
-                        }
-                        if Int(kechen.syllabus_date!)! == 4{
-                            self.zhousi.append(kechen)
-                        }
-                        if Int(kechen.syllabus_date!)! == 5{
-                            self.zhouwu.append(kechen)
-                        }
-                        
-                    }
-            
-                    
-                    
 
+                            self.yi.addObject(kechen.monday!)
+
+
+                            self.er.addObject(kechen.tuesday!)
+
+                            self.san.addObject(kechen.wednesday!)
+
+                            self.si.addObject(kechen.thursday!)
+
+                            self.wu.addObject(kechen.friday!)
+
+                            self.liu.addObject(kechen.saturday!)
+
+                            self.qi.addObject(kechen.sunday!)
+
+                    }
                     self.ketangTableView.reloadData()
                     self.ketangTableView.headerView?.endRefreshing()
                 }
@@ -118,28 +117,29 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       
-        if section == 0{
-            return self.zhouyi.count
+        if section==0 {
+            return yi.count
         }
-        if section == 1{
-            return self.zhouer.count
-
+        if section==1 {
+            return er.count
         }
-        if section == 2{
-            return self.zhousan.count
-
+        if section==2 {
+            return san.count
         }
-        if section == 3{
-            return self.zhousi.count
-
+        if section==3 {
+            return si.count
         }
-        if section == 4{
-            return self.zhouwu.count
-
+        if section==4 {
+            return wu.count
+        }
+        if section==5 {
+            return liu.count
+        }
+        else{
+            return qi.count
         }
 
-        return 0
+        
     }
 
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -160,39 +160,35 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
         cell.selectionStyle = .None
 
-
-        if indexPath.section == 0{
-            let keBiaoInfo = zhouyi[indexPath.row]
-
-            cell.textLabel?.text = "第\(indexPath.row + 1)节课: " + keBiaoInfo.syllabus_name!
-            return cell
+        if indexPath.section==0 {
+            let str = yi[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
         }
-        if indexPath.section == 1{
-            let keBiaoInfo = zhouer[indexPath.row]
-            
-            cell.textLabel?.text = "第\(indexPath.row + 1)节课: " + keBiaoInfo.syllabus_name!
-            return cell
+        if indexPath.section==1{
+            let str = er[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
         }
-        if indexPath.section == 2{
-            let keBiaoInfo = zhousan[indexPath.row]
-            
-            cell.textLabel?.text = "第\(indexPath.row + 1)节课: " + keBiaoInfo.syllabus_name!
-            return cell
+        if indexPath.section==2{
+            let str = san[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
         }
-        if indexPath.section == 3{
-            let keBiaoInfo = zhousi[indexPath.row]
-            
-            cell.textLabel?.text = "第\(indexPath.row + 1)节课: " + keBiaoInfo.syllabus_name!
-            return cell
+        if indexPath.section==3{
+            let str = si[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
         }
-        if indexPath.section == 4{
-            let keBiaoInfo = zhouwu[indexPath.row]
-            
-            cell.textLabel?.text = "第\(indexPath.row + 1)节课: " + keBiaoInfo.syllabus_name!
-            return cell
+        if indexPath.section==4{
+            let str = wu[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
         }
-    
-
+        if indexPath.section==5{
+            let str = liu[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
+        }
+        if indexPath.section==6{
+            let str = qi[indexPath.row] as! String
+            cell.textLabel?.text="第\(indexPath.row+1)节课："+str
+        }
+       
         return cell
     }
     
@@ -247,23 +243,36 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
             view.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
             return view
         }
+        if(section == 5){
+            let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 18))
+            let label = UILabel(frame: CGRectMake(5, 1, tableView.frame.size.width, 18))
+            label.font = UIFont.systemFontOfSize(12)
+            label.text = "星期六"
+            label.textColor = UIColor(red: 144/255, green: 144/255, blue: 144/255, alpha: 1)
+            view.addSubview(label)
+            view.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+            return view
+        }
+        if(section == 6){
+            let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 18))
+            let label = UILabel(frame: CGRectMake(5, 1, tableView.frame.size.width, 18))
+            label.font = UIFont.systemFontOfSize(12)
+            label.text = "星期日"
+            label.textColor = UIColor(red: 144/255, green: 144/255, blue: 144/255, alpha: 1)
+            view.addSubview(label)
+            view.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
+            return view
+        }
+
         return UIView(frame: CGRectZero)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
 
 }

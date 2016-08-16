@@ -7,44 +7,40 @@
 //
 
 import UIKit
-
-class DaiBanViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+import PagingMenuController
+class DaiBanViewController: UIViewController {
     
     let DaiBanTableView = UITableView()
-    var newsInfo = NewsInfo()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "待办事宜"
-        DaiBanTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 64)
-        DaiBanTableView.delegate = self
-        DaiBanTableView.dataSource = self
-        DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
-        let rightItem = UIBarButtonItem(title: "新增", style: UIBarButtonItemStyle.Done, target: self, action: Selector(""))
+        let yishou = YiShouViewController()
+        let yifa = YiFaViewController()
+        
+        yishou.title = "已收待办事项"
+        yifa.title = "已发待办事项"
+        
+        
+        let viewControllers = [yishou, yifa]
+        let options = PagingMenuOptions()
+        options.menuItemMargin = 5
+        options.menuHeight = 40
+        options.menuDisplayMode = .SegmentedControl
+        options.selectedTextColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
+        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+        pagingMenuController.view.frame.origin.y += 0
+        pagingMenuController.view.frame.size.height -= 0
+        addChildViewController(pagingMenuController)
+        view.addSubview(pagingMenuController.view)
+        pagingMenuController.didMoveToParentViewController(self)
+        let rightItem = UIBarButtonItem(title: "新增", style: UIBarButtonItemStyle.Done, target: self, action: #selector(addThing))
         self.navigationItem.rightBarButtonItem = rightItem
-        self.view.addSubview(DaiBanTableView)
-        // Do any additional setup after loading the view.
+             
     }
-    
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
-        cell.accessoryType = .DisclosureIndicator
-        cell.selectionStyle = .None
-        cell.textLabel?.font = UIFont.systemFontOfSize(15)
-        cell.textLabel?.text = "联系家长"
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let Ddxq = DaibanxiangqingViewController()
-        self.navigationController?.pushViewController(Ddxq, animated: true)
+
+    func addThing(){
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -52,15 +48,5 @@ class DaiBanViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

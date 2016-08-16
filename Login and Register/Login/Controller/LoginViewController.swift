@@ -114,6 +114,8 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     schoolid.setValue(status.data?.schoolid, forKey: "schoolid")
                     let classid = NSUserDefaults.standardUserDefaults()
                     classid.setValue(status.data?.classid, forKey: "classid")
+                    let photo = NSUserDefaults.standardUserDefaults()
+                    photo.setValue(status.data?.photo, forKey: "photo")
                     self.GetUserInfo()
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView")

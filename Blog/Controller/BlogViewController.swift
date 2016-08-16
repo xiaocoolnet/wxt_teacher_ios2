@@ -23,44 +23,129 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var remoteImage :[String] = []
     var sectionInt = Int()
     var peopleArray:String?
+    var scrollView = UIScrollView()
+    private let numOfPages=4
+    var num=0
+    var headerview = UIView()
+    
     
     override func viewDidLoad() {
         self.title = "动态"
         super.viewDidLoad()
-        let imageView = UIImageView(frame: CGRectMake(0, 0, self.blogTableView.bounds.width, 100))
-        imageView.image = UIImage(named: "ba1ec0437cc8d5367a516ff69b01ea89")
-        imageView.contentMode = .ScaleAspectFill
+        //MARK: - 滚动式图
+        self.scroll()
+        
+        headerview.frame = CGRectMake(0,0,frame.width,frame.width*0.55)
+        //发布按钮
         let rightItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(BlogViewController.NewBlog))
         self.navigationItem.rightBarButtonItem = rightItem
         blogTableView.delegate = self
         blogTableView.dataSource = self
-        blogTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 44 - 64)
+        blogTableView.frame = CGRectMake(0, 0, frame.width, frame.height-64)
         blogTableView.registerClass(BlogTableViewCell.self, forCellReuseIdentifier: "blogCell")
         self.automaticallyAdjustsScrollViewInsets = false
         self.tabBarController?.tabBar.hidden = false
+        blogTableView.tableHeaderView=headerview
         self.view.addSubview(blogTableView)
         self.DropDownUpdate()
     }
     override func viewWillAppear(animated: Bool) {
         self.GetDate()
         self.tabBarController?.tabBar.hidden = false
+        
     }
     
+    func scroll(){
+        //滚动式图
+        let scrollview_h = frame.width*0.55
+        
+        scrollView.frame = CGRectMake(0, 0, frame.width, scrollview_h)
+        
+        scrollView.pagingEnabled = true
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.scrollsToTop = false
+        scrollView.bounces = false
+        scrollView.contentOffset = CGPointZero
+        
+        // 将 scrollView 的 contentSize 设为屏幕宽度的3倍(根据实际情况改变)
+        scrollView.contentSize = CGSize(width: frame.width * CGFloat(numOfPages), height: scrollview_h)
+        scrollView.delegate = self
+        for index  in 0..<numOfPages {
+            let imageView = UIImageView(image: UIImage(named: "无网络的背景"))
+            imageView.frame = CGRect(x: frame.width * CGFloat(index), y: 0, width: frame.width, height: frame.height)
+            scrollView.addSubview(imageView)
+        }
+        //滚动视图添加小白点
+        let pageC = UIPageControl()
+        pageC.frame=CGRectMake(frame.width/2-20, 200, 40, 20)
+        
+        pageC.tag=102
+        pageC.numberOfPages=4
+        pageC.addTarget(self, action: #selector(dopageC), forControlEvents: UIControlEvents.ValueChanged )
+        //将小白点添加到滚动视图
+        scrollView.addSubview(pageC)
+        //将滚动式图添加到view上
+        headerview.addSubview(scrollView)
+        
+        //定时器
+        NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector (doTime), userInfo: nil, repeats: true)
+
+
+    }
+    //执行定时器方法
+    func doTime(){
+        
+        
+        let pageC = self.view.viewWithTag(102) as! UIPageControl
+        pageC.currentPage=num
+        self.dopageC(pageC)
+        num += 1
+        if num==4 {
+            num=0
+        }
+    }
+    //点击小白点，图片移动
+    func dopageC(sender:UIPageControl){
+        var x = CGFloat()
+        x=CGFloat(sender.currentPage)*self.view.bounds.width
+        var rect = CGRect()
+        rect=CGRectMake(x,64 , self.view.bounds.width, self.view.bounds.height-400)
+        scrollView.scrollRectToVisible(rect, animated: true)
+    }
+    //小白点移动
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+        
+        let frame = self.view.bounds
+        
+        let pageC = self.view.viewWithTag(102) as! UIPageControl
+        
+        pageC.currentPage = Int(scrollView.contentOffset.x/frame.width)
+    }
+
+    //MARK: - 刷新列表
     func DropDownUpdate(){
         self.blogTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(BlogViewController.GetDate))
         self.blogTableView.reloadData()
         self.blogTableView.headerView?.beginRefreshing()
     }
-    //
+    //MARK: - 获取动态列表数据
     func GetDate(){
         print("刷新")
-        let url = apiUrl+"GetMicroblog"
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=GetMicroblog"
+        let schoolid = NSUserDefaults.standardUserDefaults()
+        let scid = schoolid.stringForKey("schoolid")
+        let classid = NSUserDefaults.standardUserDefaults()
+        let clid = classid.stringForKey("classid")
+        let scidd = scid
+        let clidd = clid
+        
         let param = [
-            "schoolid":1,
-            "classid":1,
-            "beginid":0
+            "schoolid":scidd,
+            "classid":clidd,
+            "type":"1"
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -102,10 +187,16 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(indexPath.row == 0){
             let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+            
             let bloginfo = self.blogSource.objectlist[indexPath.section]
+            
+            
             self.pciSource = PictureList(bloginfo.piclist!)
+            
             let string:NSString = bloginfo.content!
+            
             let screenBounds:CGRect = UIScreen.mainScreen().bounds
+            
             if(pciSource.count == 0){
                 let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
                 if(boundingRect.size.height>140){

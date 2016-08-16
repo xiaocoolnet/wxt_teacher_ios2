@@ -12,6 +12,7 @@ class NewsInfoViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     let newsInfoTableView = UITableView()
     var newsInfo = NewsInfo()
+         
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "消息详情"

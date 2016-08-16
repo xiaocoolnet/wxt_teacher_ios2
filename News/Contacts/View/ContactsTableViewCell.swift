@@ -11,10 +11,13 @@ import UIKit
 class ContactsTableViewCell: UITableViewCell {
 
     let MY_FONT = "Bauhaus ITC"
+    
+    
+    var iconIV = UIImageView()
     var nameLabel = UILabel()
     var duanxinBtn = UIButton()
     var ipBtn = UIButton()
-    var phoneBtn = UIButton()
+   
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,23 +28,25 @@ class ContactsTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
+        iconIV.frame=CGRectMake(10, 5, 50, 50)
+        iconIV.layer.cornerRadius=25
+        iconIV.backgroundColor=UIColor.blackColor()
         
-        self.nameLabel.frame = CGRectMake(self.bounds.height/2+20/2, 8, 100, 20)
+        self.nameLabel.frame = CGRectMake(70, 8, 100, 20)
         self.nameLabel.font = UIFont(name: MY_FONT, size: 15)
         self.nameLabel.textColor = UIColor.blackColor()
         duanxinBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 72, 10, 17, 17)
        
         ipBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 50, 10, 17, 17)
         
-        phoneBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 30, 10, 17, 17)
-    
-        duanxinBtn.setImage(UIImage(named: "发消息"), forState: .Normal)
-        ipBtn.setImage(UIImage(named: "电话"), forState: .Normal)
-        phoneBtn.setImage(UIImage(named: "电话2"), forState: .Normal)
+        duanxinBtn.setImage(UIImage(named: "ic_xiaoxi"), forState: .Normal)
+        ipBtn.setImage(UIImage(named: "ic_hujiao"), forState: .Normal)
+      
         self.contentView.addSubview(self.nameLabel)
         self.contentView.addSubview(duanxinBtn)
         self.contentView.addSubview(ipBtn)
-        self.contentView.addSubview(phoneBtn)
+        self.contentView.addSubview(iconIV)
+        
         
     }
     

@@ -53,7 +53,9 @@ class ContactsInfo: JSONJoy{
         classid = decoder["classid"].string
         teacherlist = Array<TeacherInfo>()
         for teacher: JSONDecoder in decoder["teacherinfo"].array!{
-            teacherlist.append(TeacherInfo(teacher))
+            
+                teacherlist.append(TeacherInfo(teacher))
+            
         }
     }
     func append(list: [TeacherInfo]){

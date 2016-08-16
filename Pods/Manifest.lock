@@ -35,7 +35,13 @@ PODS:
   - IQKeyboardManagerSwift (3.3.4)
   - JGProgressHUD (1.3.1)
   - MBProgressHUD (0.9.1)
+  - MOBFoundation (2.0.1)
   - PagingMenuController (0.7.6)
+  - ShareSDK3 (3.3.2):
+    - ShareSDK3/ShareSDK (= 3.3.2)
+  - ShareSDK3/ShareSDK (3.3.2)
+  - ShareSDK3/ShareSDKPlatforms/WeChat (3.3.2)
+  - ShareSDK3/ShareSDKUI (3.3.2)
   - UIImageViewModeScaleAspect (1.3)
   - XWSwiftRefresh (0.1.6)
   - YYWebImage (0.9.11)
@@ -49,7 +55,11 @@ DEPENDENCIES:
   - IQKeyboardManagerSwift
   - JGProgressHUD
   - MBProgressHUD
+  - MOBFoundation
   - PagingMenuController
+  - ShareSDK3
+  - ShareSDK3/ShareSDKPlatforms/WeChat
+  - ShareSDK3/ShareSDKUI
   - XWSwiftRefresh (~> 0.1.6)
   - YYWebImage
 
@@ -63,7 +73,9 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: 6f2290d093f5269dc07bdae8bc58e968cf9c4738
   JGProgressHUD: 153053a21d81208cb5f659691996bcefce6a9885
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
   PagingMenuController: d34cb992957c7dfae085785a870cf5f3966020be
+  ShareSDK3: c76cb96eb38e079952b8157071486d945faa2df2
   UIImageViewModeScaleAspect: ec78901acfc20d3782154111a21d34390f8f71ad
   XWSwiftRefresh: 3667a6660498aa230380ccb8d89bfa2be075f3ce
   YYWebImage: a65b28461dc63d3b84de7c06ea0fbc4d46cdcd16
