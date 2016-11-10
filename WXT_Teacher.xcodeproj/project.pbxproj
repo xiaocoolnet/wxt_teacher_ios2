@@ -2693,7 +2693,8 @@
 					"$(PROJECT_DIR)/Third",
 					Package/ShareSDK/Support/Required,
 				);
-				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/微校通教师端/WXT_Teacher/PrefixHeader.pch";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = /Users/xiaocool/Desktop/ios/wxt_teacher_ios2/WXT_Teacher/PrefixHeader.pch;
 				INFOPLIST_FILE = WXT_Teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2827,7 +2828,8 @@
 					"$(PROJECT_DIR)/Third",
 					Package/ShareSDK/Support/Required,
 				);
-				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/微校通教师端/WXT_Teacher/PrefixHeader.pch";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_PREFIX_HEADER = /Users/xiaocool/Desktop/ios/wxt_teacher_ios2/WXT_Teacher/PrefixHeader.pch;
 				INFOPLIST_FILE = WXT_Teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

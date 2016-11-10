@@ -112,19 +112,19 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.contentView.addSubview(titleLbl)
         //  活动内容
         let contentLbl = UILabel()
-        contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 60)
+        contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 0)
         contentLbl.font = neirongfont
         contentLbl.textColor = neirongColor
         contentLbl.text = model.content
         contentLbl.numberOfLines = 0
-        
         cell.contentView.addSubview(contentLbl)
         
         //        自适应行高
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(contentLbl.text).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        let boundingRect = String(model.content).boundingRectWithSize(CGSizeMake(screenBounds.width-20, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(15)], context: nil)
         let height = boundingRect.size.height + 50
+        contentLbl.frame = CGRectMake(10, 20, WIDTH - 20, height)
         //  活动图片
         let pic = model.pic
         //  图片
@@ -499,7 +499,9 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.addSubview(view)
         
         tableView.rowHeight = height + image_h + 90
-        
+        print(contentLbl.frame.height)
+        print(titleLbl.frame.maxY)
+        print(titleLbl.frame.height)
         return cell
     }
     func clickBtn(sender:UIButton){
