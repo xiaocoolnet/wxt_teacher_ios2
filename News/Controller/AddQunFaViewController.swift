@@ -9,9 +9,18 @@
 import UIKit
 import MBProgressHUD
 import Alamofire
-class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate{
+import BSImagePicker
+import Photos
+
+class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegate,sendnameidArray,sendteachernameidArray{
     
+    var pushflag = 0
     
+    var imageUrl:String?
+    var imagePath = NSMutableArray()
+    var type=String()
+    var imageData:[NSData] = []
+    var isuploading = false
     let lbl2 = UILabel()
     let lbl4 = UILabel()
     var addPictureBtn = UIButton()
@@ -21,6 +30,13 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
     var i = 0
     var pictureArray = NSMutableArray()
     var itemCount = 0
+    let nameLable = UILabel()
+    var idStr = String()
+    var genre = String()
+    var numL = UILabel()
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -29,6 +45,8 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
         self.view.backgroundColor=bkColor
         self.title="消息群发"
         createUI()
+        let rightItem = UIBarButtonItem(title: "确认", style: UIBarButtonItemStyle.Done, target: self, action: #selector(UpdateBlog))
+        self.navigationItem.rightBarButtonItem = rightItem
     }
     //    创建UI
     func createUI(){
@@ -44,7 +62,14 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
         lbl1.font = UIFont.systemFontOfSize(15)
         lbl1.textColor = wenziColor
         v1.addSubview(lbl1)
-        
+        nameLable.frame=CGRectMake(frame.width-200, 20, 100, 20)
+        nameLable.font=UIFont.systemFontOfSize(15)
+        nameLable.textColor=wenziColor
+        numL.frame=CGRectMake(frame.width-100, 20, 70, 20)
+        numL.font=UIFont.systemFontOfSize(15)
+        numL.textColor=wenziColor
+        v1.addSubview(numL)
+        v1.addSubview(nameLable)
         
         let btn1 = UIButton(type: .Custom)
         btn1.frame = CGRectMake(WIDTH-30, 20, 20, 20)
@@ -90,11 +115,96 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
         // Dispose of any resources that can be recreated.
     }
     func choosePeople(){
-        
+        if type=="1" {
+            let vc = ChooseReciveViewController()
+            vc.delegate=self
+            genre="1"
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            let vc = ChooseTeacherViewController()
+            vc.delegate=self
+            genre="2"
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+       
     }
     func AddPictrures(){
-        
+        let vc = BSImagePickerViewController()
+        vc.maxNumberOfSelections = 9
+        bs_presentImagePickerController(vc, animated: true,
+                                        select: { (asset: PHAsset) -> Void in
+            }, deselect: { (asset: PHAsset) -> Void in
+            }, cancel: { (assets: [PHAsset]) -> Void in
+            }, finish: { (assets: [PHAsset]) -> Void in
+                self.getAssetThumbnail(assets)
+                dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                    self.collectV!.reloadData()
+                }
+            }, completion: nil)
     }
+    
+    func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
+        var thumbnail = UIImage()
+        i+=asset.count
+        if(i>9){
+        }
+        else{
+            print("选择的图片有\(i)张")
+            if(itemCount == 0){
+                itemCount = asset.count + 1
+                self.pictureArray.insertObject("", atIndex: 0)
+            }
+            else{
+                itemCount += asset.count
+            }
+            let manager = PHImageManager.defaultManager()
+            let option = PHImageRequestOptions()
+            option.synchronous = true
+            for j in 0..<asset.count{
+                //  这里的参数应该喝照片的大小一致（需要进行判断）
+                manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
+                    //  设置像素
+                    option.resizeMode = PHImageRequestOptionsResizeMode.Exact
+                    let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
+                    
+                    //                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
+                    if downloadFinined == true {
+                        thumbnail = result!
+                        print(" print(result?.images)")
+                        //  改变frame
+                        print(result)
+                        print("图片是")
+                        var temImage:CGImageRef = thumbnail.CGImage!
+                        //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
+                        let newImage = UIImage(CGImage: temImage)
+                        //  压缩最多1  最少0
+                        self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
+                        self.pictureArray.addObject(newImage)
+                        
+                    }
+                    //                thumbnail = result!
+                    
+                    //                
+                    
+                })
+            }
+        }
+        return thumbnail
+    }
+    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
+        let sourceImage = image
+        var newImage = UIImage()
+        UIGraphicsBeginImageContext(targetSize)
+        var thumbnailRect = CGRectZero;
+        thumbnailRect.origin = CGPointZero;
+        thumbnailRect.size.width  = targetSize.width;
+        thumbnailRect.size.height = targetSize.height;
+        sourceImage.drawInRect(thumbnailRect)
+        newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+
     //    行数
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemCount
@@ -127,13 +237,111 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
     }
     
     override func viewWillAppear(animated: Bool) {
-        if(self.i>1){
+        if(self.i>9){
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "最多选择1张图片哦"
+            hud.labelText = "最多选择9张图片哦"
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 2)
         }
+    }
+    
+    
+    func UpdateBlog(){
+        if(i != 0){
+            self.UpdatePic()
+            print("执行这个方法")
+        }
+        self.addqunfa()
+        
+    }
+    func sendnameid(name: NSMutableArray, id: NSMutableArray) {
+        
+        let arrayStr = name.componentsJoinedByString(",")
+        numL.text="共\(name.count)人"
+        nameLable.text=arrayStr
+        idStr=id.componentsJoinedByString(",")
+    }
+    func sendteachernameid(name: NSMutableArray, id: NSMutableArray) {
+        nameLable.text=name.componentsJoinedByString(",")
+        numL.text="共\(name.count)人"
+        idStr=id.componentsJoinedByString(",")
+    }
+    
+    func UpdatePic(){
+        for i in 0..<self.imageData.count{
+            let userid = NSUserDefaults.standardUserDefaults()
+            let uid = userid.stringForKey("userid")
+            let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.stringFromDate(NSDate())
+            let imageName = uid! + RanNumber + dateStr
+            
+            isuploading = true
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                ConnectModel.uploadWithImageName(imageName, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                    print("返回值")
+                    print(data)
+                })}
+            //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
+            
+            self.imagePath.addObject(imageName + ".png")
+        }
+        self.imageUrl = self.imagePath.componentsJoinedByString(",")
+        print(self.imageUrl!)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.margin = 10
+        hud.removeFromSuperViewOnHide = true
+        hud.labelText = "上传完成"
+        hud.hide(true, afterDelay: 1)
+        self.isuploading = false    }
+    
+    func addqunfa(){
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=send_message"
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let userid = defalutid.stringForKey("userid")
+        let schoolid = defalutid.stringForKey("schoolid")
+        let name = defalutid.stringForKey("username")
+        
+        
+        let param = [
+            "send_user_id" : userid,
+            "schoolid":schoolid,
+            "send_user_name":name,
+            "receiver_user_id" : idStr,
+            "picture_url" : imageUrl,
+            "message_content" : contentTextView.text!,
+            "genre":genre
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    print("Success")
+                    self.navigationController?.popViewControllerAnimated(true)
+                    
+                }
+            }
+        }
+        
     }
 }

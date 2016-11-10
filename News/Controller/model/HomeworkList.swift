@@ -35,7 +35,7 @@ class HomeworkInfo: JSONJoy{
     var content:String?
     var create_time:String?
     var id:String?
-    var photo:String?
+    var pic = Array<HomeworkPicInfo>()
     var readcount:Int?
     var readtag:Int?
     var userid:String?
@@ -52,7 +52,6 @@ class HomeworkInfo: JSONJoy{
         content = decoder["content"].string
         create_time = decoder["create_time"].string
         id = decoder["id"].string
-        photo = decoder["photo"].string
         readcount = decoder["readcount"].integer
         readtag = decoder["readtag"].integer
         userid = decoder["userid"].string
@@ -60,6 +59,26 @@ class HomeworkInfo: JSONJoy{
         title = decoder["title"].string
         dianzanlist = decoder["like"]
         comment = decoder["comment"]
+        if decoder["pic"].array != nil {
+            for childs: JSONDecoder in decoder["pic"].array!{
+                self.pic.append(HomeworkPicInfo(childs))
+            }
+        }
+    }
+    func addpend(list: [HomeworkPicInfo]){
+        self.pic = list + self.pic
+    }
+    
+}
+class HomeworkPicInfo: JSONJoy {
+    
+    var pictureurl:String
+    
+
+    required init(_ decoder: JSONDecoder){
+        pictureurl = decoder["picture_url"].string ?? ""
+    
+        
     }
     
 }

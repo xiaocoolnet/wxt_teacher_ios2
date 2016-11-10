@@ -207,17 +207,23 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
     }
     func UpdatePic(){
         for i in 0..<self.imageData.count{
+            let userid = NSUserDefaults.standardUserDefaults()
+            let uid = userid.stringForKey("userid")
             let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.stringFromDate(NSDate())
+            let imageName = uid! + RanNumber + dateStr
+            
             isuploading = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(RanNumber, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                ConnectModel.uploadWithImageName(imageName, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
                     print("返回值")
                     print(data)
                 })}
             //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
-            let userid = NSUserDefaults.standardUserDefaults()
-            let uid = userid.stringForKey("userid")
-            self.imagePath.addObject(uid! + RanNumber + ".png")
+            
+            self.imagePath.addObject(imageName + ".png")
         }
         self.imageUrl = self.imagePath.componentsJoinedByString(",")
         print(self.imageUrl!)
@@ -238,16 +244,4 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}
+   }

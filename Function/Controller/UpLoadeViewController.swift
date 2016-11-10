@@ -166,7 +166,7 @@ class UpLoadeViewController: UIViewController,UICollectionViewDataSource,UIColle
                     print("返回值")
                     print(data)
                 })}
-            //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
+            
             
             self.imagePath.addObject(imageName + ".png")
         }

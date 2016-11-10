@@ -81,7 +81,7 @@
                                     <segue destination="YCu-nu-fg2" kind="push" id="6oO-Qa-aOC"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="18363866803" placeholder="请输入账号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NJA-2J-emY">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入账号" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NJA-2J-emY">
                                 <rect key="frame" x="88" y="233" width="234" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="234" id="qsc-RK-bXC"/>
@@ -89,7 +89,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="123" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FM0-9J-mkp">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="请输入密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FM0-9J-mkp">
                                 <rect key="frame" x="88" y="308" width="234" height="49"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="49" id="Ijl-vH-lbA"/>
@@ -187,7 +187,7 @@
         <!--Scroll View Controller-->
         <scene sceneID="4ey-xa-uog">
             <objects>
-                <viewController storyboardIdentifier="ScollView" id="IWi-uf-XaV" customClass="ScrollViewController" customModule="WXT_Teacher" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScrollViewController" id="IWi-uf-XaV" customClass="ScrollViewController" customModule="WXT_Teacher" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nFv-Tw-uXA"/>
                         <viewControllerLayoutGuide type="bottom" id="7rr-lX-Ri7"/>
@@ -196,34 +196,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <pageControl hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="eOo-ii-1Yl">
+                                <rect key="frame" x="80" y="523" width="160" height="37"/>
+                            </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ogx-4p-bFh">
-                                <rect key="frame" x="84" y="474" width="152" height="41"/>
+                                <rect key="frame" x="101" y="500" width="119" height="29"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="152" id="8FU-ES-0t5"/>
-                                    <constraint firstAttribute="height" constant="41" id="l3Y-gU-poK"/>
+                                    <constraint firstAttribute="width" constant="119" id="OPQ-dZ-xDx"/>
+                                    <constraint firstAttribute="height" constant="29" id="oon-XY-cIw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="进入应用">
-                                    <color key="titleColor" red="0.60784313729999995" green="0.8980392157" blue="0.70588235290000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.024709800840000001" green="0.155179184" blue="0.029080822740000001" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <segue destination="Fwg-Tx-ZCD" kind="modal" id="I4t-6w-YXZ"/>
                                 </connections>
                             </button>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="eOo-ii-1Yl">
-                                <rect key="frame" x="80" y="523" width="160" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="160" id="Ohv-HL-wrq"/>
-                                    <constraint firstAttribute="height" constant="37" id="uoh-jr-MYK"/>
-                                </constraints>
-                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="7rr-lX-Ri7" firstAttribute="top" secondItem="eOo-ii-1Yl" secondAttribute="bottom" constant="8" id="Cy6-SG-ARU"/>
-                            <constraint firstItem="eOo-ii-1Yl" firstAttribute="centerX" secondItem="c1X-nh-zlv" secondAttribute="centerX" id="FSg-R6-iCt"/>
-                            <constraint firstItem="ogx-4p-bFh" firstAttribute="centerX" secondItem="c1X-nh-zlv" secondAttribute="centerX" id="MR9-XE-IEi"/>
-                            <constraint firstItem="eOo-ii-1Yl" firstAttribute="top" secondItem="ogx-4p-bFh" secondAttribute="bottom" constant="8" id="wFK-WI-Big"/>
+                            <constraint firstItem="7rr-lX-Ri7" firstAttribute="top" secondItem="ogx-4p-bFh" secondAttribute="bottom" constant="39" id="i3k-BP-6na"/>
+                            <constraint firstItem="ogx-4p-bFh" firstAttribute="centerX" secondItem="c1X-nh-zlv" secondAttribute="centerX" id="uoH-1q-NlA"/>
                         </constraints>
                     </view>
                     <connections>

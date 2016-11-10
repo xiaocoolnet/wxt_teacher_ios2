@@ -30,19 +30,72 @@ class PlanList: JSONJoy {
     }
 }
 class planInfo: JSONJoy{
-    var plan_id:Int?
-    var plan_title: String?
-    var plan_content:String?
-    var plan_creat_time:String?
+    
+//    "id": "1",
+//    "schoolid": "1",
+//    "classid": "1",
+//    "userid": "605",
+//    "type": "1",
+//    "title": "这周的计划",
+//    "monday": "完成1",
+//    "tuesday": "瓦城2",
+//    "wednesday": "完成三",
+//    "thursday": "哇查查给你四",
+//    "friday": "",
+//    "saturday": "",
+//    "sunday": "",
+//    "workpoint": "完成微校通",
+//    "begintime": "1470724463",
+//    "endtime": "1470811334",
+//    "school_phone": "12345681901",
+//    "create_time": "1458376723",
+//    "school_status": "2",
+//    "classname": "小一班"
+    var id:String?
+    var schoolid: String?
+    var classid:String?
+    var userid:String?
+    var type:String?
+    var title: String?
+    var monday:String?
+    var tuesday:String?
+    var wednesday:String?
+    var thursday: String?
+    var friday:String?
+    var saturday:String?
+    var sunday:String?
+    var workpoint:String?
+    var begintime: String?
+    var endtime:String?
+    var school_phone:String?
+    var create_time:String?
+    var school_status: String?
+    var classname:String?
+   
     
     init() {
         
     }
     required init(_ decoder: JSONDecoder){
-        plan_id = decoder["id"].integer
-        plan_title = decoder["title"].string
-        plan_content = decoder["content"].string
-        plan_creat_time = decoder["creat_time"].string
+        id = decoder["id"].string
+        schoolid = decoder["schoolid"].string
+        classid = decoder["classid"].string
+        userid = decoder["userid"].string
+        type = decoder["type"].string
+        title = decoder["title"].string
+        monday = decoder["monday"].string
+        tuesday = decoder["tuesday"].string
+        wednesday = decoder["wednesday"].string
+        thursday = decoder["thursday"].string
+        friday = decoder["friday"].string
+        saturday = decoder["saturday"].string
+        sunday = decoder["sunday"].string
+        workpoint = decoder["workpoint"].string
+        begintime = decoder["begintime"].string
+        endtime = decoder["endtime"].string
+        school_phone = decoder["school_phone"].string
+        create_time = decoder["create_time"].string
+        classname = decoder["classname"].string
         
     }
     

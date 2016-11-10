@@ -92,28 +92,34 @@ class DaiBanModel: JSONJoy {
             
         }
         required init(_ decoder: JSONDecoder){
-            picture_url = decoder["picture_url"].string
-            id = decoder["id"].string
+            picture_url = decoder["picture_url"].string ?? ""
+            id = decoder["id"].string ?? ""
             
             
         }}
     class reciverlistInfo: JSONJoy{
         var userid:String?
-        var avatar:String?
+        var scheduleid:String?
+        var previousid : String?
         var name : String?
-        var content : String?
         var photo : String?
-        var comment_time : String?
+        var feedback : String?
+        var finish : String?
+        var read_time : String?
+        var create_time : String?
         
         init() {
             
         }
         required init(_ decoder: JSONDecoder){
-            userid = decoder["userid"].string
-            avatar = decoder["avatar"].string
-            name=decoder["name"].string
-            content=decoder["content"].string
-            photo=decoder["photo"].string
-            comment_time=decoder["comment_time"].string
+            userid = decoder["userid"].string ?? ""
+            scheduleid = decoder["scheduleid"].string ?? ""
+            previousid=decoder["previousid"].string ?? ""
+            name=decoder["name"].string ?? ""
+            photo=decoder["photo"].string ?? ""
+            feedback=decoder["feedback"].string ?? ""
+            finish=decoder["finish"].string ?? ""
+            read_time=decoder["read_time"].string ?? ""
+            create_time=decoder["create_time"].string ?? ""
             
         }}

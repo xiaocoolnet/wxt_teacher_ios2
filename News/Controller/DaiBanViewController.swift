@@ -14,6 +14,10 @@ class DaiBanViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        loadView()
+            }
+
+ func reloadview() {
         self.title = "待办事宜"
         let yishou = YiShouViewController()
         let yifa = YiFaViewController()
@@ -36,13 +40,25 @@ class DaiBanViewController: UIViewController {
         pagingMenuController.didMoveToParentViewController(self)
         let rightItem = UIBarButtonItem(title: "新增", style: UIBarButtonItemStyle.Done, target: self, action: #selector(addThing))
         self.navigationItem.rightBarButtonItem = rightItem
-             
-    }
+        
 
+    }
     func addThing(){
+        let vc = AddDaiBanViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
         
     }
-    
+    override func viewWillAppear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("scheduleArr")
+        reloadview()
+        
+        
+    }
+    override func viewWillDisappear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("scheduleArr")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

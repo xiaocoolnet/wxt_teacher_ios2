@@ -52,25 +52,25 @@ class DaijieInfo: JSONJoy{
      
     }
     required init(_ decoder: JSONDecoder){
-        studentid = decoder["studentid"].string
-        id = decoder["id"].string
-        teacherid = decoder["teacherid"].string
-        photo = decoder["photo"].string
-        content = decoder["content"].string
-        delivery_time = decoder["delivery_time"].string
-        delivery_status = decoder["delivery_status"].string
-        parentid = decoder["parentid"].string
-        parenttime = decoder["parenttime"].string
-        classname = decoder["classname"].string
-        teachername = decoder["teachername"].string
-        teacheravatar = decoder["teacheravatar"].string
-        teacherphone = decoder["teacherphone"].string
-        parentname = decoder["parentname"].string
-        parentavatar = decoder["parentavatar"].string
+        studentid = decoder["studentid"].string ?? ""
+        id = decoder["id"].string ?? ""
+        teacherid = decoder["teacherid"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        content = decoder["content"].string ?? ""
+        delivery_time = decoder["delivery_time"].string ?? ""
+        delivery_status = decoder["delivery_status"].string ?? ""
+        parentid = decoder["parentid"].string ?? ""
+        parenttime = decoder["parenttime"].string ?? ""
+        classname = decoder["classname"].string ?? ""
+        teachername = decoder["teachername"].string ?? ""
+        teacheravatar = decoder["teacheravatar"].string ?? ""
+        teacherphone = decoder["teacherphone"].string ?? ""
+        parentname = decoder["parentname"].string ?? ""
+        parentavatar = decoder["parentavatar"].string ?? ""
         parentphone = decoder["parentphone"].string
-        studentname = decoder["studentname"].string
-        studentavatar = decoder["studentavatar"].string
-        studentphone = decoder["studentphone"].string
+        studentname = decoder["studentname"].string ?? ""
+        studentavatar = decoder["studentavatar"].string ?? ""
+        studentphone = decoder["studentphone"].string ?? ""
         
     }
    

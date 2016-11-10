@@ -38,6 +38,8 @@ class UserInfomation: JSONJoy {
     var name:String?
     var avatar:String?
     var phoneNumber:String?
+    var url:String?
+    
     init(){
     }
     required init(_ decoder:JSONDecoder){
@@ -45,6 +47,7 @@ class UserInfomation: JSONJoy {
         name = decoder["name"].string
         avatar = decoder["photo"].string
         phoneNumber = decoder["phone"].string
+        url=decoder["url"].string
         
     }
 }

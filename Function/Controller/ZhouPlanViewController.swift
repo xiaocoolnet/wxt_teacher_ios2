@@ -27,16 +27,16 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
     //MARK: - 加载数据
     func loadData() -> Void {
         
-        let url = teUrl+"m=school&a=getschoolplan"
-        let schoolid = 30
-        let type = 1
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=getschoolplan"
+        let schoolid = NSUserDefaults.standardUserDefaults().stringForKey("schoolid")
+        let classid = NSUserDefaults.standardUserDefaults().stringForKey("classid")
         
         let param = [
             "schoolid":schoolid,
-            "type":type
+            "classid":classid
             
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as! [String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -77,6 +77,10 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
         self.automaticallyAdjustsScrollViewInsets = false
         self.tabBarController?.tabBar.hidden = true
         self.view.addSubview(self.zhouPlanTableView)
+        
+        let rightItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ZhouPlanViewController.EditPlan))
+        self.navigationItem.rightBarButtonItem = rightItem
+
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -90,11 +94,10 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
         let contentLabel = UILabel()
         let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
         cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
-        cell.textLabel?.text = "星期\(indexPath.row + 1)"
-        contentLabel.frame = CGRectMake(102, 16, self.view.bounds.width - 102, 14)
+        cell.textLabel?.text = self.planList.objectlist[indexPath.row].title
+        contentLabel.frame = CGRectMake(self.view.bounds.width - 102, 16, 102, 14)
         contentLabel.font = UIFont.systemFontOfSize(14)
-        contentLabel.text = self.planList.objectlist[indexPath.row].plan_title
+        contentLabel.text = "\(changeTimeTwo(self.planList.objectlist[indexPath.row].begintime!))到\(changeTimeTwo(self.planList.objectlist[indexPath.row].endtime!))"
         contentLabel.textColor = UIColor.grayColor()
         cell.contentView.addSubview(contentLabel)
         return cell
@@ -111,7 +114,18 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
         // Dispose of any resources that can be recreated.
     }
     
-
+    func EditPlan(sender:AnyObject){
+        let vc = NewPlanViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    
+        
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        let chuanzhi = NSUserDefaults.standardUserDefaults()
+        print(chuanzhi.valueForKey("startTime"))
+        print(chuanzhi.valueForKey("endTime"))
+    }
     /*
     // MARK: - Navigation
 

@@ -95,13 +95,17 @@ class SetUpViewController: UIViewController,UITableViewDataSource,UITableViewDel
         //  点击事件
         print(indexPath)
         if indexPath.row == 0 {
-            
+            let useHelpVC = QCAboutWeVC()
+            useHelpVC.row = indexPath.row
+            self.navigationController?.pushViewController(useHelpVC, animated: true)
         }
         if indexPath.row == 1 {
            
         }
         if indexPath.row == 2 {
-        
+            let aboutWeVC = QCAboutWeVC()
+            aboutWeVC.row = indexPath.row
+            self.navigationController?.pushViewController(aboutWeVC, animated: true)
             
         }
         if indexPath.row == 3 {

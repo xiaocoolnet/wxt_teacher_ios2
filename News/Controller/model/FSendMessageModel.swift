@@ -69,14 +69,14 @@ class FSendInfo: JSONJoy{
         receiver_user_id = decoder["receiver_user_id"].string
         receiver_user_name = decoder["receiver_user_name"].string
         message_type = decoder["message_type"].string
-        read_time = decoder["read_time"].string
+        read_time = decoder["read_time"].string ?? ""
         if decoder["send_message"].array != nil {
             for childs: JSONDecoder in decoder["send_message"].array!{
                 self.send_message.append(send_messageInfo(childs))
             }
         }
-        if decoder["picture"].array != nil {
-            for childs: JSONDecoder in decoder["picture"].array!{
+        if decoder["pic"].array != nil {
+            for childs: JSONDecoder in decoder["pic"].array!{
                 self.picture.append(FSendPicInfo(childs))
             }
         }
@@ -140,7 +140,7 @@ class send_messageInfo: JSONJoy {
         send_user_id = decoder["send_user_id"].string
         send_user_name = decoder["send_user_name"].string
         message_content = decoder["message_content"].string
-        message_time = decoder["message_time"].string
+        message_time = decoder["message_time"].string ?? ""
         
     }
     

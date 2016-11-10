@@ -24,9 +24,9 @@ class PersonInformation: UIViewController,UITableViewDataSource,UITableViewDeleg
     var changeImage = UIImageView()
 
 
-    //  tableview
+    
     var tableView = UITableView()
-    //  dataSource(不需要)
+    
     
     
     override func viewDidLoad() {

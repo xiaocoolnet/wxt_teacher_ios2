@@ -104,17 +104,19 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
             cell.nameLabel
                 .text = daijieinfo.studentname
         
+        
             //        图片
             let imgUrl = pictureUrl + daijieinfo.photo!
             let photourl = NSURL(string: imgUrl)
             cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "4"))
            //        头像
-            let imgUrl1 = imageUrl + daijieinfo.teacheravatar!
+            let imgUrl1 = imageUrl + daijieinfo.parentavatar!
             let headImageurl = NSURL(string: imgUrl1)
             cell.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "4"))
         
-            cell.somebodyLabel.text = daijieinfo.studentname! + "家长，这个人可以接走孩子么？"
-            //        同意按钮
+           cell.banjiLable.text=daijieinfo.classname!
+            cell.somebodyLabel.text = daijieinfo.content
+        //        同意按钮
             cell.agreeBtn.addTarget(self, action: #selector(agreePress(_:)), forControlEvents: .TouchUpInside)
             cell.agreeBtn.tag = indexPath.row
             //        不同意按钮
@@ -195,6 +197,9 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        dataTableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

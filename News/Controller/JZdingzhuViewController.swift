@@ -25,8 +25,6 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         JZdingzhuTableView.frame = CGRectMake(0, 0, frame.width, frame.height - 64)
         JZdingzhuTableView.delegate = self
         JZdingzhuTableView.dataSource = self
-        JZdingzhuTableView.rowHeight=200
-        JZdingzhuTableView.separatorStyle = .None
         JZdingzhuTableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(JZdingzhuTableView)
         loadData()
@@ -105,9 +103,15 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         titleL.frame=CGRectMake(10,5,frame.width-20,20)
         cell.addSubview(titleL)
         titleL.text=JZDZinfo.content!
-        titleL.textColor=wenziColor
+        if indexPath.row==0 {
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setValue(JZDZinfo.content, forKey: "dingzhu")
+            
+        }
+        titleL.textColor=neirongColor
+        titleL.font=neirongfont
         //计算lable的高度
-        let titleL_h = calculateHeight(titleL.text!, size: 17, width: frame.width-20)
+        let titleL_h = calculateHeight(titleL.text!, size: 15, width: frame.width-20)
         titleL.numberOfLines=0
         titleL.frame.size.height=titleL_h
         cell.selectionStyle = .None
@@ -119,6 +123,38 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         //判断图片张数显示
             if(JZDZinfo.picCount>0&&JZDZinfo.picCount<=3){
                 image_h=80
+                if  JZDZinfo.picCount==1{
+                   
+                    let pciInfo = JZDZinfo.pic[0]
+                    var imgUrl=String()
+                    if pciInfo.pictureurl != nil {
+                        imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                    }
+                    
+                    //let image = self.imageCache[imgUrl] as UIImage?
+                    let avatarUrl = NSURL(string: imgUrl)
+                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                    
+                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                        if(data != nil){
+                            
+                            blogimage = UIButton(frame: CGRectMake(20, 20+titleL_h, frame.width-40, 80))
+                            
+                            let imgTmp = UIImage(data: data!)
+                            //self.imageCache[imgUrl] = imgTmp
+                            blogimage!.setImage(imgTmp, forState: .Normal)
+                            if blogimage!.imageView!.image==nil{
+                                blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+                            }
+                            
+                            blogimage?.tag=indexPath.row
+                            blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                            cell.contentView.addSubview(blogimage!)
+                            
+                            
+                        }
+                    })
+                }else{
                 for i in 1...JZDZinfo.picCount{
                     var x = 8
                     let pciInfo = JZDZinfo.pic[i-1]
@@ -150,7 +186,7 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
                             
                         }
                     })
-                }
+                    }}
             }
             if(JZDZinfo.picCount>3&&JZDZinfo.picCount<=6){
                 image_h=170
@@ -301,18 +337,20 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         if JZDZinfo.studentname != nil {
             senderL.text=JZDZinfo.studentname!
         }
-        senderL.font=UIFont.systemFontOfSize(15)
+        senderL.font=timefont
+        senderL.textColor=timeColor
         cell.contentView.addSubview(senderL)
         let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h+image_h+25,140,20))
         timeL.textAlignment = .Right
         timeL.textColor=timeColor
-        timeL.font=UIFont.systemFontOfSize(15)
+        timeL.font=timefont
         timeL.text=changeTime(JZDZinfo.create_time!)
         cell.contentView.addSubview(timeL)
         
         let textField = UITextField(frame: CGRectMake(10,titleL_h+image_h+55,frame.width/4*3,30))
         textField.layer.masksToBounds=true
         textField.layer.cornerRadius=4
+        textField.placeholder="回复一下家长吧～"
         textField.tag=Int(JZDZinfo.id!)!
         textField.backgroundColor=UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         
@@ -325,16 +363,19 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         senderBT.layer.cornerRadius=4
             senderBT.addTarget(self, action: #selector(senderPinglun(_:)), forControlEvents: .TouchUpInside)
         cell.contentView.addSubview(senderBT)
-
+//MARK: - 评论的view
         if JZDZinfo.comment.count != 0 {
-            
-            let pinglunView = UIView(frame: CGRectMake(0,titleL_h+image_h+55+30,frame.width,60))
-            pinglunView.backgroundColor=UIColor.init(red: 227/255, green: 225/255, blue: 227/255, alpha: 1)
+            textField.hidden=true
+            senderBT.hidden=true
+            let pinglunView = UIView(frame: CGRectMake(5,titleL_h+image_h+55+10,frame.width-10,60))
+            pinglunView.backgroundColor=UIColor.init(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+            pinglunView.layer.cornerRadius=5
             cell.contentView.addSubview(pinglunView)
             
             let icon=UIImageView(frame: CGRectMake(5, 5, 50, 50))
             icon.layer.masksToBounds=true
             icon.layer.cornerRadius=25
+            
             icon.image=UIImage(named: "4")
             pinglunView.addSubview(icon)
             let nameL = UILabel(frame: CGRectMake(60,5,frame.width-70,20))
@@ -353,6 +394,8 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
             pinglunView.frame.size.height=40+content_h
             contentL.frame.size.height=content_h
             pinglunView.addSubview(contentL)
+            
+            
             tableView.rowHeight=40+titleL_h+image_h+95+content_h
             
             
@@ -364,6 +407,64 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         
             return cell
         }
+    func senderPinglun(sender:UIButton){
+        print(sender.tag)
+        
+        let textfield = self.view.viewWithTag(sender.tag) as! UITextField
+        let content = textfield.text
+        if textfield.text=="" {
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "请输入回复内容"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+        }else{
+        print(content)
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"SetComment"
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        let id = String(sender.tag)
+        
+        let param = [
+            
+            "userid":uid,
+            "id":id,
+            "content":content,
+            "type":"4"
+            
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 3)
+                }
+                if(status.status == "success"){
+                    print("评论成功")
+                    textfield.text=""
+                    self.loadData()
+                    self.self.JZdingzhuTableView.reloadData()
+                }
+            }
+        }
+        
+    }
+    }
     func clickBtn(sender:UIButton) {
         let vc = JZPicViewController()
         let model = self.parentsExhortSource.parentsExhortList[sender.tag]
@@ -373,7 +474,7 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         
     }
 
-    func senderPinglun(sender:UIButton){
+    func Pinglun(sender:UIButton){
         print(sender.tag)
       
         let textfield = self.view.viewWithTag(sender.tag) as? UITextField
@@ -422,9 +523,7 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         }
         
     }
-    func pinglun(){
-        
-    }
+
     //         键盘消失的通知方法
     func keyboardWillHideNotification(notification:NSNotification){
         UIView.animateWithDuration(0.3) { () -> Void in
@@ -453,6 +552,14 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
    
         
         
+    }
+    override func viewWillAppear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("trustArr")
+    }
+    override func viewWillDisappear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("trustArr")
     }
 
     override func didReceiveMemoryWarning() {

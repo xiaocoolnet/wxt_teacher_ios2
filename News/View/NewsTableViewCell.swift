@@ -14,6 +14,8 @@ class NewsTableViewCell: UITableViewCell {
     var contextLabel = UILabel()
     var avatorImage = UIImageView()
     var nameLabel = UILabel()
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -29,16 +31,17 @@ class NewsTableViewCell: UITableViewCell {
         self.avatorImage.layer.cornerRadius = 22.5
         self.avatorImage.layer.masksToBounds = true
         self.nameLabel.frame = CGRectMake(72, 17, 100, 20)
-        self.nameLabel.font = UIFont.systemFontOfSize(15)
+        self.nameLabel.font = UIFont.systemFontOfSize(17)
         self.nameLabel.textColor = UIColor.blackColor()
         self.contextLabel.frame = CGRectMake(0, 0, 250, 30)
-        self.contextLabel.font = UIFont.systemFontOfSize(12)
+        self.contextLabel.font = UIFont.systemFontOfSize(13)
         self.contextLabel.center.x = self.contentView.center.x + 38
         self.contextLabel.center.y = self.contentView.center.y + 25
         self.contextLabel.textColor = UIColor.grayColor()
         self.contentView.addSubview(self.avatorImage)
         self.contentView.addSubview(self.contextLabel)
         self.contentView.addSubview(self.nameLabel)
+        
         
     }
 

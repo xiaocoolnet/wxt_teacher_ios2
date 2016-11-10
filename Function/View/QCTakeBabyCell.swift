@@ -32,23 +32,25 @@ class QCTakeBabyCell: UITableViewCell {
         
         nameLabel.frame = CGRectMake(80, 10, 100, 30)
         nameLabel.text = "老师名称"
+        nameLabel.textColor=biaotiColor
+        nameLabel.font=biaotifont
         contentView.addSubview(nameLabel)
         
         banjiLable.frame = CGRectMake(80, 45, 100, 30)
-        banjiLable.textColor = UIColor.lightGrayColor()
+        banjiLable.textColor = timeColor
         banjiLable.text = "大幼一班"
-        banjiLable.font = UIFont.systemFontOfSize(14)
+        banjiLable.font = timefont
         contentView.addSubview(banjiLable)
         
         timeLabel.frame = CGRectMake(WIDTH - 150, 45, 150, 30)
         timeLabel.text = "今天16:30"
-        timeLabel.textColor = UIColor.lightGrayColor()
-        timeLabel.font = UIFont.systemFontOfSize(14)
+        timeLabel.textColor = timeColor
+        timeLabel.font = timefont
         contentView.addSubview(timeLabel)
         
         let view = UIView()
         view.frame = CGRectMake(0, 80, WIDTH, 1)
-        view.backgroundColor = UIColor.lightGrayColor()
+        view.backgroundColor = bkColor
         contentView.addSubview(view)
         
         bigImageView.frame = CGRectMake(10, 90, WIDTH - 20, 280)
@@ -63,7 +65,7 @@ class QCTakeBabyCell: UITableViewCell {
         
         let view2 = UIView()
         view2.frame = CGRectMake(0, 410, WIDTH, 1)
-        view2.backgroundColor = UIColor.lightGrayColor()
+        view2.backgroundColor = bkColor
         contentView.addSubview(view2)
         
         disagreeBtn.frame = CGRectMake(WIDTH / 2, 415, WIDTH / 4 - 10, 30)

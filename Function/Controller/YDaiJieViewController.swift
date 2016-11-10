@@ -107,21 +107,25 @@ class YDaiJieViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.nameLabel
                 .text = daijieinfo.studentname
             
+          
             //        图片
             let imgUrl = pictureUrl + daijieinfo.photo!
             let photourl = NSURL(string: imgUrl)
             cell.bigImageView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "4"))
             //        头像
-            let imgUrl1 = imageUrl + daijieinfo.teacheravatar!
+            let imgUrl1 = imageUrl + daijieinfo.parentavatar!
             let headImageurl = NSURL(string: imgUrl1)
             cell.headImageView.yy_setImageWithURL(headImageurl, placeholder: UIImage(named: "4"))
             
-            cell.somebodyLabel.text = daijieinfo.studentname! + "家长，这个人可以接走孩子么？"
+            cell.banjiLable.text=daijieinfo.classname!
 
+           
+            
+            cell.somebodyLabel.text = daijieinfo.content
             cell.agreeBtn.userInteractionEnabled=false
-            cell.disagreeBtn.userInteractionEnabled=false
+            cell.disagreeBtn.hidden=true
             cell.agreeBtn.backgroundColor=UIColor.grayColor()
-            cell.disagreeBtn.backgroundColor=UIColor.grayColor()
+            cell.agreeBtn.setTitle("已完成", forState:  .Normal)
             
             //  cell 的高度
             tableView.rowHeight = 450

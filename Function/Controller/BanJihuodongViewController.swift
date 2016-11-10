@@ -16,10 +16,7 @@ import XWSwiftRefresh
 class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var activitySource = ActivityList()
-    var activity_listSource = activity_listList()
-    var apply_countSource = apply_countList()
-    var picSource = picList()
-    var user_Source = user_List()
+  
     let arrayPeople = NSMutableArray()
 
     let huoDongTableView = UITableView()
@@ -54,14 +51,20 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
     //    获取活动列表
     func GetDate(){
         
-        //        http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getactivitylist&receiverid=597
+        //       http://wxt.xiaocool.net/index.php?g=apps&m=index&a=ClassActivity&schoolid=1&classid=1
         
         let defalutid = NSUserDefaults.standardUserDefaults()
         let uid = defalutid.stringForKey("userid")
+        let classid = defalutid.stringForKey("classid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getactivitylist"
+        let params = [
         
-        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=student&a=getactivitylist&receiverid="+uid!
-
-        Alamofire.request(.GET, url, parameters: nil).response { request, response, json, error in
+            "userid" : uid,
+            "classid" : classid
+        
+        ]
+        
+        Alamofire.request(.GET, url, parameters: params as! [String : String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -101,30 +104,28 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
         cell.selectionStyle = .None
         let activityInfo = self.activitySource.activityList[indexPath.row]
-        self.activity_listSource = activity_listList(activityInfo.activity_list!)
-        self.apply_countSource = apply_countList(activityInfo.apply_count!)
-        self.picSource = picList(activityInfo.pic!)
+       
         
         //  得到活动中的内容
-        let activity_listModel = self.activity_listSource.activityList[0]
+       
         
         //  活动标题
         let titleLbl = UILabel()
         titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
         titleLbl.textAlignment = NSTextAlignment.Center
-        titleLbl.text = activity_listModel.title
+        titleLbl.text = activityInfo.title
         cell.contentView.addSubview(titleLbl)
         //  活动内容
         let contentLbl = UILabel()
         contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 20)
         contentLbl.font = UIFont.systemFontOfSize(16)
         contentLbl.textColor = UIColor.lightGrayColor()
-        contentLbl.text = activity_listModel.content
+        contentLbl.text = activityInfo.content
         cell.contentView.addSubview(contentLbl)
         
         //  活动图片
         
-        let pic = self.picSource.activityList
+        let pic = activityInfo.pic
         //        print(picModel.count)
         
         
@@ -138,7 +139,7 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         if pic.count == 1 {
             image_h=(WIDTH - 40)/3.0
             let pciInfo = pic[0]
-            let imgUrl = pictureUrl+(pciInfo.picture_url)!
+            let imgUrl = pictureUrl+(pciInfo.pictureurl)!
             let avatarUrl = NSURL(string: imgUrl)
             let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
@@ -165,7 +166,7 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
             for i in 1...pic.count{
                 var x = 12
                 let pciInfo = pic[i-1]
-                let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                 print(imgUrl)
                 
                 //let image = self.imageCache[imgUrl] as UIImage?
@@ -200,10 +201,10 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
+                    if pciInfo.pictureurl != "" {
                         
                         
-                        let imgUrl = microblogImageUrl+(pciInfo.picture_url)!
+                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -229,8 +230,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                     }}else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -262,8 +263,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -289,8 +290,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -316,8 +317,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -351,8 +352,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -379,8 +380,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -406,8 +407,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -445,29 +446,29 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         let senderLbl = UILabel()
         senderLbl.frame = CGRectMake(40, 80 + image_h + 10, 60, 20)
         senderLbl.font = UIFont.systemFontOfSize(16)
-        self.user_Source = user_List(activity_listModel.user_info!)
-        if self.user_Source.activityList.count != 0 {
-            let userModel = self.user_Source.activityList[0]
+    
+      
+        
             senderLbl.textColor = UIColor.lightGrayColor()
-            senderLbl.text = userModel.name
+            senderLbl.text = activityInfo.teacher_name
             cell.contentView.addSubview(senderLbl)
             print("aaaaaaaaaaa")
             print(senderLbl.text)
-        }
+       
   
 
 
         //  活动时间
-        let dateformate = NSDateFormatter()
-        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.create_time!)!)
-        let str:String = dateformate.stringFromDate(date)
+//        let dateformate = NSDateFormatter()
+//        dateformate.dateFormat = "yyyy-MM-dd HH:mm"
+//        let date = NSDate(timeIntervalSince1970: NSTimeInterval(activityInfo.create_time!)!
+//        let str:String = dateformate.stringFromDate(date)
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(110, 80+image_h+10, WIDTH - 120, 20)
         timeLbl.textAlignment = NSTextAlignment.Right
         timeLbl.font = UIFont.systemFontOfSize(15)
         timeLbl.textColor = UIColor.lightGrayColor()
-        timeLbl.text = str
+        timeLbl.text = changeTime(activityInfo.create_time!)
         cell.contentView.addSubview(timeLbl)
         
         let line = UILabel()
@@ -477,7 +478,7 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         
         let baoming = UILabel()
         baoming.frame = CGRectMake(15, 130 + image_h, WIDTH - 30, 20)
-        baoming.text = "已报名\(self.apply_countSource.activityList.count)"
+        baoming.text = "已报名\(activityInfo.applylist.count)"
         baoming.textColor = UIColor.orangeColor()
         cell.addSubview(baoming)
         
@@ -508,12 +509,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         let activityInfo = self.activitySource.activityList[indexPath.row]
         //  进行传值
         let detailsVC = QCDetailsClassActiveVC()
-        detailsVC.id = activityInfo.activity_id
         detailsVC.activitySource = activityInfo
-        detailsVC.activity_listSource = activity_listList(activityInfo.activity_list!)
-        detailsVC.apply_countSource = apply_countList(activityInfo.apply_count!)
-        detailsVC.picSource = picList(activityInfo.pic!)
-        //        detailsVC.user_Source = user_List(activity_listModel.user_info!)
+      
         self.navigationController?.pushViewController(detailsVC, animated: true)
         
 
@@ -530,15 +527,4 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

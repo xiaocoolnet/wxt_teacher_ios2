@@ -27,30 +27,31 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
         self.kejianTableview.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height)
         self.kejianTableview.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(self.kejianTableview)
-        
+        let rightItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(ZhouPlanViewController.EditPlan))
+        self.navigationItem.rightBarButtonItem = rightItem
         self.DropDownUpdate()
         
         // Do any additional setup after loading the view.
     }
     
     func DropDownUpdate(){
-//        self.kejianTableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-//        self.kejianTableview.reloadData()
-//        self.kejianTableview.headerView?.beginRefreshing()
+        self.kejianTableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
+        self.kejianTableview.reloadData()
+        self.kejianTableview.headerView?.beginRefreshing()
     }
     
     func GetDate(){
-        let url = apiUrl+"SchoolCourseware"
-        //let userid = NSUserDefaults.standardUserDefaults()
-        let schoolid = 1
-        let classid = 1
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=SchoolCourseware"
+        let user = NSUserDefaults.standardUserDefaults()
+        let schoolid = user.stringForKey("schoolid")
+        let classid = user.stringForKey("classid")
         
         let param = [
             "schoolid":schoolid,
             "classid":classid
             
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as! [String : String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -99,8 +100,14 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
         cell.selectionStyle = .None
         cell.accessoryType = .DisclosureIndicator
         
-        cell.textLabel?.text = kejianInfo.courseware_title
-        cell.detailTextLabel?.text = kejianInfo.courseware_time
+        cell.textLabel?.text = kejianInfo.subject
+        
+        let contentLabel = UILabel()
+        contentLabel.frame = CGRectMake(self.view.bounds.width - 50, 16, 50, 14)
+        contentLabel.font = neirongfont
+        contentLabel.textColor = neirongColor
+        cell.contentView.addSubview(contentLabel)
+        contentLabel.text = "\(kejianInfo.courseware_info.count)条"
         self.view.backgroundColor = UIColor.whiteColor()
         
         //        checkBtn.frame = CGRectMake(0, 10, 70, 30)
@@ -120,10 +127,11 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
         let kejianInfo = keJianSource.objectlist[indexPath.row]
         
         let kejian = KeJianInfoViewController()
+        kejian.activitySource = kejianInfo
         self.navigationController?.pushViewController(kejian, animated: true)
-        kejian.title = kejianInfo.courseware_title
-        kejian.contentTextView.text = kejianInfo.courseware_content
-        kejian.nameKejian.text = "主讲人：" + kejianInfo.releasename!
+//        kejian.title = kejianInfo.courseware_title
+//        kejian.contentTextView.text = kejianInfo.courseware_content
+//        kejian.nameKejian.text = "主讲人：" + kejianInfo.releasename!
         
     }
     //    func CheckKejian(){
@@ -131,6 +139,13 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
     //        self.navigationController?.pushViewController(kejian, animated: true)
     //    }
     
+    
+    
+    func EditPlan(sender:AnyObject){
+        let vc = AddKeJianViewController()
+    
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

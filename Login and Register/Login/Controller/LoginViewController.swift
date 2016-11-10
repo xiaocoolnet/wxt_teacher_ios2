@@ -76,11 +76,15 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
             return
         }
         let url = apiUrl+"applogin"
+       
+        
+        
         let param = [
             "phone":self.AccountText.text!,
             "password":self.PasswordText.text!
+
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -116,6 +120,9 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     classid.setValue(status.data?.classid, forKey: "classid")
                     let photo = NSUserDefaults.standardUserDefaults()
                     photo.setValue(status.data?.photo, forKey: "photo")
+                    
+                    let studentid = userid.stringForKey("userid")
+                    JPUSHService.setTags(nil, aliasInbackground: studentid)
                     self.GetUserInfo()
                     let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                     let vc : UIViewController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView")
@@ -154,6 +161,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     print("Success")
                     let username = NSUserDefaults.standardUserDefaults()
                     username.setValue(status.data?.name, forKey: "username")
+                    
                 }
             }
         }

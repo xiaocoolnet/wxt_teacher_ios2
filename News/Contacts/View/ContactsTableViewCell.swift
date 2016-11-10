@@ -32,7 +32,7 @@ class ContactsTableViewCell: UITableViewCell {
         iconIV.layer.cornerRadius=25
         iconIV.backgroundColor=UIColor.blackColor()
         
-        self.nameLabel.frame = CGRectMake(70, 8, 100, 20)
+        self.nameLabel.frame = CGRectMake(10, 8, frame.width-100, 20)
         self.nameLabel.font = UIFont(name: MY_FONT, size: 15)
         self.nameLabel.textColor = UIColor.blackColor()
         duanxinBtn.frame = CGRectMake(UIScreen.mainScreen().bounds.width - 72, 10, 17, 17)
@@ -45,7 +45,7 @@ class ContactsTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.nameLabel)
         self.contentView.addSubview(duanxinBtn)
         self.contentView.addSubview(ipBtn)
-        self.contentView.addSubview(iconIV)
+//        self.contentView.addSubview(iconIV)
         
         
     }

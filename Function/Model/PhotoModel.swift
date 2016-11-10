@@ -37,6 +37,7 @@ class PhotoInfo: JSONJoy{
     var pic : [photopicInfo]
     var photolikelist : [photolikeInfo]
     
+    var PhotoComment : [PhotoCommentInfo]
     
     
     var picCount: Int{
@@ -45,7 +46,7 @@ class PhotoInfo: JSONJoy{
     init() {
         pic=Array<photopicInfo>()
         photolikelist=Array<photolikeInfo>()
-        
+        PhotoComment=Array<PhotoCommentInfo>()
     }
     required init(_ decoder: JSONDecoder){
         name = decoder["name"].string
@@ -58,6 +59,7 @@ class PhotoInfo: JSONJoy{
         photolikelist=Array<photolikeInfo>()
         
         pic=Array<photopicInfo>()
+        PhotoComment=Array<PhotoCommentInfo>()
         if decoder["pic"].array != nil{
             for childs: JSONDecoder in decoder["pic"].array!{
                 pic.append(photopicInfo(childs))
@@ -65,7 +67,9 @@ class PhotoInfo: JSONJoy{
         for childs:JSONDecoder in decoder["like"].array! {
             photolikelist.append(photolikeInfo(childs))
         }
-        
+        for childs:JSONDecoder in decoder["comment"].array! {
+            PhotoComment.append(PhotoCommentInfo(childs))
+        }
         
     }
     func addpend(list:[photopicInfo]){
@@ -74,7 +78,9 @@ class PhotoInfo: JSONJoy{
     func addpend(list:[photolikeInfo]){
         self.photolikelist=list+self.photolikelist
     }
-    
+    func addpend(list:[PhotoCommentInfo]){
+        self.PhotoComment=list+self.PhotoComment
+    }
     
 }
 class photopicInfo: JSONJoy{
@@ -112,3 +118,32 @@ class photolikeInfo: JSONJoy{
         
         
     }}
+class PhotoCommentInfo: JSONJoy{
+    var userid:String?
+    
+    var name : String?
+    var content : String?
+    var avatar : String?
+    var comment_time : String?
+    
+    
+    
+    
+    
+    
+    
+    init() {
+        
+    }
+    required init(_ decoder: JSONDecoder){
+        userid = decoder["userid"].string
+        name=decoder["name"].string
+        content=decoder["content"].string
+        avatar=decoder["avatar"].string
+        comment_time=decoder["comment_time"].string
+        
+        
+        
+        
+    }}
+

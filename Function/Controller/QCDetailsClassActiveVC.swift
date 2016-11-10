@@ -16,10 +16,7 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
     var id:String!
     //  数据源
     var activitySource = ActivityInfo()
-    var activity_listSource = activity_listList()
-    var apply_countSource = apply_countList()
-    var picSource = picList()
-    var user_Source = user_List()
+ 
     //  创建tableview
     var tableView = UITableView()
     var isCollect:Bool = false
@@ -64,41 +61,40 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as? QCDetailsClassActiveCell
         cell?.selectionStyle = .None
-        let activity_listModel = self.activity_listSource.activityList[0]
-        self.user_Source = user_List(activity_listModel.user_info!)
-        if self.user_Source.activityList.count != 0 {
-            let userModel = self.user_Source.activityList[0]
-            cell?.teacherLabel.text = userModel.name
-        }
+    
+    
+        cell?.teacherLabel.text = self.activitySource.teacher_name
         
-        cell?.titleLabel.text = activity_listModel.title
+        
+        cell?.titleLabel.text = self.activitySource.title
         //  活动时间
         let dateformate = NSDateFormatter()
         dateformate.dateFormat = "MM-dd HH:mm"
-        let date = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.create_time!)!)
+        let date = NSDate(timeIntervalSince1970: NSTimeInterval(self.activitySource.create_time!)!)
         let str:String = dateformate.stringFromDate(date)
         cell?.timeLabel.text = str
         
-        cell?.contentLabel.text = activity_listModel.content
+        cell?.contentLabel.text = self.activitySource.content
         cell?.contentLabel.numberOfLines = 0
         cell?.contentLabel.sizeToFit()
         
         let dateformate1 = NSDateFormatter()
         dateformate1.dateFormat = "yy-MM-dd"
-        let data1 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.finishtime!)!)
+        let data1 = NSDate(timeIntervalSince1970: NSTimeInterval(self.activitySource.begintime!)!)
         cell?.startTime.frame = CGRectMake(10, (cell?.contentLabel.frame.size.height)!+cell!.contentLabel.frame.origin.y + 20, WIDTH - 20, 30)
         cell?.startTime.text = "大赛举办时间\(dateformate.stringFromDate(data1))"
         cell?.startTime.sizeToFit()
         
         let dateformate2 = NSDateFormatter()
         dateformate2.dateFormat = "MM-dd"
-        let data2 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.starttime!)!)
-        let data3 = NSDate(timeIntervalSince1970: NSTimeInterval(activity_listModel.finishtime!)!)
+        let data2 = NSDate(timeIntervalSince1970: NSTimeInterval(self.activitySource.starttime!)!)
+        let data3 = NSDate(timeIntervalSince1970: NSTimeInterval(self.activitySource.finishtime!)!)
         cell?.activeTimes.frame = CGRectMake(10, (cell?.startTime.frame.size.height)!+cell!.contentLabel.frame.origin.y + 50, WIDTH - 20, 30)
         cell?.activeTimes.text = "报名截止日期\(dateformate.stringFromDate(data2))到\(dateformate.stringFromDate(data3))"
     
         
-        let pic = self.picSource.activityList
+        let pic = self.activitySource.pic
+
         //        print(picModel.count)
         
         
@@ -114,7 +110,7 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         if pic.count == 1 {
             image_h=(WIDTH - 40)/3.0
             let pciInfo = pic[0]
-            let imgUrl = pictureUrl+(pciInfo.picture_url)!
+            let imgUrl = pictureUrl+(pciInfo.pictureurl)!
             let avatarUrl = NSURL(string: imgUrl)
             let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
@@ -141,7 +137,7 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
             for i in 1...pic.count{
                 var x = 12
                 let pciInfo = pic[i-1]
-                let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                 print(imgUrl)
                 
                 //let image = self.imageCache[imgUrl] as UIImage?
@@ -176,10 +172,10 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
+                    if pciInfo.pictureurl != "" {
                         
                         
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -205,8 +201,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     }}else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -238,8 +234,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -265,8 +261,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -292,8 +288,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -327,8 +323,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                 if i <= 3 {
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -355,8 +351,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -382,8 +378,8 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
-                    if pciInfo.picture_url != "" {
-                        let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                    if pciInfo.pictureurl != "" {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
@@ -415,27 +411,48 @@ class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDa
         return cell!
         }else if indexPath.section==1{
             let cell = UITableViewCell()
+            let lable = UILabel(frame: CGRectMake(150,10,frame.width-160,20))
+        
+            lable.textColor=wenziColor
             
             if indexPath.row==0 {
                 cell.textLabel?.text="活动开始时间"
+                cell.textLabel?.textColor=wenziColor
+                lable.text=changeTimeTwo(self.activitySource.begintime!)
+                cell.contentView.addSubview(lable)
+                
                 
             }else if indexPath.row==1{
                 cell.textLabel?.text="活动结束时间"
+                cell.textLabel?.textColor=wenziColor
+                lable.text=changeTimeTwo(self.activitySource.endtime!)
+                cell.contentView.addSubview(lable)
             }else if indexPath.row==2{
                 cell.textLabel?.text="联系人"
+                cell.textLabel?.textColor=wenziColor
+                lable.text=self.activitySource.contactman
+                cell.contentView.addSubview(lable)
             }else if indexPath.row==3{
                 cell.textLabel?.text="联系方式"
+                cell.textLabel?.textColor=wenziColor
+                lable.text=self.activitySource.contactphone
+                cell.contentView.addSubview(lable)
             }
             tableView.rowHeight=44
             return cell
         }else{
             let cell = UITableViewCell()
-            
+            let lable = UILabel(frame: CGRectMake(150,10,frame.width-160,20))
+            lable.textColor=wenziColor
             if indexPath.row==0 {
                 cell.textLabel?.text="报名开始时间"
+                cell.textLabel?.textColor=wenziColor
+                cell.contentView.addSubview(lable)
                 
             }else {
                 cell.textLabel?.text="报名结束时间"
+                cell.textLabel?.textColor=wenziColor
+                cell.contentView.addSubview(lable)
             }
             tableView.rowHeight=44
             return cell

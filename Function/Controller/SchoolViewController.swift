@@ -47,8 +47,9 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     let contentText2 = UILabel()
     var schoolListSource = SchoolListModel()
     var SchoolNoticesSource = SchoolNoticesModel()
+    var YuerSource = SchoolListModel()
     
-    var yuErList = YuErList()
+   
     
     
 
@@ -67,52 +68,17 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
     //MARK: - 加载数据
     func loadData() -> Void {
         
-//        getYuErData()
+
         
         GetNewsDate()
         GetNoticesDate()
+        GetYuerDate()
         
         
     }
     
   
-    //获取育儿知识
-    func getYuErData() -> Void {
-        let url = apiUrl+"ParentingKnowledge"
-        let schoolid = 1
-        
-        let param = [
-            "schoolid":schoolid
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                    
-                }
-                if(status.status == "success"){
-                    print(status.data)
-                    self.yuErList = YuErList(status.data!)
-                    self.schoolTableView.reloadData()
-                    self.schoolTableView.headerView?.endRefreshing()
-                }
-            }
-        }
-
-    }
-    //MARK: - 加载视图
+       //MARK: - 加载视图
     func loadSubviews() -> Void {
         self.title = "学校官网"
         self.schoolTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height-64)
@@ -206,6 +172,44 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
     }
+    //MARK: - 获取育儿知识接口
+    func GetYuerDate(){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"getParentsThings"
+        let school = NSUserDefaults.standardUserDefaults()
+        let schoolid = school.stringForKey("schoolid")
+        let param=[
+            
+            "schoolid":schoolid
+        ]
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+            }
+            else{
+                
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        self.YuerSource = SchoolListModel(status.data!)
+                        self.schoolTableView.reloadData()
+                    }
+                    
+                    
+                    
+                })
+            }
+        }
+    }
 
 
     override func didReceiveMemoryWarning() {
@@ -257,7 +261,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
         case 2:
             return schoolListSource.count+1
         case 3:
-            return 2
+            return YuerSource.count+1
         default:
             return 2
         }
@@ -386,7 +390,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let newsinfo = schoolListSource.objectlist[indexPath.row-1]
                 
                 let cell = SchoolListCell.cellWithTableView(tableView)
-                cell.iconIV.image=UIImage(named: "宝宝秀场")
+                cell.iconIV.image=UIImage(named: "4")
                 cell.titleL.text=newsinfo.post_title
                 cell.contentL.text=newsinfo.post_excerpt
                 cell.timeL.text=newsinfo.post_date
@@ -415,7 +419,7 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let newsinfo = SchoolNoticesSource.objectlist[indexPath.row-1]
                 
                 let cell = SchoolListCell.cellWithTableView(tableView)
-                cell.iconIV.image=UIImage(named: "宝宝秀场")
+                cell.iconIV.image=UIImage(named: "4")
                 cell.titleL.text=newsinfo.post_title
                 cell.contentL.text=newsinfo.post_excerpt
                 cell.timeL.text=newsinfo.post_date
@@ -439,17 +443,13 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
                 return cell
             }
             if indexPath.row == 1{
-                self.teacherPic2.frame = CGRectMake(5, 5, 80, 80)
-                self.teacherPic2.image = UIImage(named: "teacherPic")
-                cell.contentView.addSubview(self.teacherPic2)
-                self.contentText2.frame = CGRectMake(88, 5, self.view.bounds.width - 90, 80)
-                self.contentText1.numberOfLines = 0
-                if self.yuErList.objectlist.count>0 {
-                    self.contentText2.text = self.yuErList.objectlist[0].happy_title
-                }
+                let newsinfo = YuerSource.objectlist[indexPath.row-1]
                 
-                self.contentText2.font = UIFont.systemFontOfSize(15)
-                cell.contentView.addSubview(self.contentText2)
+                let cell = SchoolListCell.cellWithTableView(tableView)
+                cell.iconIV.image=UIImage(named: "4")
+                cell.titleL.text=newsinfo.post_title
+                cell.contentL.text=newsinfo.post_excerpt
+                cell.timeL.text=newsinfo.post_date
                 return cell
             }
         }
@@ -489,14 +489,15 @@ class SchoolViewController: UIViewController,UITableViewDelegate,UITableViewData
         //MARK: - 育儿知识点击事件
         if indexPath.section == 3{
             if indexPath.row == 0{
-                let yuErList = YuErListTableViewController()
-                yuErList.yuErList = self.yuErList
-                self.navigationController?.pushViewController(yuErList, animated: true)
-            }
-            if indexPath.row == 1{
-                let yuErInfo = YuErInfoViewController()
-                yuErInfo.yuErInfo = self.yuErList.objectlist.first!
-                self.navigationController?.pushViewController(yuErInfo, animated: true)
+                
+            }else{
+            
+                let newsinfo = schoolListSource.objectlist[indexPath.row-1]
+                let xinweninfo = XinWenInfoViewController()
+                xinweninfo.id=newsinfo.id!
+                xinweninfo.ziduan="news"
+                self.navigationController?.pushViewController(xinweninfo, animated: true)
+
             }
         }
 

@@ -7,24 +7,93 @@
 //
 
 import UIKit
+import Alamofire
+import MBProgressHUD
+import XWSwiftRefresh
+class YSQingKuangViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
-class YSQingKuangViewController: UIViewController {
-
+    let tableView = UITableView()
+   
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor=bkColor
+        self.title="院所情况"
+        // 初始化视图
+        initView()
 
-        self.title = "院所情况"
-        self.view.backgroundColor = UIColor.whiteColor()
         
-        // Do any additional setup after loading the view.
     }
-
+    
+    
+    func initView() -> Void {
+        tableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-64-40)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .None
+        self.view.addSubview(tableView)
+    }
+    
+    
+    
+    
+        
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //MARK: delegate
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 40
+    }
 
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell = tableView.dequeueReusableCellWithIdentifier("qingkaung")
+     
+        if cell == nil {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: "qingkaung")
+            cell?.accessoryType = .DisclosureIndicator
+            cell?.selectionStyle = .None
+        }
+        
+        if indexPath.row == 0 {
+            cell?.textLabel?.text = "班级相册"
+        }
+               
+        
+        
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if indexPath.row == 0 {
+            self.navigationController?.pushViewController(QKClassAblumTableViewController(), animated: true)
+        }
+    }
+    
+    
+    
+   
+    //MARK:
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=true
+        
+    }
+    override func viewWillDisappear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden=false
+    }
     /*
     // MARK: - Navigation
 

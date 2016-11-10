@@ -20,7 +20,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         self.title="已发代办事项"
         
         self.view.backgroundColor=UIColor.whiteColor()
-        DaiBanTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 64)
+        DaiBanTableView.frame = CGRectMake(0, 0, frame.width, frame.height - 64-44)
         DaiBanTableView.delegate = self
         DaiBanTableView.dataSource = self
         DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
@@ -28,6 +28,10 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         self.view.addSubview(DaiBanTableView)
 
         // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(animated: Bool) {
+        loadData()
+        DaiBanTableView.reloadData()
     }
     //MARK: -    获取数据
     func loadData(){
@@ -64,8 +68,9 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                 if(status.status == "success"){
                     self.DaibanSource = DaiBanModel(status.data!)
                     self.DaiBanTableView.reloadData()
-                    self.DaiBanTableView.headerView?.endRefreshing()
+                    
                 }
+                self.DaiBanTableView.headerView?.endRefreshing()
             }
         }
     }
@@ -77,11 +82,13 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         let daibaninfo = DaibanSource.parentsExhortList[indexPath.row]
         
         let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        cell.selectionStyle = .None
         let titleL = UILabel()
         titleL.frame=CGRectMake(10,5,frame.width-20,20)
         cell.contentView.addSubview(titleL)
         titleL.text=daibaninfo.title!
-        
+        titleL.textColor=biaotiColor
+        titleL.font=biaotifont
         //计算lable的高度
         let titleL_h = calculateHeight(titleL.text!, size: 17, width: frame.width-20)
         titleL.numberOfLines=0
@@ -89,9 +96,9 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         let contentL = UILabel()
         contentL.frame=CGRectMake(10,titleL_h+15,frame.width-20,20)
         cell.contentView.addSubview(contentL)
-        contentL.textColor=UIColor.grayColor()
+        contentL.textColor=neirongColor
         contentL.text=daibaninfo.content!
-        contentL.font=UIFont.systemFontOfSize(15)
+        contentL.font=neirongfont
         //计算lable的高度
         let contentL_h = calculateHeight(contentL.text!, size: 15, width: frame.width-20)
         contentL.numberOfLines=0
@@ -104,7 +111,31 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         //        判断图片张数显示
         if(daibaninfo.picCount>0&&daibaninfo.picCount<=3){
             image_h=80
-            for i in 1...daibaninfo.picCount{
+            if daibaninfo.picCount==1 {
+                
+                let pciInfo = daibaninfo.pic[0]
+                let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                
+                //let image = self.imageCache[imgUrl] as UIImage?
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        
+                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 80))
+                        let imgTmp = UIImage(data: data!)
+                        //self.imageCache[imgUrl] = imgTmp
+                        blogimage!.image = imgTmp
+                        if blogimage?.image==nil{
+                            blogimage?.image=UIImage(named: "Logo")
+                        }
+                        cell.contentView.addSubview(blogimage!)
+                        
+                    }
+                })
+            }else{
+            for i in 2...daibaninfo.picCount{
                 var x = 8
                 let pciInfo = daibaninfo.pic[i-1]
                 let imgUrl = pictureUrl+(pciInfo.picture_url)!
@@ -128,7 +159,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                     }
                 })
                 
-            }
+                }}
         }
         if(daibaninfo.picCount>3&&daibaninfo.picCount<=6){
             image_h=170
@@ -272,12 +303,13 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         if daibaninfo.name != nil {
             senderL.text=daibaninfo.name!
         }
-        senderL.font=UIFont.systemFontOfSize(15)
+        senderL.font=timefont
+        senderL.textColor=timeColor
         cell.contentView.addSubview(senderL)
         let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h+image_h+35+contentL_h,140,20))
         timeL.textAlignment = .Right
         timeL.textColor=timeColor
-        timeL.font=UIFont.systemFontOfSize(15)
+        timeL.font=timefont
         timeL.text=changeTime(daibaninfo.create_time!)
         cell.contentView.addSubview(timeL)
 

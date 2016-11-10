@@ -13,7 +13,8 @@ class XinXiangViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.view.backgroundColor=UIColor.whiteColor()
+        self.title="园长信箱"
     }
 
     override func didReceiveMemoryWarning() {

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Haneke
+import Alamofire
 import MBProgressHUD
 
 class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -23,6 +23,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
     let qingchuHuancun = UIButton()
     let footview = UIView()
     let phoneBtn = UIButton()
+    var ServiceBtn = UIButton()
     
     let vip = "Lv.2"
     
@@ -31,6 +32,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "我的"
+        GetService()
         mineTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 44 - 64)
         mineTableView.delegate = self
         mineTableView.dataSource = self
@@ -65,7 +67,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if(section == 0){
             return 1
         }else{
-            return 6
+            return 5
         }
         
     }
@@ -87,6 +89,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let useDefaults = NSUserDefaults.standardUserDefaults()
         let cell = UITableViewCell(style: .Value1, reuseIdentifier: "userInfoCell")
         cell.selectionStyle = .None
         cell.accessoryType = .DisclosureIndicator
@@ -103,14 +106,19 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.avatorImage.frame = CGRectMake(10, 62, 80, 80)
                 self.avatorImage.layer.cornerRadius = 40
                 self.avatorImage.layer.masksToBounds = true
-                self.avatorImage.image = UIImage(named: "Logo")
+                let photo = useDefaults.stringForKey("photo")
+                let url = imageUrl+photo!
+                avatorImage.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
                 let bt = UIButton(frame: CGRectMake(10, 62, 80, 80))
                 bt.addTarget(self, action: #selector(changeInfo), forControlEvents: .TouchUpInside)
                 
-                self.nameLabel.frame = CGRectMake(104, 90, 73, 16)
+                self.nameLabel.frame = CGRectMake(104, 90, frame.width-120, 16)
                 self.nameLabel.font = UIFont.systemFontOfSize(16)
                 self.nameLabel.textColor = UIColor.whiteColor()
-                self.nameLabel.text = "王丹老师"
+                
+                let username = useDefaults.valueForKey("username") as! String
+                
+                self.nameLabel.text = username
                 self.infoLabel.frame = CGRectMake(105, 115, 110, 11)
                 self.infoLabel.font = UIFont.systemFontOfSize(11)
                 self.infoLabel.textColor = UIColor.whiteColor()
@@ -123,21 +131,18 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
                 
             }}else {
-                if indexPath.row==0 {
-                    cell.textLabel?.text="积分商城"
-                    lable.text="当前积分1000"
-                    cell.contentView.addSubview(lable)
-                }else if indexPath.row==1{
+                 if indexPath.row==0{
                     cell.textLabel?.text="扫一扫打卡"
-                }else if indexPath.row==2{
+                }else if indexPath.row==1{
                     cell.textLabel?.text="维护人员"
-                    lable.text="小明 17878787878"
-                    cell.contentView.addSubview(lable)
-                }else if indexPath.row==3{
+                    ServiceBtn.frame=CGRectMake(frame.width-200,10,170,20)
+                    cell.contentView.addSubview(ServiceBtn)
+                    
+                }else if indexPath.row==2{
                     cell.textLabel?.text="在线留言"
-                }else if indexPath.row==4{
+                }else if indexPath.row==3{
                     cell.textLabel?.text="系统通知"
-                }else if indexPath.row==5{
+                }else if indexPath.row==4{
                     cell.textLabel?.text="客户端二维码名片"
                 }
                 
@@ -152,9 +157,33 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-            }
-    
-        
+        if indexPath.section==0 {
+            self.changeInfo()
+        }else{
+        if indexPath.row==0{
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "暂无功能"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+
+        }else if indexPath.row==1{
+            
+        }else if indexPath.row==2{
+            let vc = QCOnlineHelpVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else if indexPath.row==3{
+            let vc = QCSystemInformsVC()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else if indexPath.row==4{
+            let vc = ErWeiMaViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+
+        }}
     func ExitLogin(){
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -172,8 +201,66 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.presentViewController(alertController, animated: true, completion: nil)
     }
 
-  
+    func GetService(){
+    let defalutid = NSUserDefaults.standardUserDefaults()
+    let cid = defalutid.stringForKey("schoolid")
+    let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=service_phone"
+    let param = [
+    "schoolid":cid!
+    ]
+    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+    if(error != nil){
+    }
+    else{
+    print("request是")
+    print(request!)
+    print("====================")
+    let status = ServiceModel(JSONDecoder(json!))
+    print("状态是")
+    print(status.status)
+    if(status.status == "error"){
+    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    hud.mode = MBProgressHUDMode.Text;
+    hud.labelText = status.errorData
+    hud.margin = 10.0
+    hud.removeFromSuperViewOnHide = true
+    hud.hide(true, afterDelay: 1)
+    }
     
+    if(status.status == "success"){
+    //                    self.ServiceBtn.titleLabel?.text = status.data?.phone!
+    self.ServiceBtn.setTitle(status.data?.phone!, forState: .Normal)
+        self.ServiceBtn.setTitleColor(greenColor, forState: .Normal)
+        self.ServiceBtn.tag=Int((status.data?.phone)!)!
+        self.ServiceBtn.addTarget(self, action: #selector(self.callphone(_:)), forControlEvents: .TouchUpInside)
+    }
+    }
+    
+    }
+    
+    }
+    func callphone(sender:UIButton){
+        if sender.tag == 0 {
+            
+        }else{
+            let alertController=UIAlertController(title: "", message: "呼叫\(sender.tag)", preferredStyle: .Alert)
+            let okAction = UIAlertAction(title: "确定", style: .Default,
+                                         handler: {
+                                            action in
+                                            UIApplication.sharedApplication().openURL(NSURL(string :"tel://\(sender.tag)")!)
+                                            
+                                            
+            })
+            let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: nil)
+            alertController.addAction(cancelAction)
+            
+            alertController.addAction(okAction)
+            
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+  
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

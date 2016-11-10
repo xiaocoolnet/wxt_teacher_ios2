@@ -8,10 +8,9 @@
 
 import UIKit
 import PagingMenuController
+
 class QFListViewController: UIViewController {
 
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,22 +40,45 @@ class QFListViewController: UIViewController {
     }
     
     func addThing(){
+        let obj = NSMutableArray()
+        
+        for titles in self.titles() {
+            let wb = WBPopMenuModel()
+            wb.title = titles as! String
+            obj.addObject(wb)
+            
+        }
+        WBPopMenuSingleton.shareManager().showPopMenuSelecteWithFrame(100, item: obj as [AnyObject]) { (index) in
+            print("66666\(index)")
+            let add = AddQunFaViewController()
+            if index==0{
+               add.type = "0"
+            }else{
+               add.type = "1"
+            }
+            self.navigationController?.pushViewController(add, animated: true)
+        }
+
         
     }
+    
+    
+    func titles() -> NSArray {
+        return ["群发教师","群发学生"]
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("count")
+        
     }
-    */
-
+    override func viewWillDisappear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("count")
+    }
 }

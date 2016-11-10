@@ -14,7 +14,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
 
     let TongZhiTableView = UITableView()
     var newsInfo = NewsInfo()
-    var dianzanSource = DianZanList()
+    
     var activitySource = ClassNoticeList()
     var commentSource = ACommentList()
     let arrayPeople = NSMutableArray()
@@ -34,7 +34,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         self.navigationItem.rightBarButtonItem = rightItem
 
         self.view.addSubview(TongZhiTableView)
-        // Do any additional setup after loading the view.
+ 
     }
     //    开始刷新
     func DropDownUpdate(){
@@ -49,13 +49,15 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         let defalutid = NSUserDefaults.standardUserDefaults()
         let userid = defalutid.stringForKey("userid")
         let classid = defalutid.stringForKey("classid")
+        let schoolid = defalutid.stringForKey("schoolid")
+        
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=getnoticelist"
         let param = [
             "userid":userid!,
             "classid":classid!,
-            "schoolid":1
+            "schoolid":schoolid!
         ]
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
@@ -101,17 +103,19 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         //  活动标题
         let titleLbl = UILabel()
         titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
-        titleLbl.textAlignment = NSTextAlignment.Center
+        
         titleLbl.text = model.title
+        titleLbl.textColor=biaotiColor
+        titleLbl.font=biaotifont
         cell.contentView.addSubview(titleLbl)
         //  活动内容
         let contentLbl = UILabel()
         contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 60)
-        contentLbl.font = UIFont.systemFontOfSize(16)
-        contentLbl.textColor = UIColor.lightGrayColor()
+        contentLbl.font = neirongfont
+        contentLbl.textColor = neirongColor
         contentLbl.text = model.content
         contentLbl.numberOfLines = 0
-        contentLbl.sizeToFit()
+        
         cell.contentView.addSubview(contentLbl)
         
         //        自适应行高
@@ -436,7 +440,8 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         
         let senderLbl = UILabel()
         senderLbl.frame = CGRectMake(40, height + image_h + 10, 60, 20)
-        senderLbl.font = UIFont.systemFontOfSize(16)
+        senderLbl.font = timefont
+        senderLbl.textColor=timeColor
         senderLbl.text = model.username
         cell.contentView.addSubview(senderLbl)
         
@@ -449,21 +454,21 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(110, height + image_h + 10, WIDTH - 120, 20)
         timeLbl.textAlignment = NSTextAlignment.Right
-        timeLbl.font = UIFont.systemFontOfSize(15)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         timeLbl.text = str
         cell.contentView.addSubview(timeLbl)
         
         let line = UILabel()
         line.frame = CGRectMake(1, height + image_h + 40, WIDTH - 2, 0.5)
-        line.backgroundColor = UIColor.lightGrayColor()
+        line.backgroundColor = bkColor
         cell.addSubview(line)
         
         let all = UILabel()
         all.frame = CGRectMake(10, height + image_h + 50, 60, 20)
         all.text = "总发 \(model.receive_list.count)"
         all.textColor = UIColor.orangeColor()
-        all.font = UIFont.systemFontOfSize(15)
+        all.font = timefont
         cell.contentView.addSubview(all)
         
         let already = UILabel()

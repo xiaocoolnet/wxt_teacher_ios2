@@ -40,16 +40,46 @@ class AnnounceViewController: UIViewController {
     
     
     func addThing(){
-        self.navigationController?.pushViewController(AddJZGongGaoViewController(), animated: true)
+        let obj = NSMutableArray()
+        
+        for titles in self.titles() {
+            let wb = WBPopMenuModel()
+            wb.title = titles as! String
+            obj.addObject(wb)
+            
+        }
+        WBPopMenuSingleton.shareManager().showPopMenuSelecteWithFrame(100, item: obj as [AnyObject]) { (index) in
+            
+            let add = AddJZGongGaoViewController()
+            if index==0{
+                add.type = "0"
+            }else{
+                add.type = "1"
+            }
+            self.navigationController?.pushViewController(add, animated: true)
+        }
+        
+
     }
 
-
+    
+    func titles() -> NSArray {
+        return ["教师公告","学生公告"]
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    override func viewWillAppear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("noticeArr")
+    }
+    override func viewWillDisappear(animated: Bool) {
+        let user = NSUserDefaults.standardUserDefaults()
+        user.removeObjectForKey("noticeArr")
+    }
     /*
     // MARK: - Navigation
 

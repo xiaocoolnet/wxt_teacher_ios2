@@ -55,14 +55,14 @@ class TeacherInfoViewController: UIViewController {
         shareParames.SSDKSetupShareParamsByText(url,
                                                 images : UIImage(named: "1.png"),
                                                 url : NSURL(string:url),
-                                                title : "老师风采",
+                                                title : "教师风采",
                                                 type : SSDKContentType.Auto)
         
         //  判断微信是否安装了
         if WXApi.isWXAppInstalled() {
             
             //微信朋友圈分享
-            ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+            ShareSDK.share(SSDKPlatformType.SubTypeWechatSession, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
                 
                 switch state{
                     

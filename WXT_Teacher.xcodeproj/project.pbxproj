@@ -12,7 +12,6 @@
 		18B368F91CB5E7C3007DC602 /* MaintainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B368F81CB5E7C3007DC602 /* MaintainViewController.swift */; };
 		18B368FB1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B368FA1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift */; };
 		18B368FE1CB5E8BF007DC602 /* CardSetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B368FD1CB5E8BF007DC602 /* CardSetViewController.swift */; };
-		18B369001CB5E9C0007DC602 /* XiaoXiQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B368FF1CB5E9C0007DC602 /* XiaoXiQunFaViewController.swift */; };
 		18B369021CB5ED66007DC602 /* ContactList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B369011CB5ED66007DC602 /* ContactList.swift */; };
 		18B369051CB5EF3F007DC602 /* VideosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B369041CB5EF3F007DC602 /* VideosViewController.swift */; };
 		18B369071CB5EF59007DC602 /* VideoPlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B369061CB5EF59007DC602 /* VideoPlayViewController.swift */; };
@@ -79,8 +78,6 @@
 		EAC200881C9CF72700A6A613 /* SetPassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC200871C9CF72700A6A613 /* SetPassViewController.swift */; };
 		EAC2008C1C9D332700A6A613 /* DingzhuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC2008B1C9D332700A6A613 /* DingzhuViewController.swift */; };
 		EAC2008E1C9D36A400A6A613 /* DingZhuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC2008D1C9D36A400A6A613 /* DingZhuTableViewCell.swift */; };
-		EAC8DE701C8974AC00C2CEE6 /* BlogCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC8DE6F1C8974AC00C2CEE6 /* BlogCommentTableViewController.swift */; };
-		EAC8DE721C8978B300C2CEE6 /* CommentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC8DE711C8978B300C2CEE6 /* CommentList.swift */; };
 		EACF434C1C9D3B730008A3A6 /* DingzhuXiangqingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF434B1C9D3B730008A3A6 /* DingzhuXiangqingViewController.swift */; };
 		EACF434F1C9D3EC30008A3A6 /* QunLiaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF434D1C9D3EC30008A3A6 /* QunLiaoViewController.swift */; };
 		EACF43501C9D3EC30008A3A6 /* YuanDingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EACF434E1C9D3EC30008A3A6 /* YuanDingViewController.swift */; };
@@ -103,9 +100,6 @@
 		EAFAE5DD1C82E4D600A8BAF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5DB1C82E4D600A8BAF2 /* LaunchScreen.storyboard */; };
 		EAFAE6A41C82E50900A8BAF2 /* BlogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5E61C82E50900A8BAF2 /* BlogViewController.swift */; };
 		EAFAE6A51C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5E71C82E50900A8BAF2 /* Readme */; };
-		EAFAE6A61C82E50900A8BAF2 /* BlogList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5E91C82E50900A8BAF2 /* BlogList.swift */; };
-		EAFAE6A71C82E50900A8BAF2 /* DianZanList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EA1C82E50900A8BAF2 /* DianZanList.swift */; };
-		EAFAE6A81C82E50900A8BAF2 /* PictureList.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EB1C82E50900A8BAF2 /* PictureList.swift */; };
 		EAFAE6A91C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5EC1C82E50900A8BAF2 /* Readme */; };
 		EAFAE6AA1C82E50900A8BAF2 /* BlogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EE1C82E50900A8BAF2 /* BlogTableViewCell.swift */; };
 		EAFAE6AB1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EF1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift */; };
@@ -135,7 +129,6 @@
 		EAFAE6C41C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE61C1C82E50900A8BAF2 /* Readme */; };
 		EAFAE6C51C82E50900A8BAF2 /* MineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE61E1C82E50900A8BAF2 /* MineTableViewCell.swift */; };
 		EAFAE6C61C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE61F1C82E50900A8BAF2 /* Readme */; };
-		EAFAE6C71C82E50900A8BAF2 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE6231C82E50900A8BAF2 /* ContactsViewController.swift */; };
 		EAFAE6C81C82E50900A8BAF2 /* JiaZhangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE6241C82E50900A8BAF2 /* JiaZhangViewController.swift */; };
 		EAFAE6CA1C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE6261C82E50900A8BAF2 /* Readme */; };
 		EAFAE6CC1C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE6291C82E50900A8BAF2 /* Readme */; };
@@ -241,6 +234,7 @@
 		EAFAE7321C82E52B00A8BAF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7301C82E52B00A8BAF2 /* Assets.xcassets */; };
 		EAFAE7331C82E52B00A8BAF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7311C82E52B00A8BAF2 /* Main.storyboard */; };
 		EAFAE7391C82E56800A8BAF2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7381C82E56800A8BAF2 /* Podfile */; };
+		F606ED021D74284C00FD390F /* ChooseTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F606ED011D74284C00FD390F /* ChooseTeacherViewController.swift */; };
 		F60F5D851D22742F00CEFC30 /* HomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D841D22742F00CEFC30 /* HomeworkViewController.swift */; };
 		F60F5D891D227AF800CEFC30 /* HCommentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D871D227AF800CEFC30 /* HCommentList.swift */; };
 		F60F5D8A1D227AF800CEFC30 /* HomeworkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D881D227AF800CEFC30 /* HomeworkList.swift */; };
@@ -249,7 +243,13 @@
 		F61F70921CFFD02B00A4BFB9 /* ACommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61F70901CFFD02B00A4BFB9 /* ACommentTableViewCell.swift */; };
 		F61F70931CFFD02B00A4BFB9 /* ACommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F61F70911CFFD02B00A4BFB9 /* ACommentTableViewCell.xib */; };
 		F61F709D1CFFD5DE00A4BFB9 /* CAWriteCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61F709C1CFFD5DE00A4BFB9 /* CAWriteCommentViewController.swift */; };
-		F6331D1C1D23736E009E63A7 /* AddQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6331D1B1D23736E009E63A7 /* AddQunFaViewController.swift */; };
+		F63365921D9D1651004E931B /* TeacherListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63365911D9D1651004E931B /* TeacherListViewController.swift */; };
+		F635FEEE1D741A3A0082D6A1 /* ChooseTeacherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F635FEED1D741A3A0082D6A1 /* ChooseTeacherModel.swift */; };
+		F636189A1D96832B0020D56E /* QCAboutWeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63618991D96832A0020D56E /* QCAboutWeVC.swift */; };
+		F636189C1D96846E0020D56E /* QCOnlineHelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F636189B1D96846E0020D56E /* QCOnlineHelpVC.swift */; };
+		F63693DD1D6E870A0054B6D4 /* CustomBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63693DC1D6E870A0054B6D4 /* CustomBtn.swift */; };
+		F63693DF1D6E87170054B6D4 /* ChooseUserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63693DE1D6E87170054B6D4 /* ChooseUserTableViewCell.swift */; };
+		F63693E11D6E87200054B6D4 /* ChooseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63693E01D6E87200054B6D4 /* ChooseUser.swift */; };
 		F63760EA1D1A358E001BC470 /* ZhaoPinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63760E91D1A358E001BC470 /* ZhaoPinViewController.swift */; };
 		F63760EE1D1A35A8001BC470 /* XingQuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63760ED1D1A35A8001BC470 /* XingQuViewController.swift */; };
 		F63760F21D1A9307001BC470 /* TeacherLIstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63760F11D1A9307001BC470 /* TeacherLIstViewController.swift */; };
@@ -261,13 +261,29 @@
 		F63B2BE11D40C5DA00880C3C /* FoodMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63B2BE01D40C5DA00880C3C /* FoodMenuModel.swift */; };
 		F63D4DDA1D1BB14500DF4D2B /* TeacherTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63D4DD91D1BB14500DF4D2B /* TeacherTableViewCell.swift */; };
 		F63D4DDE1D1BB97600DF4D2B /* TeacherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63D4DDD1D1BB97600DF4D2B /* TeacherModel.swift */; };
+		F63F68DD1DB89AB200C8B03B /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F68DC1DB89AB200C8B03B /* ServiceModel.swift */; };
+		F63F68DF1DB8AC0200C8B03B /* QCSystemInformsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F68DE1DB8AC0200C8B03B /* QCSystemInformsVC.swift */; };
+		F63F68E11DB8AC1400C8B03B /* SystemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F68E01DB8AC1400C8B03B /* SystemDetailViewController.swift */; };
+		F63F68E31DB8AC2000C8B03B /* QCDetailsInformVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F68E21DB8AC2000C8B03B /* QCDetailsInformVC.swift */; };
+		F63F68E51DB8B1EB00C8B03B /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63F68E41DB8B1EB00C8B03B /* NewsModel.swift */; };
 		F63FA7D61D34D23A0049AC3B /* XinXiangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FA7D51D34D23A0049AC3B /* XinXiangViewController.swift */; };
+		F63FFC2A1D76B18D00E1DFA0 /* AddDaiBanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FFC291D76B18D00E1DFA0 /* AddDaiBanViewController.swift */; };
+		F63FFC2C1D76C6D500E1DFA0 /* DaiBanInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63FFC2B1D76C6D500E1DFA0 /* DaiBanInfoViewController.swift */; };
 		F64141301D435EC60086F640 /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641412F1D435EC60086F640 /* PhotoModel.swift */; };
 		F64198C11D4AE6F900E6A935 /* DaijieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64198C01D4AE6F900E6A935 /* DaijieModel.swift */; };
 		F64198C31D4B340A00E6A935 /* DJViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64198C21D4B340A00E6A935 /* DJViewController.swift */; };
 		F64198C51D4B348000E6A935 /* YDaiJieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64198C41D4B348000E6A935 /* YDaiJieViewController.swift */; };
 		F64198C91D4B544F00E6A935 /* AddDaijieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64198C81D4B544F00E6A935 /* AddDaijieViewController.swift */; };
-		F644A12F1D507ED40069DA07 /* FSendMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F644A12E1D507ED40069DA07 /* FSendMessageModel.swift */; };
+		F641C8B51DAA3E3B00562825 /* GroupPicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F641C8B41DAA3E3B00562825 /* GroupPicViewController.swift */; };
+		F642AB601D7BBFB80038BF71 /* ChooseDaiBanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB5F1D7BBFB80038BF71 /* ChooseDaiBanViewController.swift */; };
+		F642AB621D7BCD060038BF71 /* AddKeJianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB611D7BCD060038BF71 /* AddKeJianViewController.swift */; };
+		F642AB641D7BEE3C0038BF71 /* ChooseClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB631D7BEE3C0038BF71 /* ChooseClassViewController.swift */; };
+		F642AB661D7C01780038BF71 /* QKClassAblumTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB651D7C01780038BF71 /* QKClassAblumTableViewController.swift */; };
+		F642AB681D7C0AFC0038BF71 /* ClassAlbumIntrouce.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB671D7C0AFC0038BF71 /* ClassAlbumIntrouce.swift */; };
+		F642AB6A1D7C0FB50038BF71 /* QKAblumDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F642AB691D7C0FB50038BF71 /* QKAblumDetailTableViewController.swift */; };
+		F64304F51DACD634006326D7 /* GroupPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64304F41DACD634006326D7 /* GroupPictureViewController.swift */; };
+		F64336BF1D798392001D7D18 /* FTPopOverMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = F64336BE1D798392001D7D18 /* FTPopOverMenu.m */; };
+		F64336C11D7984D9001D7D18 /* DatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64336C01D7984D9001D7D18 /* DatePickerView.swift */; };
 		F644B7411D24F52C0062E439 /* HomeWorkTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F644B7401D24F52C0062E439 /* HomeWorkTwoViewController.swift */; };
 		F644B7431D2516470062E439 /* AddHomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F644B7421D2516470062E439 /* AddHomeworkViewController.swift */; };
 		F646512C1CFD8634005599CD /* HomeworkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F646512A1CFD8634005599CD /* HomeworkTableViewCell.swift */; };
@@ -285,17 +301,71 @@
 		F64E83B31D603B190044528F /* AnnounceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64E83B21D603B190044528F /* AnnounceViewController.swift */; };
 		F64E83B51D603CCF0044528F /* ReciveAnnounceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64E83B41D603CCF0044528F /* ReciveAnnounceViewController.swift */; };
 		F64E83B91D603F9E0044528F /* ReciveAnnounceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64E83B81D603F9E0044528F /* ReciveAnnounceModel.swift */; };
+		F651170F1D7D1D6C00699E38 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F651170E1D7D1D6C00699E38 /* CFNetwork.framework */; };
+		F65117111D7D1DD100699E38 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117101D7D1DD100699E38 /* CoreFoundation.framework */; };
+		F65117131D7D1DDF00699E38 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117121D7D1DDF00699E38 /* CoreTelephony.framework */; };
+		F65117151D7D1DEA00699E38 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117141D7D1DEA00699E38 /* SystemConfiguration.framework */; };
+		F65117171D7D3EE700699E38 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117161D7D3EE700699E38 /* CoreGraphics.framework */; };
+		F65117191D7D3EF800699E38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117181D7D3EF800699E38 /* Foundation.framework */; };
+		F651171B1D7D3F0100699E38 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F651171A1D7D3F0100699E38 /* UIKit.framework */; };
+		F651171D1D7D3F0A00699E38 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F651171C1D7D3F0A00699E38 /* Security.framework */; };
+		F651171E1D7D3F1F00699E38 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F63D4DFC1D1BDD1400DF4D2B /* libz.tbd */; };
+		F65117221D7D478900699E38 /* jpush-ios-2.1.8.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F65117201D7D478900699E38 /* jpush-ios-2.1.8.a */; };
+		F65357CB1D9A4F5100FA9474 /* ErWeiMaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65357CA1D9A4F5100FA9474 /* ErWeiMaViewController.swift */; };
 		F653B5CD1D62ECC400422A55 /* PhotoBigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F653B5CC1D62ECC400422A55 /* PhotoBigViewController.swift */; };
+		F65472411D7AAE2A002C97C0 /* ClassModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65472401D7AAE2A002C97C0 /* ClassModel.swift */; };
+		F65472431D7AAE6D002C97C0 /* ClassScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65472421D7AAE6D002C97C0 /* ClassScheduleTableViewController.swift */; };
 		F65499921D3F14C300F6FD7D /* SchoolNoticesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65499911D3F14C300F6FD7D /* SchoolNoticesModel.swift */; };
 		F65499941D3F687A00F6FD7D /* SetUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65499931D3F687A00F6FD7D /* SetUpViewController.swift */; };
 		F65499971D3F770600F6FD7D /* ChangeInformationPageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65499951D3F770600F6FD7D /* ChangeInformationPageVC.swift */; };
 		F65499981D3F770600F6FD7D /* PersonInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65499961D3F770600F6FD7D /* PersonInformation.swift */; };
+		F6564FD61D683A1700E276EF /* BirthdayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6564FD51D683A1700E276EF /* BirthdayViewController.swift */; };
 		F65793301D485658003F2267 /* QCTakeBabyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657932F1D485658003F2267 /* QCTakeBabyCell.swift */; };
 		F65793321D485E37003F2267 /* TakeChilrenList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65793311D485E37003F2267 /* TakeChilrenList.swift */; };
+		F657951B1D65941D0059301F /* BlogModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657951A1D65941D0059301F /* BlogModel.swift */; };
+		F657951D1D659E290059301F /* XiaoXiQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657951C1D659E290059301F /* XiaoXiQunFaViewController.swift */; };
+		F657951F1D659E2E0059301F /* YiFaQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657951E1D659E2E0059301F /* YiFaQunFaViewController.swift */; };
+		F65795211D659E760059301F /* AddQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65795201D659E760059301F /* AddQunFaViewController.swift */; };
+		F65795231D659E7A0059301F /* ChooseReciveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65795221D659E7A0059301F /* ChooseReciveViewController.swift */; };
+		F65795251D659E940059301F /* QFListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65795241D659E940059301F /* QFListViewController.swift */; };
+		F657952D1D65A0150059301F /* NewGroupRecive.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657952C1D65A0150059301F /* NewGroupRecive.swift */; };
+		F657953A1D65A0490059301F /* WBPopMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F657952F1D65A0490059301F /* WBPopMenuModel.m */; };
+		F657953B1D65A0490059301F /* WBPopMenuSingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = F65795311D65A0490059301F /* WBPopMenuSingleton.m */; };
+		F657953C1D65A0490059301F /* WBPopMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = F65795331D65A0490059301F /* WBPopMenuView.m */; };
+		F657953D1D65A0490059301F /* WBTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F65795351D65A0490059301F /* WBTableViewCell.m */; };
+		F657953E1D65A0490059301F /* WBTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = F65795371D65A0490059301F /* WBTableViewDataSource.m */; };
+		F657953F1D65A0490059301F /* WBTableViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F65795391D65A0490059301F /* WBTableViewDelegate.m */; };
+		F65795431D65A4320059301F /* FSendMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65795421D65A4320059301F /* FSendMessageModel.swift */; };
+		F6579FEC1D77D0690049932E /* ClassKaoQin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FEB1D77D0690049932E /* ClassKaoQin.swift */; };
+		F6579FEE1D77D0710049932E /* ClassKaoqinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FED1D77D0710049932E /* ClassKaoqinViewController.swift */; };
+		F6579FF01D77D0760049932E /* KaoQinHistroyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FEF1D77D0760049932E /* KaoQinHistroyViewController.swift */; };
+		F6579FF21D77D07A0049932E /* QianTuiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FF11D77D07A0049932E /* QianTuiViewController.swift */; };
+		F6579FF41D77D12F0049932E /* ClassInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FF31D77D12F0049932E /* ClassInfo.swift */; };
+		F6579FF61D77D1820049932E /* ClassHistroy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FF51D77D1820049932E /* ClassHistroy.swift */; };
+		F6579FF81D77D44D0049932E /* KaoqinCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FF71D77D44D0049932E /* KaoqinCollectionViewCell.swift */; };
+		F6579FFA1D77D49E0049932E /* KaoQinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FF91D77D49E0049932E /* KaoQinViewController.swift */; };
+		F6579FFC1D77D4F80049932E /* KaoqinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FFB1D77D4F80049932E /* KaoqinModel.swift */; };
+		F6579FFE1D77D5580049932E /* AddDianpingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FFD1D77D5580049932E /* AddDianpingView.swift */; };
+		F657A0001D77D5900049932E /* TeacherCommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6579FFF1D77D5900049932E /* TeacherCommentsTableViewController.swift */; };
+		F657A0021D77D6170049932E /* QCTeacherCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657A0011D77D6170049932E /* QCTeacherCommentCell.swift */; };
+		F657A0041D77D7620049932E /* QCTeacherCommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657A0031D77D7620049932E /* QCTeacherCommentModel.swift */; };
+		F657A0061D77FFF60049932E /* BanLiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F657A0051D77FFF60049932E /* BanLiViewController.swift */; };
+		F657A01C1D7809FB0049932E /* CalendarDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A0091D7809FB0049932E /* CalendarDayCell.m */; };
+		F657A01D1D7809FB0049932E /* CalendarDayModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A00B1D7809FB0049932E /* CalendarDayModel.m */; };
+		F657A01E1D7809FB0049932E /* CalendarFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A00D1D7809FB0049932E /* CalendarFirstViewController.m */; };
+		F657A01F1D7809FB0049932E /* CalendarHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A00F1D7809FB0049932E /* CalendarHomeViewController.m */; };
+		F657A0201D7809FB0049932E /* CalendarLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A0111D7809FB0049932E /* CalendarLogic.m */; };
+		F657A0211D7809FB0049932E /* CalendarMonthCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A0131D7809FB0049932E /* CalendarMonthCollectionViewLayout.m */; };
+		F657A0221D7809FB0049932E /* CalendarMonthHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A0151D7809FB0049932E /* CalendarMonthHeaderView.m */; };
+		F657A0231D7809FB0049932E /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A0171D7809FB0049932E /* CalendarViewController.m */; };
+		F657A0241D7809FB0049932E /* chack.png in Resources */ = {isa = PBXBuildFile; fileRef = F657A0181D7809FB0049932E /* chack.png */; };
+		F657A0251D7809FB0049932E /* NSDate+WQCalendarLogic.m in Sources */ = {isa = PBXBuildFile; fileRef = F657A01B1D7809FB0049932E /* NSDate+WQCalendarLogic.m */; };
+		F65A0C341D6D44D3003B48E4 /* HTMLViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F65A0C331D6D44D3003B48E4 /* HTMLViewController.swift */; };
 		F66292FC1CB9E7CC0022EEC3 /* PlanList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66292FB1CB9E7CC0022EEC3 /* PlanList.swift */; };
 		F66292FF1CB9F29F0022EEC3 /* YuErListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66292FE1CB9F29F0022EEC3 /* YuErListTableViewController.swift */; };
 		F66293011CB9F2CF0022EEC3 /* YuErInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66293001CB9F2CF0022EEC3 /* YuErInfoViewController.swift */; };
 		F66293031CB9F4230022EEC3 /* YuErList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66293021CB9F4230022EEC3 /* YuErList.swift */; };
+		F663EC411DBA182A00E19D0E /* JiazhangModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F663EC401DBA182A00E19D0E /* JiazhangModel.swift */; };
 		F66510621D519CCF00A5F3E6 /* ActivityList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F665105F1D519CCF00A5F3E6 /* ActivityList.swift */; };
 		F66510631D519CCF00A5F3E6 /* ActivityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66510601D519CCF00A5F3E6 /* ActivityModel.swift */; };
 		F66510651D51EDCD00A5F3E6 /* QCDetailsClassActiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66510641D51EDCD00A5F3E6 /* QCDetailsClassActiveVC.swift */; };
@@ -327,8 +397,6 @@
 		F6F750B51D5C53DF006BFCE5 /* AddJZGongGaoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F750B41D5C53DF006BFCE5 /* AddJZGongGaoViewController.swift */; };
 		F6F8FC8F1D54713D006313EB /* NoticePicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8FC8E1D54713D006313EB /* NoticePicViewController.swift */; };
 		F6F8FC931D547B68006313EB /* PictureCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8FC921D547B68006313EB /* PictureCollectionViewCell.swift */; };
-		F6F8FC971D549310006313EB /* QFListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8FC961D549310006313EB /* QFListViewController.swift */; };
-		F6F8FC991D549546006313EB /* YiFaQunFaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8FC981D549546006313EB /* YiFaQunFaViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -337,7 +405,6 @@
 		18B368F81CB5E7C3007DC602 /* MaintainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MaintainViewController.swift; sourceTree = "<group>"; };
 		18B368FA1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErWeiMaDownViewController.swift; sourceTree = "<group>"; };
 		18B368FD1CB5E8BF007DC602 /* CardSetViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardSetViewController.swift; sourceTree = "<group>"; };
-		18B368FF1CB5E9C0007DC602 /* XiaoXiQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoXiQunFaViewController.swift; sourceTree = "<group>"; };
 		18B369011CB5ED66007DC602 /* ContactList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactList.swift; sourceTree = "<group>"; };
 		18B369041CB5EF3F007DC602 /* VideosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideosViewController.swift; sourceTree = "<group>"; };
 		18B369061CB5EF59007DC602 /* VideoPlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoPlayViewController.swift; sourceTree = "<group>"; };
@@ -409,8 +476,6 @@
 		EAC200871C9CF72700A6A613 /* SetPassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetPassViewController.swift; sourceTree = "<group>"; };
 		EAC2008B1C9D332700A6A613 /* DingzhuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DingzhuViewController.swift; sourceTree = "<group>"; };
 		EAC2008D1C9D36A400A6A613 /* DingZhuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DingZhuTableViewCell.swift; sourceTree = "<group>"; };
-		EAC8DE6F1C8974AC00C2CEE6 /* BlogCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogCommentTableViewController.swift; sourceTree = "<group>"; };
-		EAC8DE711C8978B300C2CEE6 /* CommentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentList.swift; sourceTree = "<group>"; };
 		EACF434B1C9D3B730008A3A6 /* DingzhuXiangqingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DingzhuXiangqingViewController.swift; sourceTree = "<group>"; };
 		EACF434D1C9D3EC30008A3A6 /* QunLiaoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QunLiaoViewController.swift; sourceTree = "<group>"; };
 		EACF434E1C9D3EC30008A3A6 /* YuanDingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YuanDingViewController.swift; sourceTree = "<group>"; };
@@ -435,9 +500,6 @@
 		EAFAE5DE1C82E4D600A8BAF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EAFAE5E61C82E50900A8BAF2 /* BlogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogViewController.swift; sourceTree = "<group>"; };
 		EAFAE5E71C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
-		EAFAE5E91C82E50900A8BAF2 /* BlogList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogList.swift; sourceTree = "<group>"; };
-		EAFAE5EA1C82E50900A8BAF2 /* DianZanList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DianZanList.swift; sourceTree = "<group>"; };
-		EAFAE5EB1C82E50900A8BAF2 /* PictureList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureList.swift; sourceTree = "<group>"; };
 		EAFAE5EC1C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EAFAE5EE1C82E50900A8BAF2 /* BlogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogTableViewCell.swift; sourceTree = "<group>"; };
 		EAFAE5EF1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserCollectionCell.swift; sourceTree = "<group>"; };
@@ -467,7 +529,6 @@
 		EAFAE61C1C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EAFAE61E1C82E50900A8BAF2 /* MineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineTableViewCell.swift; sourceTree = "<group>"; };
 		EAFAE61F1C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
-		EAFAE6231C82E50900A8BAF2 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		EAFAE6241C82E50900A8BAF2 /* JiaZhangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JiaZhangViewController.swift; sourceTree = "<group>"; };
 		EAFAE6261C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EAFAE6291C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
@@ -577,6 +638,7 @@
 		EAFAE7311C82E52B00A8BAF2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EAFAE7341C82E55400A8BAF2 /* WXT_Teacher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WXT_Teacher-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		EAFAE7381C82E56800A8BAF2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F606ED011D74284C00FD390F /* ChooseTeacherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseTeacherViewController.swift; sourceTree = "<group>"; };
 		F60F5D841D22742F00CEFC30 /* HomeworkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkViewController.swift; sourceTree = "<group>"; };
 		F60F5D871D227AF800CEFC30 /* HCommentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCommentList.swift; sourceTree = "<group>"; };
 		F60F5D881D227AF800CEFC30 /* HomeworkList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkList.swift; sourceTree = "<group>"; };
@@ -585,7 +647,13 @@
 		F61F70901CFFD02B00A4BFB9 /* ACommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACommentTableViewCell.swift; sourceTree = "<group>"; };
 		F61F70911CFFD02B00A4BFB9 /* ACommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACommentTableViewCell.xib; sourceTree = "<group>"; };
 		F61F709C1CFFD5DE00A4BFB9 /* CAWriteCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CAWriteCommentViewController.swift; sourceTree = "<group>"; };
-		F6331D1B1D23736E009E63A7 /* AddQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddQunFaViewController.swift; sourceTree = "<group>"; };
+		F63365911D9D1651004E931B /* TeacherListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherListViewController.swift; sourceTree = "<group>"; };
+		F635FEED1D741A3A0082D6A1 /* ChooseTeacherModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseTeacherModel.swift; sourceTree = "<group>"; };
+		F63618991D96832A0020D56E /* QCAboutWeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCAboutWeVC.swift; sourceTree = "<group>"; };
+		F636189B1D96846E0020D56E /* QCOnlineHelpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCOnlineHelpVC.swift; sourceTree = "<group>"; };
+		F63693DC1D6E870A0054B6D4 /* CustomBtn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBtn.swift; sourceTree = "<group>"; };
+		F63693DE1D6E87170054B6D4 /* ChooseUserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUserTableViewCell.swift; sourceTree = "<group>"; };
+		F63693E01D6E87200054B6D4 /* ChooseUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUser.swift; sourceTree = "<group>"; };
 		F63760E91D1A358E001BC470 /* ZhaoPinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZhaoPinViewController.swift; sourceTree = "<group>"; };
 		F63760ED1D1A35A8001BC470 /* XingQuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XingQuViewController.swift; sourceTree = "<group>"; };
 		F63760F11D1A9307001BC470 /* TeacherLIstViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherLIstViewController.swift; sourceTree = "<group>"; };
@@ -611,13 +679,30 @@
 		F63D4DFE1D1BDD2200DF4D2B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		F63D4E001D1BDD3000DF4D2B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F63D4E021D1BDD3E00DF4D2B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F63F68DC1DB89AB200C8B03B /* ServiceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
+		F63F68DE1DB8AC0200C8B03B /* QCSystemInformsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCSystemInformsVC.swift; sourceTree = "<group>"; };
+		F63F68E01DB8AC1400C8B03B /* SystemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemDetailViewController.swift; sourceTree = "<group>"; };
+		F63F68E21DB8AC2000C8B03B /* QCDetailsInformVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCDetailsInformVC.swift; sourceTree = "<group>"; };
+		F63F68E41DB8B1EB00C8B03B /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F63FA7D51D34D23A0049AC3B /* XinXiangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XinXiangViewController.swift; sourceTree = "<group>"; };
+		F63FFC291D76B18D00E1DFA0 /* AddDaiBanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDaiBanViewController.swift; sourceTree = "<group>"; };
+		F63FFC2B1D76C6D500E1DFA0 /* DaiBanInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaiBanInfoViewController.swift; sourceTree = "<group>"; };
 		F641412F1D435EC60086F640 /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		F64198C01D4AE6F900E6A935 /* DaijieModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaijieModel.swift; sourceTree = "<group>"; };
 		F64198C21D4B340A00E6A935 /* DJViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DJViewController.swift; sourceTree = "<group>"; };
 		F64198C41D4B348000E6A935 /* YDaiJieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YDaiJieViewController.swift; sourceTree = "<group>"; };
 		F64198C81D4B544F00E6A935 /* AddDaijieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDaijieViewController.swift; sourceTree = "<group>"; };
-		F644A12E1D507ED40069DA07 /* FSendMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSendMessageModel.swift; sourceTree = "<group>"; };
+		F641C8B41DAA3E3B00562825 /* GroupPicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPicViewController.swift; sourceTree = "<group>"; };
+		F642AB5F1D7BBFB80038BF71 /* ChooseDaiBanViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDaiBanViewController.swift; sourceTree = "<group>"; };
+		F642AB611D7BCD060038BF71 /* AddKeJianViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddKeJianViewController.swift; sourceTree = "<group>"; };
+		F642AB631D7BEE3C0038BF71 /* ChooseClassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseClassViewController.swift; sourceTree = "<group>"; };
+		F642AB651D7C01780038BF71 /* QKClassAblumTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QKClassAblumTableViewController.swift; sourceTree = "<group>"; };
+		F642AB671D7C0AFC0038BF71 /* ClassAlbumIntrouce.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassAlbumIntrouce.swift; sourceTree = "<group>"; };
+		F642AB691D7C0FB50038BF71 /* QKAblumDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QKAblumDetailTableViewController.swift; sourceTree = "<group>"; };
+		F64304F41DACD634006326D7 /* GroupPictureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupPictureViewController.swift; sourceTree = "<group>"; };
+		F64336BD1D798392001D7D18 /* FTPopOverMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FTPopOverMenu.h; sourceTree = "<group>"; };
+		F64336BE1D798392001D7D18 /* FTPopOverMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FTPopOverMenu.m; sourceTree = "<group>"; };
+		F64336C01D7984D9001D7D18 /* DatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerView.swift; sourceTree = "<group>"; };
 		F644B7401D24F52C0062E439 /* HomeWorkTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeWorkTwoViewController.swift; sourceTree = "<group>"; };
 		F644B7421D2516470062E439 /* AddHomeworkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddHomeworkViewController.swift; sourceTree = "<group>"; };
 		F646512A1CFD8634005599CD /* HomeworkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkTableViewCell.swift; sourceTree = "<group>"; };
@@ -635,17 +720,87 @@
 		F64E83B21D603B190044528F /* AnnounceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnounceViewController.swift; sourceTree = "<group>"; };
 		F64E83B41D603CCF0044528F /* ReciveAnnounceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReciveAnnounceViewController.swift; sourceTree = "<group>"; };
 		F64E83B81D603F9E0044528F /* ReciveAnnounceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReciveAnnounceModel.swift; sourceTree = "<group>"; };
+		F651170E1D7D1D6C00699E38 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		F65117101D7D1DD100699E38 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		F65117121D7D1DDF00699E38 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F65117141D7D1DEA00699E38 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F65117161D7D3EE700699E38 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F65117181D7D3EF800699E38 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F651171A1D7D3F0100699E38 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F651171C1D7D3F0A00699E38 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F65117201D7D478900699E38 /* jpush-ios-2.1.8.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "jpush-ios-2.1.8.a"; sourceTree = "<group>"; };
+		F65117211D7D478900699E38 /* JPUSHService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPUSHService.h; sourceTree = "<group>"; };
+		F65357CA1D9A4F5100FA9474 /* ErWeiMaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErWeiMaViewController.swift; sourceTree = "<group>"; };
 		F653B5CC1D62ECC400422A55 /* PhotoBigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBigViewController.swift; sourceTree = "<group>"; };
+		F65472401D7AAE2A002C97C0 /* ClassModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassModel.swift; sourceTree = "<group>"; };
+		F65472421D7AAE6D002C97C0 /* ClassScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassScheduleTableViewController.swift; sourceTree = "<group>"; };
 		F65499911D3F14C300F6FD7D /* SchoolNoticesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolNoticesModel.swift; sourceTree = "<group>"; };
 		F65499931D3F687A00F6FD7D /* SetUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetUpViewController.swift; sourceTree = "<group>"; };
 		F65499951D3F770600F6FD7D /* ChangeInformationPageVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeInformationPageVC.swift; sourceTree = "<group>"; };
 		F65499961D3F770600F6FD7D /* PersonInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonInformation.swift; sourceTree = "<group>"; };
+		F6564FD51D683A1700E276EF /* BirthdayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BirthdayViewController.swift; sourceTree = "<group>"; };
 		F657932F1D485658003F2267 /* QCTakeBabyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCTakeBabyCell.swift; sourceTree = "<group>"; };
 		F65793311D485E37003F2267 /* TakeChilrenList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeChilrenList.swift; sourceTree = "<group>"; };
+		F657951A1D65941D0059301F /* BlogModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogModel.swift; sourceTree = "<group>"; };
+		F657951C1D659E290059301F /* XiaoXiQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XiaoXiQunFaViewController.swift; sourceTree = "<group>"; };
+		F657951E1D659E2E0059301F /* YiFaQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiFaQunFaViewController.swift; sourceTree = "<group>"; };
+		F65795201D659E760059301F /* AddQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddQunFaViewController.swift; sourceTree = "<group>"; };
+		F65795221D659E7A0059301F /* ChooseReciveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseReciveViewController.swift; sourceTree = "<group>"; };
+		F65795241D659E940059301F /* QFListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QFListViewController.swift; sourceTree = "<group>"; };
+		F657952C1D65A0150059301F /* NewGroupRecive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGroupRecive.swift; sourceTree = "<group>"; };
+		F657952E1D65A0490059301F /* WBPopMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuModel.h; sourceTree = "<group>"; };
+		F657952F1D65A0490059301F /* WBPopMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuModel.m; sourceTree = "<group>"; };
+		F65795301D65A0490059301F /* WBPopMenuSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuSingleton.h; sourceTree = "<group>"; };
+		F65795311D65A0490059301F /* WBPopMenuSingleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuSingleton.m; sourceTree = "<group>"; };
+		F65795321D65A0490059301F /* WBPopMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBPopMenuView.h; sourceTree = "<group>"; };
+		F65795331D65A0490059301F /* WBPopMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBPopMenuView.m; sourceTree = "<group>"; };
+		F65795341D65A0490059301F /* WBTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewCell.h; sourceTree = "<group>"; };
+		F65795351D65A0490059301F /* WBTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewCell.m; sourceTree = "<group>"; };
+		F65795361D65A0490059301F /* WBTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDataSource.h; sourceTree = "<group>"; };
+		F65795371D65A0490059301F /* WBTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDataSource.m; sourceTree = "<group>"; };
+		F65795381D65A0490059301F /* WBTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBTableViewDelegate.h; sourceTree = "<group>"; };
+		F65795391D65A0490059301F /* WBTableViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WBTableViewDelegate.m; sourceTree = "<group>"; };
+		F65795421D65A4320059301F /* FSendMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FSendMessageModel.swift; sourceTree = "<group>"; };
+		F6579FEB1D77D0690049932E /* ClassKaoQin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassKaoQin.swift; sourceTree = "<group>"; };
+		F6579FED1D77D0710049932E /* ClassKaoqinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassKaoqinViewController.swift; sourceTree = "<group>"; };
+		F6579FEF1D77D0760049932E /* KaoQinHistroyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KaoQinHistroyViewController.swift; sourceTree = "<group>"; };
+		F6579FF11D77D07A0049932E /* QianTuiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QianTuiViewController.swift; sourceTree = "<group>"; };
+		F6579FF31D77D12F0049932E /* ClassInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassInfo.swift; sourceTree = "<group>"; };
+		F6579FF51D77D1820049932E /* ClassHistroy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassHistroy.swift; sourceTree = "<group>"; };
+		F6579FF71D77D44D0049932E /* KaoqinCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KaoqinCollectionViewCell.swift; path = ../Controller/KaoqinCollectionViewCell.swift; sourceTree = "<group>"; };
+		F6579FF91D77D49E0049932E /* KaoQinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KaoQinViewController.swift; sourceTree = "<group>"; };
+		F6579FFB1D77D4F80049932E /* KaoqinModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KaoqinModel.swift; sourceTree = "<group>"; };
+		F6579FFD1D77D5580049932E /* AddDianpingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDianpingView.swift; sourceTree = "<group>"; };
+		F6579FFF1D77D5900049932E /* TeacherCommentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TeacherCommentsTableViewController.swift; sourceTree = "<group>"; };
+		F657A0011D77D6170049932E /* QCTeacherCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCTeacherCommentCell.swift; sourceTree = "<group>"; };
+		F657A0031D77D7620049932E /* QCTeacherCommentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCTeacherCommentModel.swift; sourceTree = "<group>"; };
+		F657A0051D77FFF60049932E /* BanLiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BanLiViewController.swift; sourceTree = "<group>"; };
+		F657A0081D7809FB0049932E /* CalendarDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDayCell.h; sourceTree = "<group>"; };
+		F657A0091D7809FB0049932E /* CalendarDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDayCell.m; sourceTree = "<group>"; };
+		F657A00A1D7809FB0049932E /* CalendarDayModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarDayModel.h; sourceTree = "<group>"; };
+		F657A00B1D7809FB0049932E /* CalendarDayModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarDayModel.m; sourceTree = "<group>"; };
+		F657A00C1D7809FB0049932E /* CalendarFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarFirstViewController.h; sourceTree = "<group>"; };
+		F657A00D1D7809FB0049932E /* CalendarFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarFirstViewController.m; sourceTree = "<group>"; };
+		F657A00E1D7809FB0049932E /* CalendarHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHomeViewController.h; sourceTree = "<group>"; };
+		F657A00F1D7809FB0049932E /* CalendarHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarHomeViewController.m; sourceTree = "<group>"; };
+		F657A0101D7809FB0049932E /* CalendarLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarLogic.h; sourceTree = "<group>"; };
+		F657A0111D7809FB0049932E /* CalendarLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarLogic.m; sourceTree = "<group>"; };
+		F657A0121D7809FB0049932E /* CalendarMonthCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarMonthCollectionViewLayout.h; sourceTree = "<group>"; };
+		F657A0131D7809FB0049932E /* CalendarMonthCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarMonthCollectionViewLayout.m; sourceTree = "<group>"; };
+		F657A0141D7809FB0049932E /* CalendarMonthHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarMonthHeaderView.h; sourceTree = "<group>"; };
+		F657A0151D7809FB0049932E /* CalendarMonthHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarMonthHeaderView.m; sourceTree = "<group>"; };
+		F657A0161D7809FB0049932E /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		F657A0171D7809FB0049932E /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		F657A0181D7809FB0049932E /* chack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chack.png; sourceTree = "<group>"; };
+		F657A0191D7809FB0049932E /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		F657A01A1D7809FB0049932E /* NSDate+WQCalendarLogic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+WQCalendarLogic.h"; sourceTree = "<group>"; };
+		F657A01B1D7809FB0049932E /* NSDate+WQCalendarLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+WQCalendarLogic.m"; sourceTree = "<group>"; };
+		F65A0C331D6D44D3003B48E4 /* HTMLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTMLViewController.swift; sourceTree = "<group>"; };
 		F66292FB1CB9E7CC0022EEC3 /* PlanList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanList.swift; sourceTree = "<group>"; };
 		F66292FE1CB9F29F0022EEC3 /* YuErListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YuErListTableViewController.swift; sourceTree = "<group>"; };
 		F66293001CB9F2CF0022EEC3 /* YuErInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YuErInfoViewController.swift; sourceTree = "<group>"; };
 		F66293021CB9F4230022EEC3 /* YuErList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YuErList.swift; sourceTree = "<group>"; };
+		F663EC401DBA182A00E19D0E /* JiazhangModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JiazhangModel.swift; sourceTree = "<group>"; };
 		F665105F1D519CCF00A5F3E6 /* ActivityList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityList.swift; sourceTree = "<group>"; };
 		F66510601D519CCF00A5F3E6 /* ActivityModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityModel.swift; sourceTree = "<group>"; };
 		F66510641D51EDCD00A5F3E6 /* QCDetailsClassActiveVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCDetailsClassActiveVC.swift; sourceTree = "<group>"; };
@@ -677,8 +832,6 @@
 		F6F750B41D5C53DF006BFCE5 /* AddJZGongGaoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddJZGongGaoViewController.swift; sourceTree = "<group>"; };
 		F6F8FC8E1D54713D006313EB /* NoticePicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoticePicViewController.swift; sourceTree = "<group>"; };
 		F6F8FC921D547B68006313EB /* PictureCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCollectionViewCell.swift; sourceTree = "<group>"; };
-		F6F8FC961D549310006313EB /* QFListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QFListViewController.swift; sourceTree = "<group>"; };
-		F6F8FC981D549546006313EB /* YiFaQunFaViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YiFaQunFaViewController.swift; sourceTree = "<group>"; };
 		F7D892E0A840C8D6CB9F6455 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -687,6 +840,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F651171E1D7D3F1F00699E38 /* libz.tbd in Frameworks */,
+				F651171D1D7D3F0A00699E38 /* Security.framework in Frameworks */,
+				F651171B1D7D3F0100699E38 /* UIKit.framework in Frameworks */,
+				F65117191D7D3EF800699E38 /* Foundation.framework in Frameworks */,
+				F65117171D7D3EE700699E38 /* CoreGraphics.framework in Frameworks */,
+				F65117151D7D1DEA00699E38 /* SystemConfiguration.framework in Frameworks */,
+				F65117131D7D1DDF00699E38 /* CoreTelephony.framework in Frameworks */,
+				F65117111D7D1DD100699E38 /* CoreFoundation.framework in Frameworks */,
+				F651170F1D7D1D6C00699E38 /* CFNetwork.framework in Frameworks */,
+				F65117221D7D478900699E38 /* jpush-ios-2.1.8.a in Frameworks */,
 				AFC09C14012FD90FA811DB41 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -697,6 +860,7 @@
 		18A848F01CB759C000A9D123 /* KeBiao */ = {
 			isa = PBXGroup;
 			children = (
+				F65472421D7AAE6D002C97C0 /* ClassScheduleTableViewController.swift */,
 				EA4350301C9403810040F56D /* BBKeTangViewController.swift */,
 			);
 			name = KeBiao;
@@ -714,6 +878,9 @@
 			isa = PBXGroup;
 			children = (
 				EA6D2D3C1C95125D0092F09A /* bbKaoQinViewController.swift */,
+				F6579FED1D77D0710049932E /* ClassKaoqinViewController.swift */,
+				F6579FEF1D77D0760049932E /* KaoQinHistroyViewController.swift */,
+				F6579FF11D77D07A0049932E /* QianTuiViewController.swift */,
 			);
 			name = BBKaoQin;
 			sourceTree = "<group>";
@@ -722,6 +889,8 @@
 			isa = PBXGroup;
 			children = (
 				18B369211CB5F66F007DC602 /* YSQingKuangViewController.swift */,
+				F642AB651D7C01780038BF71 /* QKClassAblumTableViewController.swift */,
+				F642AB691D7C0FB50038BF71 /* QKAblumDetailTableViewController.swift */,
 			);
 			name = QingKuang;
 			sourceTree = "<group>";
@@ -737,6 +906,7 @@
 		18A848F51CB75A9A00A9D123 /* TeKaoQin */ = {
 			isa = PBXGroup;
 			children = (
+				F6579FF91D77D49E0049932E /* KaoQinViewController.swift */,
 				EA6D54121C97AB3D00F85EA2 /* daKaViewController.swift */,
 			);
 			name = TeKaoQin;
@@ -798,6 +968,14 @@
 		476E5D8D9D14FDD2A187CAEF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F651171C1D7D3F0A00699E38 /* Security.framework */,
+				F651171A1D7D3F0100699E38 /* UIKit.framework */,
+				F65117181D7D3EF800699E38 /* Foundation.framework */,
+				F65117161D7D3EE700699E38 /* CoreGraphics.framework */,
+				F65117141D7D1DEA00699E38 /* SystemConfiguration.framework */,
+				F65117121D7D1DDF00699E38 /* CoreTelephony.framework */,
+				F65117101D7D1DD100699E38 /* CoreFoundation.framework */,
+				F651170E1D7D1D6C00699E38 /* CFNetwork.framework */,
 				F63799D11D3877C50050FB7B /* libiconv.tbd */,
 				F63799CE1D3877B00050FB7B /* libstdc++.6.0.9.tbd */,
 				F63799CB1D3877820050FB7B /* libc++.tbd */,
@@ -845,6 +1023,7 @@
 			children = (
 				EAD5D45A1C93A2D900013E10 /* TeacherDianPingViewController.swift */,
 				EA2D40221CABB5EE000DEAF6 /* DianPingListViewController.swift */,
+				F6579FFF1D77D5900049932E /* TeacherCommentsTableViewController.swift */,
 				EA2D40201CABB547000DEAF6 /* FaBiaoDianpingViewController.swift */,
 			);
 			name = DianPing;
@@ -879,6 +1058,7 @@
 				EA6D54141C97E85F00F85EA2 /* BanJihuodongViewController.swift */,
 				EA61C6DD1C9F8A760073E9CA /* HuoDongXqViewController.swift */,
 				F66510641D51EDCD00A5F3E6 /* QCDetailsClassActiveVC.swift */,
+				F6564FD51D683A1700E276EF /* BirthdayViewController.swift */,
 			);
 			name = Huodong;
 			sourceTree = "<group>";
@@ -932,6 +1112,10 @@
 				EA8B7C4C1CA27980007AFED0 /* DaiBanViewController.swift */,
 				F66AA0AA1D41BA9A0092E636 /* YiShouViewController.swift */,
 				F66AA0AC1D41BAA40092E636 /* YiFaViewController.swift */,
+				F63FFC291D76B18D00E1DFA0 /* AddDaiBanViewController.swift */,
+				F63FFC2B1D76C6D500E1DFA0 /* DaiBanInfoViewController.swift */,
+				F657A0051D77FFF60049932E /* BanLiViewController.swift */,
+				F642AB5F1D7BBFB80038BF71 /* ChooseDaiBanViewController.swift */,
 			);
 			name = daiban;
 			sourceTree = "<group>";
@@ -953,6 +1137,8 @@
 			children = (
 				EA43502E1C93F51F0040F56D /* BanJiKeJianViewController.swift */,
 				EAA2CDF61CACB37800766CCB /* KeJianInfoViewController.swift */,
+				F642AB611D7BCD060038BF71 /* AddKeJianViewController.swift */,
+				F642AB631D7BEE3C0038BF71 /* ChooseClassViewController.swift */,
 			);
 			name = Kejian;
 			sourceTree = "<group>";
@@ -981,6 +1167,10 @@
 			children = (
 				EAA2CDFF1CAE0A9000766CCB /* XiTongGongGaoViewController.swift */,
 				EAA2CE031CAE4DEF00766CCB /* XiTongInfoViewController.swift */,
+				F63F68E41DB8B1EB00C8B03B /* NewsModel.swift */,
+				F63F68DE1DB8AC0200C8B03B /* QCSystemInformsVC.swift */,
+				F63F68E21DB8AC2000C8B03B /* QCDetailsInformVC.swift */,
+				F63F68E01DB8AC1400C8B03B /* SystemDetailViewController.swift */,
 			);
 			name = XiTong;
 			sourceTree = "<group>";
@@ -988,7 +1178,6 @@
 		EACF434A1C9D3B4B0008A3A6 /* Dingzhu */ = {
 			isa = PBXGroup;
 			children = (
-				EA61C6DC1C9F8A5B0073E9CA /* Huodong */,
 				EAC2008B1C9D332700A6A613 /* DingzhuViewController.swift */,
 				EACF434B1C9D3B730008A3A6 /* DingzhuXiangqingViewController.swift */,
 			);
@@ -1017,6 +1206,7 @@
 			isa = PBXGroup;
 			children = (
 				EAFAE7381C82E56800A8BAF2 /* Podfile */,
+				F651171F1D7D478900699E38 /* lib */,
 				EAFAE5FC1C82E50900A8BAF2 /* Login and Register */,
 				EAFAE6201C82E50900A8BAF2 /* 消息 */,
 				EAFAE6211C82E50900A8BAF2 /* 通讯录 */,
@@ -1073,7 +1263,6 @@
 				EAFAE5E71C82E50900A8BAF2 /* Readme */,
 				EAFAE5E61C82E50900A8BAF2 /* BlogViewController.swift */,
 				EA94898B1C83E4FD008682E6 /* NewBlogViewController.swift */,
-				EAC8DE6F1C8974AC00C2CEE6 /* BlogCommentTableViewController.swift */,
 				EAA578021C8A7BDA00E9A95D /* NewCommentViewController.swift */,
 			);
 			path = Controller;
@@ -1083,10 +1272,7 @@
 			isa = PBXGroup;
 			children = (
 				EAFAE5EC1C82E50900A8BAF2 /* Readme */,
-				EAFAE5E91C82E50900A8BAF2 /* BlogList.swift */,
-				EAFAE5EB1C82E50900A8BAF2 /* PictureList.swift */,
-				EAFAE5EA1C82E50900A8BAF2 /* DianZanList.swift */,
-				EAC8DE711C8978B300C2CEE6 /* CommentList.swift */,
+				F657951A1D65941D0059301F /* BlogModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1126,6 +1312,7 @@
 				EA1AB6881CA12A9600803E2D /* Daijie */,
 				EA61C6DF1C9FD25E0073E9CA /* School */,
 				F6F4C5451CB4E0B100D4B6D9 /* Shipu */,
+				EA61C6DC1C9F8A5B0073E9CA /* Huodong */,
 				EACF434A1C9D3B4B0008A3A6 /* Dingzhu */,
 				EA4882051C9948E3009CAC3A /* photo */,
 				18B3690F1CB5F025007DC602 /* ChengZhang */,
@@ -1145,6 +1332,11 @@
 		EAFAE5F61C82E50900A8BAF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F6579FF31D77D12F0049932E /* ClassInfo.swift */,
+				F65472401D7AAE2A002C97C0 /* ClassModel.swift */,
+				F6579FEB1D77D0690049932E /* ClassKaoQin.swift */,
+				F6579FFB1D77D4F80049932E /* KaoqinModel.swift */,
+				F6579FF51D77D1820049932E /* ClassHistroy.swift */,
 				F665105F1D519CCF00A5F3E6 /* ActivityList.swift */,
 				F66510601D519CCF00A5F3E6 /* ActivityModel.swift */,
 				F65793311D485E37003F2267 /* TakeChilrenList.swift */,
@@ -1160,9 +1352,11 @@
 				1876F0261CB6440C00425BA9 /* GongGaoList.swift */,
 				18A848EE1CB757AD00A9D123 /* KeChengList.swift */,
 				F66292FB1CB9E7CC0022EEC3 /* PlanList.swift */,
+				F657A0031D77D7620049932E /* QCTeacherCommentModel.swift */,
 				F66293021CB9F4230022EEC3 /* YuErList.swift */,
 				F63AB04A1D4611DC002D0F51 /* QingjiaModel.swift */,
 				F64198C01D4AE6F900E6A935 /* DaijieModel.swift */,
+				F642AB671D7C0AFC0038BF71 /* ClassAlbumIntrouce.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1170,7 +1364,11 @@
 		EAFAE5F81C82E50900A8BAF2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F64336C01D7984D9001D7D18 /* DatePickerView.swift */,
+				F6579FF71D77D44D0049932E /* KaoqinCollectionViewCell.swift */,
+				F6579FFD1D77D5580049932E /* AddDianpingView.swift */,
 				EAFAE5FB1C82E50900A8BAF2 /* Readme */,
+				F657A0011D77D6170049932E /* QCTeacherCommentCell.swift */,
 				F66510661D51F5ED00A5F3E6 /* QCDetailsClassActiveCell.swift */,
 				F657932F1D485658003F2267 /* QCTakeBabyCell.swift */,
 				F6D802D21D3DCBCB0054682B /* SchoolListCell.swift */,
@@ -1329,6 +1527,9 @@
 				EA4402821C9BED87009D1890 /* YiJianFanKuiViewController.swift */,
 				18B368F81CB5E7C3007DC602 /* MaintainViewController.swift */,
 				18B368FA1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift */,
+				F63618991D96832A0020D56E /* QCAboutWeVC.swift */,
+				F636189B1D96846E0020D56E /* QCOnlineHelpVC.swift */,
+				F65357C91D9A4F1F00FA9474 /* 二维码 */,
 				18B368FC1CB5E899007DC602 /* CardSet */,
 				F6F4C5421CB4A92400D4B6D9 /* Edit */,
 				EAA2CE021CAE4D8200766CCB /* XiTong */,
@@ -1340,6 +1541,7 @@
 		EAFAE61B1C82E50900A8BAF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F63F68DC1DB89AB200C8B03B /* ServiceModel.swift */,
 				EAEA5F011C86C51A00DD362E /* MineModel.swift */,
 				EAFAE61C1C82E50900A8BAF2 /* Readme */,
 			);
@@ -1381,7 +1583,6 @@
 			isa = PBXGroup;
 			children = (
 				EAFAE6261C82E50900A8BAF2 /* Readme */,
-				EAFAE6231C82E50900A8BAF2 /* ContactsViewController.swift */,
 				EAFAE6241C82E50900A8BAF2 /* JiaZhangViewController.swift */,
 				EACF434D1C9D3EC30008A3A6 /* QunLiaoViewController.swift */,
 				EACF434E1C9D3EC30008A3A6 /* YuanDingViewController.swift */,
@@ -1430,6 +1631,8 @@
 			isa = PBXGroup;
 			children = (
 				EAFAE6321C82E50900A8BAF2 /* Readme */,
+				F63693E01D6E87200054B6D4 /* ChooseUser.swift */,
+				F635FEED1D741A3A0082D6A1 /* ChooseTeacherModel.swift */,
 				F66714A41D5DBAEB008083BB /* SubjectListModel.swift */,
 				F6393B171D534A1C00975BC7 /* ClassNoticeModel.swift */,
 				EA20A69C1C8D663F001AAAAD /* NewsList.swift */,
@@ -1438,6 +1641,7 @@
 				F61F708C1CFFCC5500A4BFB9 /* ACommentList.swift */,
 				F66AA0AE1D42024F0092E636 /* DaiBanModel.swift */,
 				F64E83B81D603F9E0044528F /* ReciveAnnounceModel.swift */,
+				F663EC401DBA182A00E19D0E /* JiazhangModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1446,6 +1650,8 @@
 			isa = PBXGroup;
 			children = (
 				EAFAE6351C82E50900A8BAF2 /* Readme */,
+				F63693DC1D6E870A0054B6D4 /* CustomBtn.swift */,
+				F63693DE1D6E87170054B6D4 /* ChooseUserTableViewCell.swift */,
 				F61F70901CFFD02B00A4BFB9 /* ACommentTableViewCell.swift */,
 				F61F70911CFFD02B00A4BFB9 /* ACommentTableViewCell.xib */,
 				EAFAE6341C82E50900A8BAF2 /* NewsTableViewCell.swift */,
@@ -1460,6 +1666,19 @@
 		EAFAE6361C82E50900A8BAF2 /* Third Package */ = {
 			isa = PBXGroup;
 			children = (
+				F657A0071D7809FB0049932E /* ZFCalendar */,
+				F657952E1D65A0490059301F /* WBPopMenuModel.h */,
+				F657952F1D65A0490059301F /* WBPopMenuModel.m */,
+				F65795301D65A0490059301F /* WBPopMenuSingleton.h */,
+				F65795311D65A0490059301F /* WBPopMenuSingleton.m */,
+				F65795321D65A0490059301F /* WBPopMenuView.h */,
+				F65795331D65A0490059301F /* WBPopMenuView.m */,
+				F65795341D65A0490059301F /* WBTableViewCell.h */,
+				F65795351D65A0490059301F /* WBTableViewCell.m */,
+				F65795361D65A0490059301F /* WBTableViewDataSource.h */,
+				F65795371D65A0490059301F /* WBTableViewDataSource.m */,
+				F65795381D65A0490059301F /* WBTableViewDelegate.h */,
+				F65795391D65A0490059301F /* WBTableViewDelegate.m */,
 				EAA2CDFA1CACC89000766CCB /* NirKxMenu.h */,
 				EAA2CDFB1CACC89000766CCB /* NirKxMenu.m */,
 				EA9489931C84266F008682E6 /* ConnectModel.h */,
@@ -1682,8 +1901,9 @@
 		F60F5D861D227AE900CEFC30 /* model */ = {
 			isa = PBXGroup;
 			children = (
-				F644A12E1D507ED40069DA07 /* FSendMessageModel.swift */,
+				F65795421D65A4320059301F /* FSendMessageModel.swift */,
 				F60F5D871D227AF800CEFC30 /* HCommentList.swift */,
+				F657952C1D65A0150059301F /* NewGroupRecive.swift */,
 				F60F5D881D227AF800CEFC30 /* HomeworkList.swift */,
 			);
 			path = model;
@@ -1705,6 +1925,15 @@
 			name = TeacherModel;
 			sourceTree = "<group>";
 		};
+		F64336BC1D798392001D7D18 /* FTPopOverMenu */ = {
+			isa = PBXGroup;
+			children = (
+				F64336BD1D798392001D7D18 /* FTPopOverMenu.h */,
+				F64336BE1D798392001D7D18 /* FTPopOverMenu.m */,
+			);
+			path = FTPopOverMenu;
+			sourceTree = "<group>";
+		};
 		F64C35BD1D225271009C953D /* view */ = {
 			isa = PBXGroup;
 			children = (
@@ -1715,6 +1944,51 @@
 				F64C35B61D222AD6009C953D /* MassageCell.swift */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		F651171F1D7D478900699E38 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				F65117201D7D478900699E38 /* jpush-ios-2.1.8.a */,
+				F65117211D7D478900699E38 /* JPUSHService.h */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		F65357C91D9A4F1F00FA9474 /* 二维码 */ = {
+			isa = PBXGroup;
+			children = (
+				F65357CA1D9A4F5100FA9474 /* ErWeiMaViewController.swift */,
+			);
+			name = "二维码";
+			sourceTree = "<group>";
+		};
+		F657A0071D7809FB0049932E /* ZFCalendar */ = {
+			isa = PBXGroup;
+			children = (
+				F64336BC1D798392001D7D18 /* FTPopOverMenu */,
+				F657A0081D7809FB0049932E /* CalendarDayCell.h */,
+				F657A0091D7809FB0049932E /* CalendarDayCell.m */,
+				F657A00A1D7809FB0049932E /* CalendarDayModel.h */,
+				F657A00B1D7809FB0049932E /* CalendarDayModel.m */,
+				F657A00C1D7809FB0049932E /* CalendarFirstViewController.h */,
+				F657A00D1D7809FB0049932E /* CalendarFirstViewController.m */,
+				F657A00E1D7809FB0049932E /* CalendarHomeViewController.h */,
+				F657A00F1D7809FB0049932E /* CalendarHomeViewController.m */,
+				F657A0101D7809FB0049932E /* CalendarLogic.h */,
+				F657A0111D7809FB0049932E /* CalendarLogic.m */,
+				F657A0121D7809FB0049932E /* CalendarMonthCollectionViewLayout.h */,
+				F657A0131D7809FB0049932E /* CalendarMonthCollectionViewLayout.m */,
+				F657A0141D7809FB0049932E /* CalendarMonthHeaderView.h */,
+				F657A0151D7809FB0049932E /* CalendarMonthHeaderView.m */,
+				F657A0161D7809FB0049932E /* CalendarViewController.h */,
+				F657A0171D7809FB0049932E /* CalendarViewController.m */,
+				F657A0181D7809FB0049932E /* chack.png */,
+				F657A0191D7809FB0049932E /* Color.h */,
+				F657A01A1D7809FB0049932E /* NSDate+WQCalendarLogic.h */,
+				F657A01B1D7809FB0049932E /* NSDate+WQCalendarLogic.m */,
+			);
+			path = ZFCalendar;
 			sourceTree = "<group>";
 		};
 		F66292FD1CB9F2530022EEC3 /* YuEr */ = {
@@ -1730,6 +2004,7 @@
 			isa = PBXGroup;
 			children = (
 				F66510691D52032400A5F3E6 /* HappySchoolVC.swift */,
+				F65A0C331D6D44D3003B48E4 /* HTMLViewController.swift */,
 				F665106B1D52033400A5F3E6 /* ActivityViewController.swift */,
 				F665106D1D52034B00A5F3E6 /* SpicyClassViewController.swift */,
 				F665106F1D52035B00A5F3E6 /* HappySchoolTableViewCell.swift */,
@@ -1754,11 +2029,16 @@
 		F66714A31D5DBA7F008083BB /* qunfa */ = {
 			isa = PBXGroup;
 			children = (
-				F6F8FC961D549310006313EB /* QFListViewController.swift */,
-				18B368FF1CB5E9C0007DC602 /* XiaoXiQunFaViewController.swift */,
-				F6F8FC981D549546006313EB /* YiFaQunFaViewController.swift */,
+				F65795241D659E940059301F /* QFListViewController.swift */,
+				F65795221D659E7A0059301F /* ChooseReciveViewController.swift */,
+				F606ED011D74284C00FD390F /* ChooseTeacherViewController.swift */,
+				F63365911D9D1651004E931B /* TeacherListViewController.swift */,
+				F65795201D659E760059301F /* AddQunFaViewController.swift */,
+				F657951E1D659E2E0059301F /* YiFaQunFaViewController.swift */,
+				F657951C1D659E290059301F /* XiaoXiQunFaViewController.swift */,
 				F64C35C21D22540F009C953D /* GroupNewsDetailViewController.swift */,
-				F6331D1B1D23736E009E63A7 /* AddQunFaViewController.swift */,
+				F641C8B41DAA3E3B00562825 /* GroupPicViewController.swift */,
+				F64304F41DACD634006326D7 /* GroupPictureViewController.swift */,
 			);
 			name = qunfa;
 			sourceTree = "<group>";
@@ -1826,6 +2106,11 @@
 					EAFAE5CE1C82E4D500A8BAF2 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = TB5TQ2MXGN;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1888,6 +2173,7 @@
 				EAFAE7321C82E52B00A8BAF2 /* Assets.xcassets in Resources */,
 				EAFAE5DD1C82E4D600A8BAF2 /* LaunchScreen.storyboard in Resources */,
 				EAFAE7281C82E50900A8BAF2 /* ItemCell.xib in Resources */,
+				F657A0241D7809FB0049932E /* chack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1946,9 +2232,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F65A0C341D6D44D3003B48E4 /* HTMLViewController.swift in Sources */,
 				F66292FC1CB9E7CC0022EEC3 /* PlanList.swift in Sources */,
 				F66510631D519CCF00A5F3E6 /* ActivityModel.swift in Sources */,
 				EAFAE6FC1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallClipRotateMultiple.swift in Sources */,
+				F657A0251D7809FB0049932E /* NSDate+WQCalendarLogic.m in Sources */,
 				EAFAE7241C82E50900A8BAF2 /* PhotoBrowser+Model.swift in Sources */,
 				EAA2CDF71CACB37800766CCB /* KeJianInfoViewController.swift in Sources */,
 				EAFAE6C81C82E50900A8BAF2 /* JiaZhangViewController.swift in Sources */,
@@ -1957,26 +2245,34 @@
 				18B369171CB5F2DA007DC602 /* HuoDongList.swift in Sources */,
 				EAA2CDFE1CACFE2C00766CCB /* NewPlanViewController.swift in Sources */,
 				F64C35B91D2250E1009C953D /* tool.swift in Sources */,
+				F657953F1D65A0490059301F /* WBTableViewDelegate.m in Sources */,
 				18B369111CB5F080007DC602 /* PersonViewController.swift in Sources */,
 				EA5DC6DC1C9AA36500A0641B /* NewPhotoViewController.swift in Sources */,
 				F6889E621D4CA1D10004E903 /* PingLunView.swift in Sources */,
 				F66510701D52035B00A5F3E6 /* HappySchoolTableViewCell.swift in Sources */,
+				F657A01C1D7809FB0049932E /* CalendarDayCell.m in Sources */,
 				EAFAE6F11C82E50900A8BAF2 /* NetworkFetcher.swift in Sources */,
 				EA4882071C995E9A009CAC3A /* CameraViewController.swift in Sources */,
 				F65793301D485658003F2267 /* QCTakeBabyCell.swift in Sources */,
 				EA8B7C4A1CA273F3007AFED0 /* TongZhiXinagQingViewController.swift in Sources */,
+				F657951F1D659E2E0059301F /* YiFaQunFaViewController.swift in Sources */,
 				EAFAE6F01C82E50900A8BAF2 /* Log.swift in Sources */,
+				F6579FF81D77D44D0049932E /* KaoqinCollectionViewCell.swift in Sources */,
 				EA2D40231CABB5EE000DEAF6 /* DianPingListViewController.swift in Sources */,
 				F6F8FC931D547B68006313EB /* PictureCollectionViewCell.swift in Sources */,
 				F649918D1D59818900A5484A /* StudentListModel.swift in Sources */,
+				F642AB681D7C0AFC0038BF71 /* ClassAlbumIntrouce.swift in Sources */,
 				18B369191CB5F2F9007DC602 /* KeJianList.swift in Sources */,
+				F657A0211D7809FB0049932E /* CalendarMonthCollectionViewLayout.m in Sources */,
 				EAEB3C051CA3C53E0033B2E9 /* singleTeacherViewController.swift in Sources */,
 				EAFAE6DB1C82E50900A8BAF2 /* ConstraintDescription.swift in Sources */,
 				EAFAE7081C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallScaleRippleMultiple.swift in Sources */,
 				EACF43501C9D3EC30008A3A6 /* YuanDingViewController.swift in Sources */,
 				F649918B1D5883D100A5484A /* JZPicViewController.swift in Sources */,
+				F657953D1D65A0490059301F /* WBTableViewCell.m in Sources */,
 				EAFAE6D51C82E50900A8BAF2 /* DisplayView.swift in Sources */,
 				F6F750B51D5C53DF006BFCE5 /* AddJZGongGaoViewController.swift in Sources */,
+				F63693E11D6E87200054B6D4 /* ChooseUser.swift in Sources */,
 				EAFAE7031C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallRotate.swift in Sources */,
 				EAFAE6C21C82E50900A8BAF2 /* MineMainViewController.swift in Sources */,
 				EAD2EA6F1C911B00006F3A3B /* QingJiaViewController.swift in Sources */,
@@ -1984,44 +2280,58 @@
 				EAFAE6CF1C82E50900A8BAF2 /* NewsInfoViewController.swift in Sources */,
 				EAFAE6FD1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallClipRotatePulse.swift in Sources */,
 				EAFAE71B1C82E50900A8BAF2 /* PhotoBrowser+Common.swift in Sources */,
+				F63F68DF1DB8AC0200C8B03B /* QCSystemInformsVC.swift in Sources */,
 				EA8B7C4D1CA27980007AFED0 /* DaiBanViewController.swift in Sources */,
 				F665106A1D52032400A5F3E6 /* HappySchoolVC.swift in Sources */,
 				EAFAE6EB1C82E50900A8BAF2 /* DiskFetcher.swift in Sources */,
 				EAFAE7291C82E50900A8BAF2 /* ShowImageView.swift in Sources */,
+				F636189A1D96832B0020D56E /* QCAboutWeVC.swift in Sources */,
 				18B369251CB5FA6C007DC602 /* ScrollViewController.swift in Sources */,
+				F6579FF21D77D07A0049932E /* QianTuiViewController.swift in Sources */,
 				EAFAE7111C82E50900A8BAF2 /* NVActivityIndicatorAnimationLineScalePulseOut.swift in Sources */,
 				F6F4C5411CB4A91900D4B6D9 /* EditTableViewController.swift in Sources */,
+				F6579FEE1D77D0710049932E /* ClassKaoqinViewController.swift in Sources */,
 				EAFAE6DE1C82E50900A8BAF2 /* ConstraintRelation.swift in Sources */,
 				EA43502F1C93F51F0040F56D /* BanJiKeJianViewController.swift in Sources */,
 				EAFAE6AD1C82E50900A8BAF2 /* FunctionViewController.swift in Sources */,
 				F66292FF1CB9F29F0022EEC3 /* YuErListTableViewController.swift in Sources */,
 				EAFAE7261C82E50900A8BAF2 /* CollectionView.swift in Sources */,
+				F6564FD61D683A1700E276EF /* BirthdayViewController.swift in Sources */,
 				EAFAE6F21C82E50900A8BAF2 /* NSFileManager+Haneke.swift in Sources */,
 				EA5DC6DA1C9A3D4600A0641B /* RMDownloadIndicator.swift in Sources */,
 				EAFAE6B11C82E50900A8BAF2 /* FunSecondTableViewCell.swift in Sources */,
 				EAFAE72D1C82E50900A8BAF2 /* JSONJoy.swift in Sources */,
-				18B369001CB5E9C0007DC602 /* XiaoXiQunFaViewController.swift in Sources */,
+				F63693DD1D6E870A0054B6D4 /* CustomBtn.swift in Sources */,
 				EAFAE6E21C82E50900A8BAF2 /* SnapKit.swift in Sources */,
 				EACF4DA11C8E9F4000C777D6 /* ServerTableViewController.swift in Sources */,
+				F6579FFE1D77D5580049932E /* AddDianpingView.swift in Sources */,
 				18B3691B1CB5F333007DC602 /* DianPingList.swift in Sources */,
-				EAFAE6A71C82E50900A8BAF2 /* DianZanList.swift in Sources */,
 				F63799D41D388CAC0050FB7B /* AddressBookViewController.swift in Sources */,
 				F64E83B51D603CCF0044528F /* ReciveAnnounceViewController.swift in Sources */,
 				EAFAE71A1C82E50900A8BAF2 /* NVActivityIndicatorView.swift in Sources */,
 				EAFAE70E1C82E50900A8BAF2 /* NVActivityIndicatorAnimationCubeTransition.swift in Sources */,
+				F64304F51DACD634006326D7 /* GroupPictureViewController.swift in Sources */,
 				18B369151CB5F12E007DC602 /* BBShowsViewController.swift in Sources */,
 				EAFAE6EF1C82E50900A8BAF2 /* Haneke.swift in Sources */,
 				EAD5D45D1C93AB5F00013E10 /* TeacherDianPingTableViewCell.swift in Sources */,
+				F6579FFC1D77D4F80049932E /* KaoqinModel.swift in Sources */,
 				F6879A121CB75059009C06FC /* EditPhoneViewController.swift in Sources */,
+				F657953C1D65A0490059301F /* WBPopMenuView.m in Sources */,
+				F63FFC2C1D76C6D500E1DFA0 /* DaiBanInfoViewController.swift in Sources */,
 				F6DF2BFC1CFEBD0300ADD1EB /* JZdingzhuViewController.swift in Sources */,
 				EAA2CDFC1CACC89000766CCB /* NirKxMenu.m in Sources */,
 				EAF2D4961CA6299B00523B37 /* XinWenInfoViewController.swift in Sources */,
+				F6579FF01D77D0760049932E /* KaoQinHistroyViewController.swift in Sources */,
 				F60F5D891D227AF800CEFC30 /* HCommentList.swift in Sources */,
+				F657A0041D77D7620049932E /* QCTeacherCommentModel.swift in Sources */,
+				F657A01E1D7809FB0049932E /* CalendarFirstViewController.m in Sources */,
 				F64C35C01D2252BC009C953D /* GroupNewsTableViewCell.swift in Sources */,
+				F657953A1D65A0490059301F /* WBPopMenuModel.m in Sources */,
 				F63760F21D1A9307001BC470 /* TeacherLIstViewController.swift in Sources */,
 				EAA578031C8A7BDA00E9A95D /* NewCommentViewController.swift in Sources */,
 				EAFAE6E81C82E50900A8BAF2 /* CryptoSwiftMD5.swift in Sources */,
 				EAFAE7191C82E50900A8BAF2 /* NVActivityIndicatorShape.swift in Sources */,
+				F65795231D659E7A0059301F /* ChooseReciveViewController.swift in Sources */,
 				EAFAE6FF1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallGridPulse.swift in Sources */,
 				18B368F91CB5E7C3007DC602 /* MaintainViewController.swift in Sources */,
 				18A848EF1CB757AD00A9D123 /* KeChengList.swift in Sources */,
@@ -2031,12 +2341,14 @@
 				EAFAE6D81C82E50900A8BAF2 /* CFSnapKit.swift in Sources */,
 				18B369071CB5EF59007DC602 /* VideoPlayViewController.swift in Sources */,
 				EAFAE7181C82E50900A8BAF2 /* NVActivityIndicatorAnimationDelegate.swift in Sources */,
+				F636189C1D96846E0020D56E /* QCOnlineHelpVC.swift in Sources */,
 				EA8B7C441CA22F1C007AFED0 /* ZuiXinNewsViewController.swift in Sources */,
 				EAFAE6B91C82E50900A8BAF2 /* LoginViewController.swift in Sources */,
 				EAFAE7231C82E50900A8BAF2 /* Layout.swift in Sources */,
 				EAFAE71F1C82E50900A8BAF2 /* PhotoBrowser+Indicator.swift in Sources */,
 				F64C35B71D222AD6009C953D /* MassageCell.swift in Sources */,
 				EAFAE6D31C82E50900A8BAF2 /* NewsTableViewCell.swift in Sources */,
+				F65795251D659E940059301F /* QFListViewController.swift in Sources */,
 				F665106E1D52034B00A5F3E6 /* SpicyClassViewController.swift in Sources */,
 				F64C35C61D22550A009C953D /* GroupNewsDetailTableViewCell.swift in Sources */,
 				EA5DC6D81C9A3D4600A0641B /* PhotoBrowserCell.swift in Sources */,
@@ -2045,22 +2357,27 @@
 				EAFAE5D51C82E4D500A8BAF2 /* ViewController.swift in Sources */,
 				EAC200881C9CF72700A6A613 /* SetPassViewController.swift in Sources */,
 				EAFAE6E31C82E50900A8BAF2 /* SourceLocation.swift in Sources */,
+				F63F68E11DB8AC1400C8B03B /* SystemDetailViewController.swift in Sources */,
 				F6DF2C001CFEE4CC00ADD1EB /* JZdingzhuModel.swift in Sources */,
 				EA4402831C9BED87009D1890 /* YiJianFanKuiViewController.swift in Sources */,
 				F61F709D1CFFD5DE00A4BFB9 /* CAWriteCommentViewController.swift in Sources */,
 				EAFAE6DF1C82E50900A8BAF2 /* Debugging.swift in Sources */,
 				EAFAE6CD1C82E50900A8BAF2 /* ContactsTableViewCell.swift in Sources */,
+				F6579FF61D77D1820049932E /* ClassHistroy.swift in Sources */,
 				EAFAE6FB1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallClipRotate.swift in Sources */,
 				EA94898C1C83E4FD008682E6 /* NewBlogViewController.swift in Sources */,
+				F642AB641D7BEE3C0038BF71 /* ChooseClassViewController.swift in Sources */,
+				F63F68DD1DB89AB200C8B03B /* ServiceModel.swift in Sources */,
+				F63693DF1D6E87170054B6D4 /* ChooseUserTableViewCell.swift in Sources */,
 				EA5DC6D71C9A3D4600A0641B /* BrowserCellDelegate.swift in Sources */,
 				EAFAE6DC1C82E50900A8BAF2 /* ConstraintItem.swift in Sources */,
+				F65357CB1D9A4F5100FA9474 /* ErWeiMaViewController.swift in Sources */,
 				18B368FB1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift in Sources */,
 				EAFAE7171C82E50900A8BAF2 /* NVActivityIndicatorAnimationTriangleSkewSpin.swift in Sources */,
 				EAFAE6F31C82E50900A8BAF2 /* NSHTTPURLResponse+Haneke.swift in Sources */,
 				EACF4DA21C8E9F4000C777D6 /* HelpTableViewController.swift in Sources */,
 				F63B2BE11D40C5DA00880C3C /* FoodMenuModel.swift in Sources */,
 				EAFAE6D71C82E50900A8BAF2 /* FlexibleTableViewCell.swift in Sources */,
-				F6F8FC971D549310006313EB /* QFListViewController.swift in Sources */,
 				18B3691D1CB5F52D007DC602 /* FangDiuViewController.swift in Sources */,
 				F65499941D3F687A00F6FD7D /* SetUpViewController.swift in Sources */,
 				F6DF2BFE1CFEC28D00ADD1EB /* GongGaoModel.swift in Sources */,
@@ -2078,32 +2395,37 @@
 				18D971011CB79D3F00DE612F /* CardChildViewController.swift in Sources */,
 				EA7D9D111C83DE8B00056B22 /* XKeyBoard.m in Sources */,
 				EAA2CE001CAE0A9000766CCB /* XiTongGongGaoViewController.swift in Sources */,
+				F657953E1D65A0490059301F /* WBTableViewDataSource.m in Sources */,
+				F6579FF41D77D12F0049932E /* ClassInfo.swift in Sources */,
 				EAFAE72C1C82E50900A8BAF2 /* Httpresult.swift in Sources */,
 				EAFAE6BE1C82E50900A8BAF2 /* RegisterGetCodeViewController.swift in Sources */,
+				F606ED021D74284C00FD390F /* ChooseTeacherViewController.swift in Sources */,
 				F64E83B91D603F9E0044528F /* ReciveAnnounceModel.swift in Sources */,
 				EA6D54151C97E85F00F85EA2 /* BanJihuodongViewController.swift in Sources */,
 				F6F4C54F1CB4ED9900D4B6D9 /* FoodTableViewCell.swift in Sources */,
+				F642AB601D7BBFB80038BF71 /* ChooseDaiBanViewController.swift in Sources */,
 				EAFAE6DA1C82E50900A8BAF2 /* ConstraintAttributes.swift in Sources */,
-				F6331D1C1D23736E009E63A7 /* AddQunFaViewController.swift in Sources */,
 				EAA2CE041CAE4DEF00766CCB /* XiTongInfoViewController.swift in Sources */,
 				EAFAE70F1C82E50900A8BAF2 /* NVActivityIndicatorAnimationLineScale.swift in Sources */,
 				EACF4D9E1C8E7F2800C777D6 /* SaoYiSaoViewController.swift in Sources */,
 				1876F0271CB6440C00425BA9 /* GongGaoList.swift in Sources */,
 				18B368FE1CB5E8BF007DC602 /* CardSetViewController.swift in Sources */,
+				F657A0201D7809FB0049932E /* CalendarLogic.m in Sources */,
 				EACF4D9A1C8E6B8800C777D6 /* ReviceMessagesViewController.swift in Sources */,
-				EAC8DE701C8974AC00C2CEE6 /* BlogCommentTableViewController.swift in Sources */,
 				EAFAE6F81C82E50900A8BAF2 /* UIImageView+Haneke.swift in Sources */,
 				EAFAE70D1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBlank.swift in Sources */,
 				EAB2EED11C8FB1CF00693D04 /* DaiJieTableViewCell.swift in Sources */,
+				F657951B1D65941D0059301F /* BlogModel.swift in Sources */,
 				EAFAE6EA1C82E50900A8BAF2 /* DiskCache.swift in Sources */,
 				EAFAE7131C82E50900A8BAF2 /* NVActivityIndicatorAnimationLineSpinFadeLoader.swift in Sources */,
 				EA61C6DE1C9F8A760073E9CA /* HuoDongXqViewController.swift in Sources */,
 				F66510671D51F5ED00A5F3E6 /* QCDetailsClassActiveCell.swift in Sources */,
+				F657A01D1D7809FB0049932E /* CalendarDayModel.m in Sources */,
+				F64336C11D7984D9001D7D18 /* DatePickerView.swift in Sources */,
 				EAFAE70A1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallTrianglePath.swift in Sources */,
 				EACF434F1C9D3EC30008A3A6 /* QunLiaoViewController.swift in Sources */,
 				EAFAE6E11C82E50900A8BAF2 /* LayoutConstraint.swift in Sources */,
 				EAB2EED31C90032500693D04 /* PhotoViewController.swift in Sources */,
-				F644A12F1D507ED40069DA07 /* FSendMessageModel.swift in Sources */,
 				EAFAE7001C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallPulse.swift in Sources */,
 				EAFAE71E1C82E50900A8BAF2 /* PhotoBrowser+HUD.swift in Sources */,
 				EAFAE6B51C82E50900A8BAF2 /* ForgetPasswordViewController.swift in Sources */,
@@ -2112,38 +2434,44 @@
 				EAFAE72E1C82E50900A8BAF2 /* Url.swift in Sources */,
 				F66510721D52037300A5F3E6 /* ActivityTableViewCell.swift in Sources */,
 				F66293011CB9F2CF0022EEC3 /* YuErInfoViewController.swift in Sources */,
-				F6F8FC991D549546006313EB /* YiFaQunFaViewController.swift in Sources */,
 				EA2D401E1CABAE2D000DEAF6 /* TiXingJiaZhangViewController.swift in Sources */,
+				F65472431D7AAE6D002C97C0 /* ClassScheduleTableViewController.swift in Sources */,
+				F63F68E51DB8B1EB00C8B03B /* NewsModel.swift in Sources */,
 				18B3690E1CB5F002007DC602 /* ParadiseShowViewController.swift in Sources */,
 				18B3690C1CB5EFED007DC602 /* ParadiseViewController.swift in Sources */,
 				EAFAE6BF1C82E50900A8BAF2 /* RegisterSetPasswordViewController.swift in Sources */,
-				EAFAE6C71C82E50900A8BAF2 /* ContactsViewController.swift in Sources */,
 				EA94898E1C83E8EE008682E6 /* ImageCollectionViewCell.swift in Sources */,
 				F65793321D485E37003F2267 /* TakeChilrenList.swift in Sources */,
 				EAFAE72B1C82E50900A8BAF2 /* Http.swift in Sources */,
 				EAFAE6E91C82E50900A8BAF2 /* Data.swift in Sources */,
 				EA6D2D3B1C9500830092F09A /* ZhouPlanViewController.swift in Sources */,
 				EAFAE6AB1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift in Sources */,
-				EAFAE6A81C82E50900A8BAF2 /* PictureList.swift in Sources */,
 				EAFAE72A1C82E50900A8BAF2 /* CornerRadiusViewController.swift in Sources */,
+				F635FEEE1D741A3A0082D6A1 /* ChooseTeacherModel.swift in Sources */,
 				EA6D2D3F1C9512F20092F09A /* AvatorCollectionViewCell.swift in Sources */,
+				F657A0221D7809FB0049932E /* CalendarMonthHeaderView.m in Sources */,
 				F60F5D851D22742F00CEFC30 /* HomeworkViewController.swift in Sources */,
 				EAFAE6ED1C82E50900A8BAF2 /* Fetcher.swift in Sources */,
+				F657A0061D77FFF60049932E /* BanLiViewController.swift in Sources */,
 				EAFAE7211C82E50900A8BAF2 /* PhotoBrowser+PBType.swift in Sources */,
 				EAFAE6F51C82E50900A8BAF2 /* String+Haneke.swift in Sources */,
 				EA4350311C9403810040F56D /* BBKeTangViewController.swift in Sources */,
 				EA7A7E361C9261AD00DBA75B /* SchoolViewController.swift in Sources */,
 				F64198C31D4B340A00E6A935 /* DJViewController.swift in Sources */,
 				EAFAE6E01C82E50900A8BAF2 /* EdgeInsets.swift in Sources */,
+				F641C8B51DAA3E3B00562825 /* GroupPicViewController.swift in Sources */,
 				EAFAE6AA1C82E50900A8BAF2 /* BlogTableViewCell.swift in Sources */,
+				F6579FFA1D77D49E0049932E /* KaoQinViewController.swift in Sources */,
 				F65499981D3F770600F6FD7D /* PersonInformation.swift in Sources */,
 				EA2D40211CABB547000DEAF6 /* FaBiaoDianpingViewController.swift in Sources */,
 				F6F4C5441CB4DE4D00D4B6D9 /* FoodList.swift in Sources */,
+				F657953B1D65A0490059301F /* WBPopMenuSingleton.m in Sources */,
+				F65472411D7AAE2A002C97C0 /* ClassModel.swift in Sources */,
 				EA9489911C8413E8008682E6 /* BRPlaceholderTextView.m in Sources */,
 				EAFAE7221C82E50900A8BAF2 /* PhotoBrowser+ZoomAnim.swift in Sources */,
+				F657A0001D77D5900049932E /* TeacherCommentsTableViewController.swift in Sources */,
 				18B369221CB5F66F007DC602 /* YSQingKuangViewController.swift in Sources */,
 				EAFAE6FA1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
-				EAFAE6A61C82E50900A8BAF2 /* BlogList.swift in Sources */,
 				EA715B281CA3796F00E37519 /* YuanquJieShaoViewController.swift in Sources */,
 				F64198C51D4B348000E6A935 /* YDaiJieViewController.swift in Sources */,
 				EAFAE6F61C82E50900A8BAF2 /* UIButton+Haneke.swift in Sources */,
@@ -2151,6 +2479,7 @@
 				EAFAE7201C82E50900A8BAF2 /* PhotoBrowser+Main.swift in Sources */,
 				F6DF2C031CFEE51E00ADD1EB /* ParentsExhortTableViewCell.swift in Sources */,
 				EACFF6361C86885800615394 /* DianzanTableViewCell.swift in Sources */,
+				F642AB661D7C01780038BF71 /* QKClassAblumTableViewController.swift in Sources */,
 				EAF8F5611CAA6C2C00AED18B /* TongGaoListViewController.swift in Sources */,
 				EAFAE6D01C82E50900A8BAF2 /* NewsViewController.swift in Sources */,
 				F6D802D51D3E01420054682B /* SchoolListModel.swift in Sources */,
@@ -2175,9 +2504,11 @@
 				EAFAE7071C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				EA6D54131C97AB3D00F85EA2 /* daKaViewController.swift in Sources */,
 				F66714A71D5DBBD9008083BB /* SubjectListViewController.swift in Sources */,
-				EAC8DE721C8978B300C2CEE6 /* CommentList.swift in Sources */,
 				F6D802D31D3DCBCB0054682B /* SchoolListCell.swift in Sources */,
+				F6579FEC1D77D0690049932E /* ClassKaoQin.swift in Sources */,
 				F64198C11D4AE6F900E6A935 /* DaijieModel.swift in Sources */,
+				F657951D1D659E290059301F /* XiaoXiQunFaViewController.swift in Sources */,
+				F657A01F1D7809FB0049932E /* CalendarHomeViewController.m in Sources */,
 				EA6D54111C97925D00F85EA2 /* XinXiViewController.swift in Sources */,
 				F649918F1D59AC5200A5484A /* StudentLIstViewController.swift in Sources */,
 				F653B5CD1D62ECC400422A55 /* PhotoBigViewController.swift in Sources */,
@@ -2185,38 +2516,50 @@
 				EAFAE6DD1C82E50900A8BAF2 /* ConstraintMaker.swift in Sources */,
 				EAFAE7021C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallPulseSync.swift in Sources */,
 				F66510651D51EDCD00A5F3E6 /* QCDetailsClassActiveVC.swift in Sources */,
+				F657A0231D7809FB0049932E /* CalendarViewController.m in Sources */,
 				EAF8F5631CAA6DDC00AED18B /* TongGaoInfoViewController.swift in Sources */,
 				EAFAE6B41C82E50900A8BAF2 /* ForgetPasswordSetViewController.swift in Sources */,
+				F657952D1D65A0150059301F /* NewGroupRecive.swift in Sources */,
 				18B369051CB5EF3F007DC602 /* VideosViewController.swift in Sources */,
 				F63760EE1D1A35A8001BC470 /* XingQuViewController.swift in Sources */,
 				EA166B1F1C92B11000416536 /* ChengZhangViewController.swift in Sources */,
 				EAB2EED51C90035B00693D04 /* PhotoCollectionViewCell.swift in Sources */,
 				F61F708D1CFFCC5500A4BFB9 /* ACommentList.swift in Sources */,
+				F63F68E31DB8AC2000C8B03B /* QCDetailsInformVC.swift in Sources */,
 				EA8B7C461CA2350D007AFED0 /* TongZhiGonggaoViewController.swift in Sources */,
 				EAFAE7041C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallRotateChase.swift in Sources */,
+				F65795211D659E760059301F /* AddQunFaViewController.swift in Sources */,
 				F65499921D3F14C300F6FD7D /* SchoolNoticesModel.swift in Sources */,
 				EAFAE6D61C82E50900A8BAF2 /* FlexibleTableView.swift in Sources */,
 				F6393B181D534A1C00975BC7 /* ClassNoticeModel.swift in Sources */,
+				F65795431D65A4320059301F /* FSendMessageModel.swift in Sources */,
 				EAA2CDF91CACC5E400766CCB /* EditZhouPlanViewController.swift in Sources */,
 				EAFAE7091C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallSpinFadeLoader.swift in Sources */,
 				EAFAE5D31C82E4D500A8BAF2 /* AppDelegate.swift in Sources */,
+				F642AB6A1D7C0FB50038BF71 /* QKAblumDetailTableViewController.swift in Sources */,
 				EAFAE7051C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallScale.swift in Sources */,
 				EA20A69D1C8D663F001AAAAD /* NewsList.swift in Sources */,
 				EAFAE6E41C82E50900A8BAF2 /* View+SnapKit.swift in Sources */,
 				F6F8FC8F1D54713D006313EB /* NoticePicViewController.swift in Sources */,
 				EACF4D9C1C8E794300C777D6 /* ChangePassViewController.swift in Sources */,
 				F60F5D8A1D227AF800CEFC30 /* HomeworkList.swift in Sources */,
+				F64336BF1D798392001D7D18 /* FTPopOverMenu.m in Sources */,
+				F63365921D9D1651004E931B /* TeacherListViewController.swift in Sources */,
 				F644B7411D24F52C0062E439 /* HomeWorkTwoViewController.swift in Sources */,
 				EAFAE6A41C82E50900A8BAF2 /* BlogViewController.swift in Sources */,
 				F66293031CB9F4230022EEC3 /* YuErList.swift in Sources */,
 				EAFAE7271C82E50900A8BAF2 /* ItemCell.swift in Sources */,
+				F663EC411DBA182A00E19D0E /* JiazhangModel.swift in Sources */,
 				EAC2008C1C9D332700A6A613 /* DingzhuViewController.swift in Sources */,
 				EAB2EECF1C8FAE5500693D04 /* DaiJieViewController.swift in Sources */,
 				EA652B091CA524F2001724F3 /* XinWenListViewController.swift in Sources */,
+				F657A0021D77D6170049932E /* QCTeacherCommentCell.swift in Sources */,
+				F63FFC2A1D76B18D00E1DFA0 /* AddDaiBanViewController.swift in Sources */,
 				EAEA5F021C86C51A00DD362E /* MineModel.swift in Sources */,
 				F66AA0AB1D41BA9A0092E636 /* YiShouViewController.swift in Sources */,
 				F646512C1CFD8634005599CD /* HomeworkTableViewCell.swift in Sources */,
 				EAFAE71D1C82E50900A8BAF2 /* PhotoBrowser+CollectionViewExtend.swift in Sources */,
+				F642AB621D7BCD060038BF71 /* AddKeJianViewController.swift in Sources */,
 				F65499971D3F770600F6FD7D /* ChangeInformationPageVC.swift in Sources */,
 				EAFAE6C51C82E50900A8BAF2 /* MineTableViewCell.swift in Sources */,
 				EAFAE7161C82E50900A8BAF2 /* NVActivityIndicatorAnimationSquareSpin.swift in Sources */,
@@ -2265,8 +2608,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shuguo Peng (269Z58773S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shuguo Peng (269Z58773S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Wenzhou Yuntu Science And Technology Co., Ltd. (TB5TQ2MXGN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wenzhou Yuntu Science And Technology Co., Ltd. (TB5TQ2MXGN)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -2288,7 +2631,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "8588f643-5f82-4507-87f9-ba1c7e20e979";
+				PROVISIONING_PROFILE = "64fb6c7d-f320-4393-8e9b-1430d5ea4ef3";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2311,8 +2654,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Shuguo Peng (269Z58773S)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Shuguo Peng (269Z58773S)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Wenzhou Yuntu Science And Technology Co., Ltd. (TB5TQ2MXGN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wenzhou Yuntu Science And Technology Co., Ltd. (TB5TQ2MXGN)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2327,7 +2670,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "8588f643-5f82-4507-87f9-ba1c7e20e979";
+				PROVISIONING_PROFILE = "64fb6c7d-f320-4393-8e9b-1430d5ea4ef3";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2350,7 +2693,7 @@
 					"$(PROJECT_DIR)/Third",
 					Package/ShareSDK/Support/Required,
 				);
-				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/wxt_teacher_ios_2016 3 2/WXT_Teacher/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/微校通教师端/WXT_Teacher/PrefixHeader.pch";
 				INFOPLIST_FILE = WXT_Teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2426,6 +2769,7 @@
 					Package/HyphenateFullSDK/lib/3rdparty,
 					"$(PROJECT_DIR)/Third",
 					Package/HyphenateFullSDK/lib,
+					"$(PROJECT_DIR)/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2462,6 +2806,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WXT_Teacher-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -2482,7 +2827,7 @@
 					"$(PROJECT_DIR)/Third",
 					Package/ShareSDK/Support/Required,
 				);
-				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/wxt_teacher_ios_2016 3 2/WXT_Teacher/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "/Users/xiaocool/Desktop/微校通教师端/WXT_Teacher/PrefixHeader.pch";
 				INFOPLIST_FILE = WXT_Teacher/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2558,6 +2903,7 @@
 					Package/HyphenateFullSDK/lib/3rdparty,
 					"$(PROJECT_DIR)/Third",
 					Package/HyphenateFullSDK/lib,
+					"$(PROJECT_DIR)/lib",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2593,6 +2939,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "WXT_Teacher-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

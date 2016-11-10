@@ -8,9 +8,16 @@
 
 
 import UIKit
-
+import Alamofire
+import MBProgressHUD
 class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
 
+    var dataSource = ClassKaoQinList()
+    var selectedStu = NSMutableArray()
+    var ids :String?
+    var dateSelect:String?
+    let selecBtn = UIButton()
+    
     var avatorCollection : UICollectionView!
     var flowLayout = UICollectionViewFlowLayout()
     var timeView = UIView()
@@ -19,7 +26,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
     let timeLabel = UILabel()
     let lastMonthBtn = UIButton()
     let nextMonthBtn = UIButton()
-    let sumCount = UILabel()
+    let sumCount = UILabel()	
     let shiDaoCount = UILabel()
     let qingJiaCount = UILabel()
     override func viewDidLoad() {
@@ -29,7 +36,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         self.tabBarController?.tabBar.hidden = true
         flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
         print(UIScreen.mainScreen().bounds.width)
-        avatorCollection = UICollectionView(frame: CGRectMake(0, 60, UIScreen.mainScreen().bounds.width, self.view.bounds.height), collectionViewLayout: flowLayout)
+        avatorCollection = UICollectionView(frame: CGRectMake(0, 60, UIScreen.mainScreen().bounds.width, self.view.bounds.height-50), collectionViewLayout: flowLayout)
         avatorCollection!.delegate = self
         avatorCollection!.dataSource = self
         avatorCollection!.alwaysBounceVertical = true
@@ -38,22 +45,22 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         avatorCollection!.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         avatorCollection.contentSize = CGSizeMake(100, 100)
         avatorCollection!.registerClass(AvatorCollectionViewCell.self, forCellWithReuseIdentifier: "AvatorCell")
-        self.lastDayBtn.frame = CGRectMake(50, 10, 20, 20)
-        self.lastDayBtn.setImage(UIImage(named: "上一天"), forState: .Normal)
+        self.lastDayBtn.frame  = CGRectMake((WIDTH - 200) / 2, 10, 50, 30)
+        self.lastDayBtn.setImage(UIImage(named: "左侧箭头"), forState: .Normal)
         self.lastDayBtn.addTarget(self, action: #selector(bbKaoQinViewController.LastDay), forControlEvents: .TouchUpInside)
-        self.nextDayBtn.frame = CGRectMake(0, 10, 20, 20)
-        self.nextDayBtn.frame.origin.x = self.view.bounds.width - 70
-        self.nextDayBtn.setImage(UIImage(named: "下一天"), forState: .Normal)
+        self.nextDayBtn.frame  = CGRectMake(WIDTH / 2 + 50, 10, 50, 30)
+        self.nextDayBtn.setImage(UIImage(named: "右侧箭头"), forState: .Normal)
         self.nextDayBtn.addTarget(self, action: #selector(bbKaoQinViewController.NextDay), forControlEvents: .TouchUpInside)
-        self.lastMonthBtn.frame = CGRectMake(30, 10, 20, 20)
-        self.lastMonthBtn.setImage(UIImage(named: "上个月"), forState: .Normal)
-        self.lastMonthBtn.addTarget(self, action: #selector(bbKaoQinViewController.LastMonth), forControlEvents: .TouchUpInside)
-        self.nextMonthBtn.frame = CGRectMake(0, 10, 20, 20)
-        self.nextMonthBtn.setImage(UIImage(named: "下个月"), forState: .Normal)
-        self.nextMonthBtn.frame.origin.x = self.view.bounds.width - 50
-        self.nextMonthBtn.addTarget(self, action: #selector(bbKaoQinViewController.NextMonth), forControlEvents: .TouchUpInside)
-        self.timeLabel.frame = CGRectMake(0, 10, 150, 20)
+//        self.lastMonthBtn.frame = CGRectMake(30, 10, 20, 20)
+//        self.lastMonthBtn.setImage(UIImage(named: "上个月"), forState: .Normal)
+//        self.lastMonthBtn.addTarget(self, action: #selector(bbKaoQinViewController.LastMonth), forControlEvents: .TouchUpInside)
+//        self.nextMonthBtn.frame = CGRectMake(0, 10, 20, 20)
+//        self.nextMonthBtn.setImage(UIImage(named: "下个月"), forState: .Normal)
+//        self.nextMonthBtn.frame.origin.x = self.view.bounds.width - 50
+//        self.nextMonthBtn.addTarget(self, action: #selector(bbKaoQinViewController.NextMonth), forControlEvents: .TouchUpInside)
+        self.timeLabel.frame = CGRectMake(WIDTH / 2 - 150/2, 15, 150, 20)
         self.timeLabel.textColor = UIColor.grayColor()
+        self.timeLabel.textAlignment = .Center
         self.timeLabel.center.x = self.view.center.x
         self.timeLabel.font = UIFont.systemFontOfSize(15)
         self.sumCount.frame = CGRectMake(0, 40, 69, 20)
@@ -76,9 +83,9 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         self.qingJiaCount.textAlignment = .Center
         let today:NSDate = NSDate()
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
-        let allday = dateFormatter.stringFromDate(today)
-        timeLabel.text = allday
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateSelect = dateFormatter.stringFromDate(today)
+        timeLabel.text = dateSelect
         self.view.addSubview(self.timeView)
         self.view.addSubview(self.timeLabel)
         self.view.addSubview(self.nextMonthBtn)
@@ -89,24 +96,137 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         self.view.addSubview(self.shiDaoCount)
         self.view.addSubview(self.sumCount)
         self.view.addSubview(avatorCollection!)
+        let sign_date = "\(dateSelect!)-00-00-00"
+        //初始化下面全选布局
+        setFooterView()
+        loadData(stringToTimeStamp(sign_date))
     }
     
+    func setFooterView() -> Void {
+        let footerView = UIView()
+        footerView.frame = CGRectMake(0, HEIGHT-60-40-50, WIDTH, 50)
+        self.view.addSubview(footerView)
+        
+        
+        //左边全选按钮和显示选中个数
+        let label = UILabel()
+        label.frame = CGRectMake(5, 0, 50, 50)
+        label.textAlignment = .Center
+        label.text = "全选"
+        footerView.addSubview(label)
+        
+        
+        selecBtn.frame = CGRectMake(50, 12.5, 25, 25)
+        selecBtn.setImage(UIImage(named: "deseleted"), forState: UIControlState.Normal)
+        selecBtn.setImage(UIImage(named: "selected"), forState: UIControlState.Selected)
+        selecBtn.addTarget(self, action: #selector(self.selecAllBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        footerView.addSubview(selecBtn)
+        
+        
+        //初始化补签按钮
+        let selectAllbtn = UIButton()
+        selectAllbtn.cornerRadius = 10
+        selectAllbtn.frame = CGRectMake(WIDTH - 75, 10, 70, 30)
+        selectAllbtn.backgroundColor = UIColor(red: 155/255.0, green: 229 / 255.0, blue: 180 / 255.0, alpha: 1.0)
+        selectAllbtn.setTitle("补签", forState: UIControlState.Normal)
+        selectAllbtn.addTarget(self, action: #selector(self.footerSelectAllBtnClick), forControlEvents: UIControlEvents.TouchUpInside)
+        footerView.addSubview(selectAllbtn)
+
+        
+    }
+    //MARK: 加载数据
+    func loadData(sign_date : String){
+        
+        //  http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=GetStudentAttendanceList&classid=1&sign_date=1469462400
+        //
+        //下面两hid句代码是从缓存中取出userid（入参）值
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let chid = defalutid.stringForKey("classid")
+    
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=GetStudentAttendanceList"
+        let param = [
+            "classid":chid!,
+            "sign_date":sign_date
+            ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                
+            }else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    //                    self.messageSource = sendMessageList(status.data!)
+                    
+                    self.dataSource.objectlist.removeAll()
+                    self.dataSource = ClassKaoQinList(status.data!)
+                    
+                    //判断人数
+                    var dao = 0
+                    var weidao = 0
+                    for item in self.dataSource.objectlist{
+                        if item.checkedType == "0"{
+                            dao = dao + 1
+                        }
+                        if item.checkedType == "1" || item.checkedType == "2"{
+                            weidao = weidao + 1
+                        }
+                    }
+                    
+                    self.sumCount.text = "总人数:\(self.dataSource.objectlist.count)"
+                    self.shiDaoCount.text = "未到人数:\(weidao)"
+                    self.qingJiaCount.text = "请假人数:\(self.dataSource.objectlist.count-dao-weidao)"
+                    self.avatorCollection.reloadData()
+                    self.avatorCollection.headerView?.endRefreshing()
+                }
+            }
+        }
+    }
+    //MARK: collectionView代理
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return dataSource.objectlist.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell:AvatorCollectionViewCell  = avatorCollection!.dequeueReusableCellWithReuseIdentifier("AvatorCell", forIndexPath: indexPath) as! AvatorCollectionViewCell
         cell.photo.frame = CGRectMake(0,0,50,50)
-        cell.photo.image = UIImage(named: "宝宝头像")
+        
+        let imgUrl = imageUrl + self.dataSource.objectlist[indexPath.row].photo!;
+        let url = NSURL(string: imgUrl)
+        cell.photo.yy_setImageWithURL(url, placeholder: UIImage(named: "图片默认加载"))
         cell.photo.layer.cornerRadius = 25
         cell.photo.layer.masksToBounds = true
         cell.nameLabel.frame = CGRectMake(0, 50, 50, 15)
         cell.nameLabel.font = UIFont.systemFontOfSize(12)
         cell.nameLabel.textAlignment = .Center
-        cell.nameLabel.text = "小红"
-        cell.flag.frame = CGRectMake(30, 0, 20, 20)
-        cell.flag.image = UIImage(named: "入园")
+        cell.nameLabel.text = self.dataSource.objectlist[indexPath.row].name
+        cell.flag.frame = CGRectMake(30, 30, 20, 20)
+        
+        if (self.dataSource.objectlist[indexPath.row].checkedType=="0"){
+            cell.flag.hidden = false
+            cell.flag.image = UIImage(named: "")
+        }else if(self.dataSource.objectlist[indexPath.row].checkedType=="1"){
+            cell.flag.hidden = false
+            cell.flag.image = UIImage(named: "ic_wei")
+        }else if (self.dataSource.objectlist[indexPath.row].checkedType=="2"){
+            cell.flag.hidden = false
+            cell.flag.image = UIImage(named: "ic_qian")
+        }else {
+            cell.flag.hidden = false
+            cell.flag.image = UIImage(named: "ic_jia-2")
+        }
+
         cell.contentView.addSubview(cell.nameLabel)
         cell.contentView.addSubview(cell.photo)
         cell.contentView.addSubview(cell.flag)
@@ -121,44 +241,174 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         return UIEdgeInsetsMake(10, 10, 10, 10)
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if(self.dataSource.objectlist[indexPath.row].checkedType=="1"){
+           self.dataSource.objectlist[indexPath.row].checkedType="2"
+        }else if (self.dataSource.objectlist[indexPath.row].checkedType=="2"){
+           self.dataSource.objectlist[indexPath.row].checkedType="1"
+        }
+        
+        getSelectedStedents()
+        self.avatorCollection.reloadData()
+
+    }
+    func getSelectedStedents(){
+        self.selectedStu.removeAllObjects()
+        for model in self.dataSource.objectlist{
+            if (model.checkedType=="2"){
+               self.selectedStu.addObject(model.userid!)
+            }
+        }
+       
+        var flag = 0;
+        for item in self.dataSource.objectlist {
+            if item.checkedType == "1" {
+                flag = 1
+            }
+        }
+        if (flag==0){
+            
+            selecBtn.selected = true
+        }else {
+            selecBtn.selected = false
+        }
+        ids = self.selectedStu.componentsJoinedByString(",")
+        
+        self.avatorCollection.reloadData()
+    }
+    
+    //MARK: 点击 事件
     func NextDay(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
         let theDayAfterTomorrow = stringday!.dateByAddingTimeInterval(24*60*60)
         let tomorrow = dateFormatter.stringFromDate(theDayAfterTomorrow)
-        timeLabel.text = tomorrow
+        
+        let today:NSDate = NSDate()
+        let todaydateFormatter = NSDateFormatter()
+        todaydateFormatter.dateFormat = "yyyy-MM-dd"
+        let todaydate = todaydateFormatter.stringFromDate(today)
+        if  self.timeLabel.text == todaydate{
+            let alert = UIAlertView(title: "提示", message: "选择日期不能大于当前日期", delegate: self, cancelButtonTitle: "确定")
+            alert.show()
+            
+        }else{
+            timeLabel.text = tomorrow
+            dateSelect = tomorrow
+            let sign_date = "\(dateSelect!)-00-00-00"
+            loadData(stringToTimeStamp(sign_date))
+        
+        }
+        
+       
     }
     
     func LastDay(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
         let theYesterday = stringday!.dateByAddingTimeInterval(-24*60*60)
         let yesterday = dateFormatter.stringFromDate(theYesterday)
         timeLabel.text = yesterday
+        dateSelect = yesterday
+        let sign_date = "\(dateSelect!)-00-00-00"
+        loadData(stringToTimeStamp(sign_date))
     }
     
     func LastMonth(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
         let theLastMonth = stringday!.dateByAddingTimeInterval(-24*60*60*30)
         let lastMonth = dateFormatter.stringFromDate(theLastMonth)
         timeLabel.text = lastMonth
+        dateSelect = lastMonth
+        let sign_date = "\(dateSelect!)-00-00-00"
+        loadData(stringToTimeStamp(sign_date))
     }
     
     func NextMonth(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd  EEEE"
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringday = dateFormatter.dateFromString(self.timeLabel.text!)
         let theNextMonth = stringday!.dateByAddingTimeInterval(24*60*60*30)
         let nextMonth = dateFormatter.stringFromDate(theNextMonth)
         timeLabel.text = nextMonth
+        dateSelect = nextMonth
+        let sign_date = "\(dateSelect!)-00-00-00"
+       loadData(stringToTimeStamp(sign_date))
     }
 
 
+    func selecAllBtnClick(sender:UIButton) -> Void {
+    
+        if sender.selected {
+            sender.selected = false
+            for item in self.dataSource.objectlist {
+                if item.checkedType == "2" {
+                    item.checkedType = "1"
+                }
+            }
+          
+        }else{
+            sender.selected = true
+            for item in self.dataSource.objectlist {
+                if item.checkedType == "1" {
+                    item.checkedType = "2"
+                }
+            }
+        }
+        
+        self.avatorCollection.reloadData()
+    }
 
+    //补签
+    func footerSelectAllBtnClick() -> Void {
+    
+        getSelectedStedents()
+        let defalutid = NSUserDefaults.standardUserDefaults()
+//        let chid = defalutid.stringForKey("userid")
+        let schoolid = defalutid.stringForKey("schoolid")
+        
+        //http://wxt.xiaocool.net/index.php?g=apps&m=index&a=resign&userid=597,605&schoolid=1
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=resign"
+        print(ids)
+        let param = [
+            "userid":ids!,
+            "schoolid":schoolid!
+        ]
+      
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+         
+                    let sign_date = "\(self.dateSelect!)-00-00-00"
+                    self.loadData(stringToTimeStamp(sign_date))
+                    
+                    self.avatorCollection.headerView?.endRefreshing()
+                }
+            }
+        }
+
+        avatorCollection.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

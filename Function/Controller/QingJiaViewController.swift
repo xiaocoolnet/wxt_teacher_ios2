@@ -25,6 +25,7 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         tableview.frame=CGRectMake(0, 0, frame.width, frame.height-64)
         tableview.delegate=self
         tableview.dataSource=self
+        tableview.separatorStyle = .None
         self.view.addSubview(tableview)
     }
     //MARK: -    获取数据
@@ -84,14 +85,18 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.contentView.addSubview(icon)
         let nameL = UILabel(frame: CGRectMake(70,10,frame.width-100,20))
         nameL.text=qingjiainfo.studentname
+        nameL.textColor=biaotiColor
+        nameL.font=biaotifont
         cell.contentView.addSubview(nameL)
         let banjiL = UILabel(frame: CGRectMake(70,35,frame.width-100,20))
-        banjiL.textColor=UIColor.grayColor()
+        banjiL.textColor=timeColor
         banjiL.text=qingjiainfo.classname
-        banjiL.font=UIFont.systemFontOfSize(13)
+        banjiL.font=timefont
         cell.contentView.addSubview(banjiL)
         let contentL = UILabel(frame: CGRectMake(10,80,frame.width-20,20))
         contentL.text=qingjiainfo.reason
+        contentL.textColor=neirongColor
+        contentL.font=neirongfont
         let content_h = calculateHeight(contentL.text!, size: 17, width: frame.width-20)
         contentL.frame.size.height=content_h
         cell.contentView.addSubview(contentL)
@@ -267,6 +272,7 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }}
         
+
         
        //MARK: -  下面的评论视图
         
@@ -274,21 +280,71 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 if qingjiainfo.teachername != nil {
                     senderL.text="受理人："+qingjiainfo.teachername!
                 }
-                senderL.font=UIFont.systemFontOfSize(15)
+                senderL.font=timefont
+                senderL.textColor=timeColor
                 cell.contentView.addSubview(senderL)
                 let timeL = UILabel(frame: CGRectMake(frame.width-150,80+image_h+5+content_h,140,20))
                 timeL.textAlignment = .Right
                 timeL.textColor=timeColor
-                timeL.font=UIFont.systemFontOfSize(15)
+                timeL.font=timefont
                 timeL.text=changeTimeTwo(qingjiainfo.begintime!)+"到"+changeTimeTwo(qingjiainfo.endtime!)
                 cell.contentView.addSubview(timeL)
         let textField = UITextField(frame: CGRectMake(10,90+image_h+40+content_h,frame.width-20,30))
+        textField.placeholder="回复一下家长吧～"
         textField.layer.masksToBounds=true
         textField.layer.cornerRadius=4
         textField.tag=Int(qingjiainfo.id!)!
         textField.backgroundColor=UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         cell.contentView.addSubview(textField)
-        let yesBT = UIButton(frame: CGRectMake(80,90+image_h+40+content_h+40,60,30))
+       
+        
+        
+        var ht = CGFloat()
+        
+        
+        if qingjiainfo.feedback != ""  {
+            textField.hidden=true
+            let pinglunView = UIView(frame: CGRectMake(5,90+image_h+40+content_h,frame.width-10,60))
+            pinglunView.backgroundColor=UIColor.init(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+            pinglunView.layer.cornerRadius=5
+            cell.contentView.addSubview(pinglunView)
+            
+            let icon=UIImageView(frame: CGRectMake(5, 5, 50, 50))
+            icon.layer.masksToBounds=true
+            icon.layer.cornerRadius=25
+            
+            icon.image=UIImage(named: "4")
+            pinglunView.addSubview(icon)
+            let nameL = UILabel(frame: CGRectMake(60,5,frame.width-70,20))
+            let user = NSUserDefaults.standardUserDefaults()
+            let username = user.stringForKey("username")
+            nameL.text=username
+            nameL.font=UIFont.systemFontOfSize(14)
+            pinglunView.addSubview(nameL)
+            let contentL = UILabel(frame: CGRectMake(60,30,frame.width-70,20))
+            contentL.textColor=neirongColor
+            contentL.lineBreakMode  = NSLineBreakMode.ByWordWrapping
+            contentL.numberOfLines=0
+            contentL.text=qingjiainfo.feedback
+            contentL.font=UIFont.systemFontOfSize(14)
+            let content_h = calculateHeight(contentL.text!, size: 14, width: frame.width-70)
+            pinglunView.frame.size.height=40+content_h
+            contentL.frame.size.height=content_h
+            pinglunView.addSubview(contentL)
+            
+            ht=60
+            tableview.rowHeight=90+image_h+40+content_h+90+30
+            
+        }else{
+            ht=30
+            tableview.rowHeight=90+image_h+40+content_h+90
+        }
+        let line = UIView(frame:CGRectMake(0,tableView.rowHeight-4,frame.width,4))
+        line.backgroundColor=UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        cell.addSubview(line)
+
+        
+        let yesBT = UIButton(frame: CGRectMake(80,90+image_h+40+content_h+10+ht,60,30))
         yesBT.backgroundColor=UIColor.init(red: 253/255, green: 166/255, blue: 57/255, alpha: 1)
         yesBT.setTitle("不通过", forState: .Normal)
         yesBT.titleLabel?.font=UIFont.systemFontOfSize(15)
@@ -309,19 +365,17 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         case "1":
             yesBT.userInteractionEnabled=false
             yesBT.backgroundColor=UIColor.grayColor()
-            noBT.userInteractionEnabled=false
-            noBT.backgroundColor=UIColor.grayColor()
-            noBT.setTitle("已批准", forState: .Normal)
+            noBT.hidden=true
+            yesBT.setTitle("已批准", forState: .Normal)
         case "2":
             yesBT.userInteractionEnabled=false
-            noBT.userInteractionEnabled=false
+            noBT.hidden=true
             yesBT.backgroundColor=UIColor.grayColor()
-            noBT.backgroundColor=UIColor.grayColor()
             yesBT.setTitle("已拒绝", forState: .Normal)
         default:
             break
         }
-        tableview.rowHeight=90+image_h+40+content_h+90
+        
         cell.selectionStyle = .None
         return cell
     }
@@ -331,7 +385,7 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let content = textfield?.text
         Getdata(String(sender.tag), status: "2", content: content!)
         textfield?.text=""
-        sender.setTitle("已拒", forState: .Normal)
+        sender.setTitle("已拒绝", forState: .Normal)
         sender.userInteractionEnabled=false
  
     }
@@ -341,7 +395,7 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let content = textfield?.text
         Getdata(String(sender.tag), status: "1", content: content!)
         textfield?.text=""
-        sender.setTitle("已通过", forState: .Normal)
+        sender.setTitle("已批准", forState: .Normal)
         sender.userInteractionEnabled=false
 
     }

@@ -14,7 +14,7 @@ import XWSwiftRefresh
 
 class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     
-    var contactSource : ContactList?
+    var contactSource : JiazhangModel?
     var tableView: FlexibleTableView!
     var subRows = Array<Int>()
     
@@ -35,7 +35,7 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
         self.GetDate()
     }
     func GetDate(){
-        let url = apiUrl+"MessageAddress"
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=ParentContacts"
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.stringForKey("userid")
         let param = [
@@ -62,14 +62,14 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
                     
                 }
                 if(status.status == "success"){
-                    self.contactSource = ContactList(status.data!)
+                    self.contactSource = JiazhangModel(status.data!)
                     self.tableView.refreshData()
                     self.tableView.headerView?.endRefreshing()
-                    print(self.contactSource?.objectlist[0].teacherlist[0].name)
+//                    print(self.contactSource?.objectlist[0].teacherlist[0].name)
                     print("fu")
                     print(self.contactSource?.count)
                     for ob in (self.contactSource?.objectlist)!{
-                        self.subRows.append(ob.teacherlist.count)
+                        self.subRows.append(ob.student_list.count)
                         
                     }
                     print(self.subRows)
@@ -157,13 +157,17 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
             cell = ContactsTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "ContactsCell")
         }
         if self.contactSource?.count>0 {
-//            print("indexpath.row=\(indexPath.row)")
-            cell!.nameLabel.text = self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].name
+            let babyname = self.contactSource?.objectlist[indexPath.row].student_list[indexPath.subRow-1].name
+            let jzname = self.contactSource?.objectlist[indexPath.row].student_list[indexPath.subRow-1].parent_list[0].name
+            let guanxi = self.contactSource?.objectlist[indexPath.row].student_list[indexPath.subRow-1].parent_list[0].appellation
+            
+            
+            cell!.nameLabel.text = jzname!+"("+babyname!+"的"+guanxi!+")"
         }
         
 //        cell?.ipBtn.tag = Int((self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone)!)!
-        if (self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone) != nil {
-                 cell?.ipBtn.titleLabel?.text=(self.contactSource?.objectlist[indexPath.row].teacherlist[indexPath.subRow-1].phone)!
+        if (self.contactSource?.objectlist[indexPath.row].student_list[indexPath.subRow-1].parent_list[0].phone) != nil {
+                 cell?.ipBtn.titleLabel?.text=(self.contactSource?.objectlist[indexPath.row].student_list[indexPath.subRow-1].parent_list[0].phone)!
         }
  
         cell?.ipBtn.addTarget(self, action: #selector(JiaZhangViewController.phone(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -175,16 +179,12 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     func tableView(tableView: FlexibleTableView, didSelectSubRowAtIndexPath indexPath: FlexibleIndexPath) {
         
     }
-    
     func collapseSubrows() {
         tableView.collapseCurrentlyExpandedIndexPaths()
     }
-    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30.0
     }
-    
-    
     //MARK: - 点击事件
     func phone(button:UIButton) -> Void {
         print("dianhua")
@@ -206,14 +206,6 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
         self.tabBarController?.tabBar.hidden=false
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+
     
 }

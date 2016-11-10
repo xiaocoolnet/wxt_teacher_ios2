@@ -12,13 +12,11 @@ import YYWebImage
 import MBProgressHUD
 import XWSwiftRefresh
 
-class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate {
 
     let blogTableView = UITableView()
-    var blogSource = BlogList()
-    var pciSource = PictureList()
-    var dianzanSource = DianZanList()
-    var pingLunSource = CommentList()
+    var blogSource = MyBlogList()
+   
     var remoteThumbImage = [NSIndexPath:[String]]()
     var remoteImage :[String] = []
     var sectionInt = Int()
@@ -27,11 +25,18 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     private let numOfPages=4
     var num=0
     var headerview = UIView()
+    var bview = UIView()
+    let contentTextView = UITextField()
+    var idtag = Int()
+    var keyboardShowState = false
+    
     
     
     override func viewDidLoad() {
         self.title = "动态"
         super.viewDidLoad()
+        XKeyBoard.registerKeyBoardHide(self)
+        XKeyBoard.registerKeyBoardShow(self)
         //MARK: - 滚动式图
         self.scroll()
         
@@ -46,6 +51,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.automaticallyAdjustsScrollViewInsets = false
         self.tabBarController?.tabBar.hidden = false
         blogTableView.tableHeaderView=headerview
+        blogTableView.separatorStyle = .None
         self.view.addSubview(blogTableView)
         self.DropDownUpdate()
     }
@@ -73,7 +79,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         scrollView.delegate = self
         for index  in 0..<numOfPages {
             let imageView = UIImageView(image: UIImage(named: "无网络的背景"))
-            imageView.frame = CGRect(x: frame.width * CGFloat(index), y: 0, width: frame.width, height: frame.height)
+            imageView.frame = CGRect(x: frame.width * CGFloat(index), y: 0, width: frame.width, height: scrollview_h)
             scrollView.addSubview(imageView)
         }
         //滚动视图添加小白点
@@ -137,13 +143,17 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let scid = schoolid.stringForKey("schoolid")
         let classid = NSUserDefaults.standardUserDefaults()
         let clid = classid.stringForKey("classid")
+        let ui = NSUserDefaults.standardUserDefaults()
+        let uid = ui.stringForKey("userid")
         let scidd = scid
         let clidd = clid
         
         let param = [
             "schoolid":scidd,
             "classid":clidd,
-            "type":"1"
+            "type":"1",
+            "beginid":"",
+            "userid":uid
         ]
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             if(error != nil){
@@ -163,7 +173,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    self.blogSource = BlogList(status.data!)
+                    self.blogSource = MyBlogList(status.data!)
                     self.blogTableView.reloadData()
                     self.blogTableView.headerView?.endRefreshing()
                 }
@@ -171,322 +181,378 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if (blogSource.count > 0 ){
-            return blogSource.count
-        }
-        else{
-            return 0
-        }
-    }
+ 
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return  blogSource.count
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if(indexPath.row == 0){
-            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-            
-            let bloginfo = self.blogSource.objectlist[indexPath.section]
-            
-            
-            self.pciSource = PictureList(bloginfo.piclist!)
-            
-            let string:NSString = bloginfo.content!
-            
-            let screenBounds:CGRect = UIScreen.mainScreen().bounds
-            
-            if(pciSource.count == 0){
-                let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                if(boundingRect.size.height>140){
-                    return 20 * 7 + 50
-                }
-                return boundingRect.size.height + 20 + 50
-            }
-            if(pciSource.count<=3&&pciSource.count>0){
-                let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                if(boundingRect.size.height>140){
-                    return 20 * 7 + 95 + 50
-                }else{
-                    return boundingRect.size.height + 90 + 50
-                }
-            }
-            else if(pciSource.count>3&&pciSource.count<=6){
-                let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                if(boundingRect.size.height>140){
-                    return 20 * 7 + 155 + 50
-                }else{
-                    return boundingRect.size.height + 150 + 50
-                }
-                
-            }else{
-                let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                if(boundingRect.size.height>140){
-                    return 20 * 7 + 220 + 50
-                }else{
-                    return boundingRect.size.height + 220 + 50
-                }
-            }
-        }
-        if(indexPath.row == 1){
-            return 60
-        }
-        return 0
-    }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 5
-    }
-    
+ 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        self.remoteThumbImage = [NSIndexPath:[String]]()
-        self.remoteImage = []
-        let displayView = DisplayView()
-        let avatorImage = UIImageView()
-        let nameLable = UILabel()
-        let contentLable = UILabel()
-        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-        let bloginfo = self.blogSource.objectlist[indexPath.section]
-        let string:NSString = bloginfo.content!
-        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        self.dianzanSource = DianZanList(bloginfo.dianzanlist!)
-        let cell1 = UITableViewCell(style: .Value1, reuseIdentifier: "blog")
-        cell1.selectionStyle = .None
-        if(indexPath.row == 0){
-            var cell:BlogTableViewCell? = tableView.dequeueReusableCellWithIdentifier("blogCell", forIndexPath: indexPath) as? BlogTableViewCell
-            if cell == nil{
-                 cell = BlogTableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "image")
-            }
-            else{
-                while(cell?.contentView.subviews.last != nil){
-                    cell?.contentView.subviews.last?.removeFromSuperview()
-                }
-            }
-            self.pciSource = PictureList(bloginfo.piclist!)
-            cell!.selectionStyle = .None
-            nameLable.text = bloginfo.name!
-            nameLable.frame = CGRectMake(63, 17, 50, 15)
-            nameLable.font = UIFont.systemFontOfSize(15)
-            if(bloginfo.photo != nil){
-                let imgUrl = imageUrl+(bloginfo.photo!)
+        let photoinfo = blogSource.objectlist[indexPath.row]
+        
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
+        let senderIV = UIImageView(frame: CGRectMake(5, 10, 40, 40))
+        let photo = photoinfo.photo
+        let url = imageUrl+photo!
+        senderIV.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
+        senderIV.layer.masksToBounds=true
+        senderIV.layer.cornerRadius=20
+        cell.contentView.addSubview(senderIV)
+        let senderL = UILabel(frame: CGRectMake(50,10,120,20))
+        if photoinfo.name != nil {
+            senderL.text=photoinfo.name!
+        }
+        senderL.font=UIFont.systemFontOfSize(15)
+        cell.contentView.addSubview(senderL)
+        let titleL = UILabel()
+        titleL.frame=CGRectMake(50,45,frame.width-60,20)
+        cell.addSubview(titleL)
+        titleL.text=photoinfo.content!
+        titleL.textColor=neirongColor
+        titleL.font=neirongfont
+        //计算lable的高度
+        let titleL_h = calculateHeight(titleL.text!, size: 17, width: frame.width-60)
+        titleL.numberOfLines=0
+        titleL.frame.size.height=titleL_h
+        cell.selectionStyle = .None
+        var blogimage:UIButton?
+        var image_h = CGFloat()
+        
+        //判断图片张数显示
+        if(photoinfo.pic.count>0&&photoinfo.pic.count<=3){
+            image_h=80
+            for i in 1...photoinfo.pic.count{
+                var x = 50
+                let pciInfo = photoinfo.pic[i-1]
+                let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                print(imgUrl)
+                
+                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
                 let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                //异步获取
+                
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
+                        x = x+((i-1)*85)
+                        blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+40, 80, 80))
                         let imgTmp = UIImage(data: data!)
-                        avatorImage.image = imgTmp
-                        avatorImage.alpha = 1.0
+                        //self.imageCache[imgUrl] = imgTmp
+                        blogimage?.setImage(imgTmp, forState: .Normal)
+                        if blogimage?.imageView?.image==nil{
+                            blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                        }
+                        blogimage?.tag=indexPath.row
+                        blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                        cell.contentView.addSubview(blogimage!)
+                        
                     }
                 })
-                avatorImage.frame = CGRectMake(17, 5, 42, 42)
-                avatorImage.layer.cornerRadius = 21
-                avatorImage.layer.masksToBounds = true
+                
             }
-            if(bloginfo.piclist != nil){
-                let boundingRect = string.boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-                if(boundingRect.size.height > 140){
-                    contentLable.numberOfLines = 7
-                    contentLable.frame = CGRectMake(15, 50, self.view.frame.width - 31, 140)
-                    let collectionViewFrame = CGRectMake(8, 180, 220, 290)
-                    displayView.frame = collectionViewFrame
-                }
-                if(boundingRect.size.height < 140){
-                    contentLable.numberOfLines = 0
-                    contentLable.frame = CGRectMake(15, 50, self.view.frame.width - 31, boundingRect.size.height)
-                    let collectionViewFrame = CGRectMake(8, boundingRect.size.height + 45,  220, 290)
-                    displayView.frame = collectionViewFrame
-                    //displayView.make_center(offsest: cell!.contentView.center, width: 220, height: 290)
-                }
-                contentLable.font = UIFont.systemFontOfSize(15)
-                for i in 0..<pciSource.count{
-                        let pciInfo = pciSource.picturelist[i]
-                        let imgUrl = microblogImageUrl+(pciInfo.pictureurl)!
-                        self.remoteImage.append(imgUrl)
-                }
-                self.remoteThumbImage[indexPath] = self.remoteImage
-            }
-            contentLable.text = bloginfo.content!
-            displayView.imgsPrepare(remoteThumbImage[indexPath]!, isLocal: false)
-            let pbVC = PhotoBrowser()
-            pbVC.showType = .Modal
-            pbVC.photoType = PhotoBrowser.PhotoType.Host
-            pbVC.hideMsgForZoomAndDismissWithSingleTap = true
-            var models: [PhotoBrowser.PhotoModel] = []
-            //模型数据数组
-            for i in 0 ..< self.remoteThumbImage[indexPath]!.count{
-                let model = PhotoBrowser.PhotoModel(hostHDImgURL:self.remoteThumbImage[indexPath]![i], hostThumbnailImg: (displayView.subviews[i] as! UIImageView).image, titleStr: "", descStr: "", sourceView: displayView.subviews[i])
-                models.append(model)
-            }
-            /**  设置数据  */
-            pbVC.photoModels = models
-            displayView.tapedImageV = {[unowned self] index in
-                pbVC.show(inVC: self,index: index)
-            }
-            cell!.contentView.addSubview(displayView)
-            cell!.contentView.addSubview(contentLable)
-            cell!.contentView.addSubview(nameLable)
-            cell!.contentView.addSubview(avatorImage)
-            return cell!
         }
-        if indexPath.row == 1{
-            self.dianzanSource = DianZanList(bloginfo.dianzanlist!)
-            self.pingLunSource = CommentList(bloginfo.pingLunList!)
-            let cell = UITableViewCell(style: .Default, reuseIdentifier: "test")
-            cell.selectionStyle = .None
-            let dianZanBtn = UIButton()
-            let pingLun = UIButton()
-            let dianZanPeople = UILabel()
-            let pingLunLabel = UILabel()
-            var arrayPeople:[String] = []
-            dianZanBtn.frame = CGRectMake(15, 8, 20, 20)
-            dianZanPeople.frame = CGRectMake(38, 8, 300, 20)
-            dianZanBtn.setImage(UIImage(named: "zan0"), forState: .Normal)
-            dianZanBtn.tag = Int(bloginfo.mid!)!
-            dianZanBtn.addTarget(self, action: #selector(BlogViewController.DianZan(_:)), forControlEvents: .TouchUpInside)
-            pingLun.frame = CGRectMake(15, 33, 20, 20)
-            pingLun.setImage(UIImage(named: "pinglun0"), forState: .Normal)
-            pingLun.tag = indexPath.section
-            pingLun.setTitle(bloginfo.mid!, forState: .Normal)
-            pingLun.addTarget(self, action: #selector(BlogViewController.PingLun(_:)), forControlEvents: .TouchUpInside)
-            pingLunLabel.frame = CGRectMake(40, 32, 20, 20)
-            pingLunLabel.textColor = UIColor.grayColor()
-            pingLunLabel.font = UIFont.systemFontOfSize(16)
-            pingLunLabel.text = String(self.pingLunSource.count)
-            let userid = NSUserDefaults.standardUserDefaults()
-            let uid = userid.stringForKey("userid")
-            if(self.dianzanSource.count == 0){
-                dianZanBtn.selected = false
-                dianZanBtn.setImage(UIImage(named: "zan0"), forState: .Normal)
-                dianZanPeople.text = ""
-            }
-            if(self.dianzanSource.count>0 && self.dianzanSource.count<=6){
-                for i in 0..<self.dianzanSource.count{
-                    let dianzanInfo = self.dianzanSource.dianzanlist[i]
-                    if(dianzanInfo.dianZanId == uid){
-                        dianZanBtn.selected = true
-                        dianZanBtn.setImage(UIImage(named: "zan2"), forState: .Normal)
-                    }
-                    else{
-                        dianZanBtn.selected = false
-                        dianZanBtn.setImage(UIImage(named: "zan0"), forState: .Normal)
-                    }
-                    arrayPeople.append(dianzanInfo.dianZanName!)
-                    dianZanPeople.font = UIFont.systemFontOfSize(15)
-                    dianZanPeople.textColor = UIColor.grayColor()
-                    let peopleArray = arrayPeople.joinWithSeparator(",")
-                    dianZanPeople.text = "\(peopleArray)觉得很赞"
-                }
-            }
-            if(self.dianzanSource.count>6){
-                for i in 0..<self.dianzanSource.count{
-                    let dianzanInfo = self.dianzanSource.dianzanlist[i]
-                    if(dianzanInfo.dianZanId == uid){
-                        dianZanBtn.selected = true
-                        dianZanBtn.setImage(UIImage(named: "zan2"), forState: .Normal)
-                    }
-                    else{
-                        dianZanBtn.selected = false
-                        dianZanBtn.setImage(UIImage(named: "zan0"), forState: .Normal)
+        if(photoinfo.pic.count>3&&photoinfo.pic.count<=6){
+            image_h=170
+            for i in 1...photoinfo.pic.count{
+                if i <= 3 {
+                    var x = 50
+                    let pciInfo = photoinfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        
+                        
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*85)
+                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+40, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage?.setImage(imgTmp, forState: .Normal)
+                                if blogimage?.imageView?.image==nil{
+                                    blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                
+                                blogimage?.tag=indexPath.row
+                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                    }}else{
+                    var x = 50
+                    let pciInfo = photoinfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*85)
+                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+90+40, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage?.setImage(imgTmp, forState: .Normal)
+                                if blogimage?.imageView?.image==nil{
+                                    blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                blogimage?.tag=indexPath.row
+                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
                     }
                 }
-                for i in 0...5{
-                    let dianzanInfo = self.dianzanSource.dianzanlist[i]
-                    arrayPeople.append(dianzanInfo.dianZanName!)
-                    dianZanPeople.font = UIFont.systemFontOfSize(15)
-                    dianZanPeople.textColor = UIColor.grayColor()
-                    peopleArray = arrayPeople.joinWithSeparator(",")
-                }
-                dianZanPeople.text = "\(peopleArray)等\(self.dianzanSource.count)人觉得很赞"
-            }
-            cell.contentView.addSubview(dianZanBtn)
-            cell.contentView.addSubview(dianZanPeople)
-            cell.contentView.addSubview(pingLun)
-            cell.contentView.addSubview(pingLunLabel)
-            return cell
-        }
-        return cell1
-    }
-    
-    func PingLun(sender:UIButton){
-        let blogComment = BlogCommentViewController()
-        let bloginfo = self.blogSource.objectlist[sender.tag]
-        blogComment.pingLunSource = CommentList(bloginfo.pingLunList!)
-        print(sender.titleLabel?.text)
-        blogComment.mid = sender.titleLabel?.text!
-        self.navigationController?.pushViewController(blogComment, animated: true)
-    }
-
-    func DianZan(sender:UIButton){
-        sender.selected = !sender.selected
-        if(!sender.selected){
-            QuXiaoDianZan(sender.tag)
-            sender.setImage(UIImage(named: "zan0"), forState: .Normal)
-            self.GetDate()
-        }
-        else{
-            GetDianZanDate(sender.tag)
-            sender.setImage(UIImage(named: "zan2"), forState: .Normal)
-            self.GetDate()
-        }
-    }
-    
-    func QuXiaoDianZan(mid:Int){
-        let url = apiUrl+"ResetLike"
-        let userid = NSUserDefaults.standardUserDefaults()
-        let uid = userid.stringForKey("userid")
-        let param = [
-            "mid":mid,
-            "userid":uid!
-        ]
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
-            if(error != nil){
-            }
-            else{
-                print("request是")
-                print(request!)
-                print("====================")
-                let status = MineModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+            }}
+        if(photoinfo.pic.count>6&&photoinfo.pic.count<=9){
+            image_h=260
+            for i in 1...photoinfo.pic.count{
+                if i <= 3 {
+                    var x = 50
+                    let pciInfo = photoinfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-1)*85)
+                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+40, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage?.setImage(imgTmp, forState: .Normal)
+                                if blogimage?.imageView?.image==nil{
+                                    blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                blogimage?.tag=indexPath.row
+                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    }}else if (i>3&&i<=6){
+                    var x = 50
+                    let pciInfo = photoinfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-4)*85)
+                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+90+40, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage?.setImage(imgTmp, forState: .Normal)
+                                if blogimage?.imageView?.image==nil{
+                                    blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                blogimage?.tag=indexPath.row
+                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    } }else{
+                    var x = 50
+                    let pciInfo = photoinfo.pic[i-1]
+                    if pciInfo.pictureurl != nil {
+                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+                        
+                        //let image = self.imageCache[imgUrl] as UIImage?
+                        let avatarUrl = NSURL(string: imgUrl)
+                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        
+                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                            if(data != nil){
+                                x = x+((i-7)*85)
+                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+180+40, 80, 80))
+                                let imgTmp = UIImage(data: data!)
+                                //self.imageCache[imgUrl] = imgTmp
+                                blogimage?.setImage(imgTmp, forState: .Normal)
+                                if blogimage?.imageView?.image==nil{
+                                    blogimage?.setImage(UIImage(named: "4"), forState: .Normal)
+                                }
+                                blogimage?.tag=indexPath.row
+                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+                                cell.contentView.addSubview(blogimage!)
+                            }
+                        })
+                        
+                    }
+                    
                 }
                 
-                if(status.status == "success"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "取消点赞"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+            }}
+        
+        
+        //下面的评论视图
+       
+        let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h+image_h+25+40,140,20))
+        timeL.textAlignment = .Right
+        timeL.textColor=timeColor
+        timeL.font=timefont
+        timeL.text=changeTime(photoinfo.write_time!)
+        cell.contentView.addSubview(timeL)
+        //MARK: - 点赞按钮
+        let zanBT = UIButton(frame: CGRectMake(frame.width-100, titleL_h+image_h+25+30+40, 20, 20))
+        zanBT.setImage(UIImage(named: "点赞"), forState: .Normal)
+        zanBT.tag=Int(photoinfo.mid!)!
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        if photoinfo.like.count != 0 {
+            for item in 0...photoinfo.like.count-1 {
+                if photoinfo.like[item].userid==uid {
+                    zanBT.setImage(UIImage(named: "已点赞"), forState: .Normal)
+                    break
                 }
             }
         }
+        if zanBT.imageView?.image==UIImage(named:"点赞") {
+            zanBT.addTarget(self, action: #selector(GetDianZanDate(_:)), forControlEvents: .TouchUpInside)
+        }else{
+            zanBT.addTarget(self, action: #selector(QuXiaoDianZan(_:)), forControlEvents: .TouchUpInside)
+        }
+        
+        
+        cell.contentView.addSubview(zanBT)
+        let plBT = UIButton(frame: CGRectMake(frame.width-50, titleL_h+image_h+25+30+40, 20, 20))
+        plBT.setImage(UIImage(named: "发消息"), forState: .Normal)
+        plBT.addTarget(self, action: #selector(pinglun(_:)), forControlEvents: .TouchUpInside)
+        plBT.tag=Int(photoinfo.mid!)!+100
+        cell.contentView.addSubview(plBT)
+  
+        if photoinfo.comment.count != 0 {
+            for item in 0...photoinfo.comment.count-1 {
+                
+                let pinglunView = UIView(frame: CGRectMake(50,titleL_h+image_h+85+30+55*CGFloat(item)+35,frame.width-60,60))
+                pinglunView.backgroundColor=UIColor.init(red: 227/255, green: 225/255, blue: 227/255, alpha: 1)
+                pinglunView.layer.masksToBounds=true
+                pinglunView.layer.cornerRadius=5
+                cell.contentView.addSubview(pinglunView)
+                
+                let icon=UIImageView(frame: CGRectMake(5, 5, 50, 50))
+                icon.layer.masksToBounds=true
+                icon.layer.cornerRadius=25
+                let photo = photoinfo.comment[item].avatar
+                let url = imageUrl+photo
+                icon.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
+                pinglunView.addSubview(icon)
+                let nameL = UILabel(frame: CGRectMake(60,5,frame.width-70-70-10,20))
+                nameL.text=photoinfo.comment[item].name
+                nameL.font=UIFont.systemFontOfSize(14)
+                pinglunView.addSubview(nameL)
+                let contentL = UILabel(frame: CGRectMake(60,30,frame.width-70-30,20))
+                contentL.textColor=pinglunColor
+                
+                contentL.lineBreakMode  = NSLineBreakMode.ByWordWrapping
+                contentL.numberOfLines=0
+                contentL.text=photoinfo.comment[item].content
+                contentL.font=UIFont.systemFontOfSize(14)
+                let content_h = calculateHeight(contentL.text!, size: 14, width: frame.width-70-30)
+                
+                pinglunView.frame.size.height=40+content_h
+                contentL.frame.size.height=content_h
+                pinglunView.addSubview(contentL)
+            }
+            tableView.rowHeight=30+titleL_h+image_h+20+40+60*CGFloat(photoinfo.comment.count)+30+40+20
+        }else{
+            tableView.rowHeight=30+titleL_h+image_h+20+40+30+40
+        }
+        
+        let view = UIView(frame: CGRectMake(0,tableView.rowHeight-4,frame.width,4))
+        view.backgroundColor=bkColor
+        cell.contentView.addSubview(view)
+        
+        
+        return cell
     }
-    
-    func GetDianZanDate(mid:Int){
-        let url = apiUrl+"SetLike"
+    func pinglun(sender:UIButton){
+        
+        
+        bview.frame = CGRectMake(0, frame.height - 185 , frame.width, 80)
+        bview.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(bview)
+        contentTextView.frame = CGRectMake(20 , 20, frame.width - 40, 40)
+        contentTextView.borderStyle = UITextBorderStyle.RoundedRect
+        contentTextView.placeholder = "评论"
+        contentTextView.returnKeyType = UIReturnKeyType.Send
+        contentTextView.delegate = self
+        bview.addSubview(contentTextView)
+        self.idtag = sender.tag
+        print(self.idtag)
+        
+
+    }
+
+    //     键盘出现的通知方法
+    func keyboardWillShowNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+     
+        self.bview.frame = CGRectMake(0, frame.height - keyboardheight - 144, frame.width, 80)
+        self.blogTableView.frame = CGRectMake(0, 0, frame.width, frame.height - keyboardheight - 145)
+ 
+        }
+    }
+    //         键盘消失的通知方法
+    func keyboardWillHideNotification(notification:NSNotification){
+        UIView.animateWithDuration(0.3) { () -> Void in
+     
+            self.bview.removeFromSuperview()
+            self.contentTextView.removeFromSuperview()
+            self.blogTableView.frame = CGRectMake(0, 0, frame.width, frame.height)
+            
+        }
+        print("键盘落下")
+    }
+
+
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+
+        
+        let content = contentTextView.text
+        print(content)
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a="+"SetComment"
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.stringForKey("userid")
+        let id = String(idtag-100)
+        
         let param = [
-            "mid":mid,
-            "userid":uid!
+            
+            "userid":uid,
+            "id":id,
+            "content":content,
+            "type":"1"
+            
         ]
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject]).response { request, response, json, error in
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
             if(error != nil){
             }
             else{
                 print("request是")
                 print(request!)
                 print("====================")
-                let status = MineModel(JSONDecoder(json!))
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
@@ -495,19 +561,118 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud.hide(true, afterDelay: 3)
                 }
                 if(status.status == "success"){
+                    print("评论成功")
+                    self.contentTextView.text=""
+                    self.GetDate()
+                    self.blogTableView.reloadData()
+                }
+            }
+        }
+textField.resignFirstResponder()
+        return true
+        
+            }
+
+
+    func QuXiaoDianZan(sender:UIButton){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=ResetLike"
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        let id = String(sender.tag)
+        
+        let param = [
+            
+            "userid":uid,
+            "id":id,
+            "type":"1"
+            
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "点赞成功"
+                    hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud.hide(true, afterDelay: 3)
+                }
+                if(status.status == "success"){
+                    sender.setImage(UIImage(named: "点赞"), forState: .Normal)
+                    
+                    self.GetDate()
+                    self.blogTableView.reloadData()
+                    
+                }
+            }
+        }
+        
+    }
+    func GetDianZanDate(sender:UIButton){
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=SetLike"
+        let userid = NSUserDefaults.standardUserDefaults()
+        let uid = userid.stringForKey("userid")
+        let id = String(sender.tag)
+        
+        let param = [
+            
+            "userid":uid,
+            "id":id,
+            "type":"1"
+            
+        ]
+        print(url)
+        Alamofire.request(.GET, url, parameters: param as? [String : String]).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Httpresult(JSONDecoder(json!))
+                print(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 3)
+                }
+                if(status.status == "success"){
+                    sender.setImage(UIImage(named: "已点赞"), forState: .Normal)
+                    
+                    self.GetDate()
+                    self.blogTableView.reloadData()
+                    
                 }
             }
         }
     }
+    func clickBtn(sender:UIButton){
+        
+    }
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+
+            self.view.endEditing(true)
+
+    }
+
 
     func NewBlog(){
         let newBlog = NewBlogViewController()
@@ -518,5 +683,6 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+
     
 }

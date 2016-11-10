@@ -18,7 +18,7 @@ let DaiBanTableView = UITableView()
 
         self.title="已收代办事项"
         self.view.backgroundColor=UIColor.whiteColor()
-        DaiBanTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 64)
+        DaiBanTableView.frame = CGRectMake(0, 0, frame.width, frame.height - 64-44)
         DaiBanTableView.delegate = self
         DaiBanTableView.dataSource = self
         DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
@@ -79,6 +79,8 @@ let DaiBanTableView = UITableView()
         titleL.frame=CGRectMake(10,5,frame.width-20,20)
         cell.contentView.addSubview(titleL)
         titleL.text=daibaninfo.title!
+        titleL.textColor=biaotiColor
+        titleL.font=biaotifont
     
         //计算lable的高度
         let titleL_h = calculateHeight(titleL.text!, size: 17, width: frame.width-20)
@@ -89,7 +91,13 @@ let DaiBanTableView = UITableView()
         cell.contentView.addSubview(contentL)
         contentL.textColor=UIColor.grayColor()
         contentL.text=daibaninfo.content!
-        contentL.font=UIFont.systemFontOfSize(15)
+        if indexPath.row==0 {
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setValue(daibaninfo.content, forKey: "daiban")
+            
+        }
+        contentL.font=neirongfont
+        contentL.textColor=neirongColor
         //计算lable的高度
         let contentL_h = calculateHeight(contentL.text!, size: 15, width: frame.width-20)
         contentL.numberOfLines=0
@@ -101,10 +109,35 @@ let DaiBanTableView = UITableView()
         
 //        判断图片张数显示
         if(daibaninfo.picCount>0&&daibaninfo.picCount<=3){
-            for i in 1...daibaninfo.picCount{
+            image_h=80
+            if daibaninfo.picCount==1 {
+                
+                let pciInfo = daibaninfo.pic[0]
+                let imgUrl = pictureUrl+(pciInfo.picture_url)!
+                
+                //let image = self.imageCache[imgUrl] as UIImage?
+                let avatarUrl = NSURL(string: imgUrl)
+                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                
+                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+                    if(data != nil){
+                        
+                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 80))
+                        let imgTmp = UIImage(data: data!)
+                        //self.imageCache[imgUrl] = imgTmp
+                        blogimage!.image = imgTmp
+                        if blogimage?.image==nil{
+                            blogimage?.image=UIImage(named: "Logo")
+                        }
+                        cell.contentView.addSubview(blogimage!)
+                        
+                    }
+                })
+            }else{
+                for i in 2...daibaninfo.picCount{
                 var x = 8
                 let pciInfo = daibaninfo.pic[i-1]
-                let imgUrl = picUrl+(pciInfo.picture_url)!
+                let imgUrl = pictureUrl+(pciInfo.picture_url)!
                 
                 //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
@@ -118,11 +151,11 @@ let DaiBanTableView = UITableView()
                         //self.imageCache[imgUrl] = imgTmp
                         blogimage!.image = imgTmp
                         cell.contentView.addSubview(blogimage!)
-                        image_h=80
+                        
                     }
                 })
                 
-            }
+                }}
         }
         if(daibaninfo.picCount>3&&daibaninfo.picCount<=6){
             image_h=170
@@ -256,20 +289,30 @@ let DaiBanTableView = UITableView()
         if daibaninfo.name != nil {
             senderL.text=daibaninfo.name!
         }
-        senderL.font=UIFont.systemFontOfSize(15)
+        senderL.font=timefont
+        senderL.textColor=timeColor
         cell.contentView.addSubview(senderL)
         let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h+image_h+25+contentL_h,140,20))
         timeL.textAlignment = .Right
         timeL.textColor=timeColor
-        timeL.font=UIFont.systemFontOfSize(15)
+        timeL.font=timefont
         timeL.text=changeTime(daibaninfo.create_time!)
         cell.contentView.addSubview(timeL)
 
         tableView.rowHeight=titleL_h+contentL_h+40+image_h+20
-//        cell.selectionStyle = .None
+        cell.selectionStyle = .None
         return cell
     }
-
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let daibaninfo = DaibanSource.parentsExhortList[indexPath.row]
+        let vc = DaiBanInfoViewController()
+        vc.info=daibaninfo
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    override func viewWillAppear(animated: Bool) {
+        DaiBanTableView.reloadData()
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

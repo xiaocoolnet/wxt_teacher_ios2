@@ -29,6 +29,8 @@ class AddDaijieViewController: UIViewController ,UITableViewDelegate,UITableView
         tableview.dataSource=self
        tableview.scrollEnabled=false
         self.view.addSubview(tableview)
+        let rightItem = UIBarButtonItem(title: "提交", style: UIBarButtonItemStyle.Done, target: self, action: #selector(addDaijie))
+        self.navigationItem.rightBarButtonItem = rightItem
     }
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return 3
@@ -50,12 +52,11 @@ class AddDaijieViewController: UIViewController ,UITableViewDelegate,UITableView
             textview.layer.borderWidth=1
             textview.layer.cornerRadius=5
             textview.layer.borderColor=UIColor.grayColor().CGColor
-
             cell.addSubview(textview)
             tableView.rowHeight=200
+            
         }else{
-            cell.textLabel?.text="提交"
-            tableview.rowHeight=44
+          
         }
         return cell
     }
@@ -66,16 +67,16 @@ class AddDaijieViewController: UIViewController ,UITableViewDelegate,UITableView
             self.navigationController?.pushViewController(vc, animated: true)
             
         }
-        if indexPath.row==2 {
-            GETDate(self.id)
-        }
+        
     }
 
     func sendnameid(name: String, id: String) {
         nameL.text=name
         self.id=id
     }
-  
+    func addDaijie(){
+        GETDate(self.id)
+    }
     //MARK: - 发布待接确认
     //http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=addtransport&teacherid=605&studentid=661,666&photo=123.jpg&content=asdsad
     func GETDate(id:String){
@@ -108,7 +109,7 @@ class AddDaijieViewController: UIViewController ,UITableViewDelegate,UITableView
                 }
                 if(status.status == "success"){
                     print("Success")
-                    
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
             }
         }

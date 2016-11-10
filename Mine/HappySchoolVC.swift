@@ -8,7 +8,7 @@
 
 import UIKit
 import ImageSlideshow
-
+import MBProgressHUD
 class HappySchoolVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     //  滚动视图的设置
     let imageScrollView = ImageSlideshow()
@@ -103,20 +103,38 @@ class HappySchoolVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
             if indexPath.row == 6 {
                 line.removeFromSuperview()
             }
-            
         }
-        
         return cell
         
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 0 {
-            let vc = ActivityViewController()
-            self.navigationController?.pushViewController(vc, animated: true)
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "功能暂未实现，敬请期待"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+//            let vc = ActivityViewController()
+//            self.navigationController?.pushViewController(vc, animated: true)
         }else if indexPath.section == 1{
             if indexPath.row == 0 {
                 let vc = SpicyClassViewController()
+                self.navigationController?.pushViewController(vc, animated: true)
+            }else{
+                let vc = HTMLViewController()
+                if indexPath.row==1{
+                    vc.tit="营养食谱"
+                }else if indexPath.row==2{
+                    vc.tit="睡前故事"
+                }else if indexPath.row==3{
+                    vc.tit="经典儿歌"
+                }else if indexPath.row==4{
+                    vc.tit="育儿百科"
+                }else if indexPath.row==6{
+                    vc.tit="亲子乐园"
+                }
                 self.navigationController?.pushViewController(vc, animated: true)
                 
             }

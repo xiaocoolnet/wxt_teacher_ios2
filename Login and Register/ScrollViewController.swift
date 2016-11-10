@@ -16,14 +16,14 @@ class ScrollViewController: UIViewController {
     
     private var scrollView: UIScrollView!
     
-    private let numOfPages = 4
+    private let numOfPages = 3
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let frame = self.view.bounds
-        enterBtn.layer.borderWidth = 2.0
-        enterBtn.layer.borderColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0).CGColor
+        enterBtn.layer.borderWidth = 1.0
+        enterBtn.layer.borderColor = UIColor.blackColor().CGColor
         scrollView = UIScrollView(frame: frame)
         scrollView.pagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
@@ -37,7 +37,7 @@ class ScrollViewController: UIViewController {
         scrollView.delegate = self
         
         for index  in 0..<numOfPages {
-            let imageView = UIImageView(image: UIImage(named: "wxt_\(index + 1)"))
+            let imageView = UIImageView(image: UIImage(named: "引导页模板-\(index + 1)"))
             imageView.frame = CGRect(x: frame.size.width * CGFloat(index), y: 0, width: frame.size.width, height: frame.size.height)
             scrollView.addSubview(imageView)
         }

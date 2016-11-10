@@ -13,7 +13,7 @@ import MBProgressHUD
 class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     var dateLbl=UILabel()
-    let table = UITableView()
+    var table = UITableView()
     //  数据源
     var dataSourse = FoodMenuModel()
     //  开始时间戳
@@ -28,6 +28,7 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.title="每周食谱"
         self.view.backgroundColor=UIColor.whiteColor()
         dateLbl.frame=CGRectMake(frame.width/4, 0, frame.width/2, 40)
@@ -117,7 +118,6 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let nowString = dateformatter.stringFromDate(now)
         //  获得小时 分 秒
         let hours:Int = Int((nowString as NSString).substringWithRange(NSMakeRange(0, 2)))!
-        
         let points:Int = Int((nowString as NSString).substringWithRange(NSMakeRange(3, 2)))!
         let seconds:Int = Int((nowString as NSString).substringWithRange(NSMakeRange(6, 2)))!
         //  得到这个周的周一日期
@@ -231,6 +231,7 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func createTable(){
         table.frame = CGRectMake(0, 50, self.view.frame.size.width, self.view.frame.size.height-64-50)
+      
         table.delegate = self
         table.dataSource = self
         

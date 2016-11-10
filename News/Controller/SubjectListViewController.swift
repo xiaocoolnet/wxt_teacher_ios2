@@ -11,6 +11,8 @@ import Alamofire
 import MBProgressHUD
 protocol sendSubiectDelegate:NSObjectProtocol {
     func sendSubject(name:String)
+    
+    func sendSubjectWithId(name:String,id:String)
 }
 class SubjectListViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource{
     
@@ -88,7 +90,7 @@ class SubjectListViewController: UIViewController ,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let info = studentSource.objectlist[indexPath.row]
         self.delegate?.sendSubject(info.subject!)
-        
+        self.delegate?.sendSubjectWithId(info.subject!, id: info.id!)
         self.navigationController?.popViewControllerAnimated(true)
     }
     override func didReceiveMemoryWarning() {

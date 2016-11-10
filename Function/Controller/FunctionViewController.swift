@@ -8,7 +8,7 @@
 //
 
 import UIKit
-
+import MBProgressHUD
 class FunctionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
     let avatorImage = UIImageView()
@@ -73,6 +73,20 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     let lab14 = UILabel()
     let lab15 = UILabel()
     let lab16 = UILabel()
+    var count1 = String()
+    var count2 = String()
+    var count3 = String()
+    var count4 = String()
+    var deliveryL = UILabel()
+    var leaveL = UILabel()
+    var activityL = UILabel()
+    var commentL = UILabel()
+    
+    
+    
+    
+    
+    
     
     
     override func viewDidLoad() {
@@ -85,8 +99,26 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.addSubview(funTableView)
 
-        // Do any additional setup after loading the view.
+         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.gameOver(_:)), name: "push", object: nil)
+        
     }
+    func gameOver(title:NSNotification){
+        if title.object as! String == "leave"{
+            let vc = QingJiaViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if title.object as! String == "deliery"{
+            let vc = DJViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if title.object as! String == "activity"{
+            let vc = BanJihuodongViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if title.object as! String == "comment"{
+            let vc = TeacherDianPingViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+ 
+    } 
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -95,10 +127,98 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game(_:)), name: "deliveryAry", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game2(_:)), name: "leaveArr", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game3(_:)), name: "activityArr", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.game4(_:)), name: "commentArr", object: nil)
+        let chid = NSUserDefaults.standardUserDefaults()
+        if chid.valueForKey("deliveryAry") != nil {
+            
+            let arr = chid.valueForKey("deliveryAry") as! NSArray
+            deliveryL.text = String(arr.count)
+            deliveryL.hidden=false
+        }else{
+            deliveryL.removeFromSuperview()
+        }
+        if deliveryL.text == "0" {
+            deliveryL.removeFromSuperview()
+        }
+        if chid.valueForKey("leaveArr") != nil {
+            
+            let arr = chid.valueForKey("leaveArr") as! NSArray
+            leaveL.text = String(arr.count)
+            leaveL.hidden=false
+            
+        }else{
+            leaveL.removeFromSuperview()
+        }
+        if leaveL.text == "0" {
+            leaveL.removeFromSuperview()
+        }
+        if chid.valueForKey("activityArr") != nil {
+            
+            let arr = chid.valueForKey("activityArr") as! NSArray
+            activityL.text = String(arr.count)
+        }else{
+            activityL.removeFromSuperview()
+        }
+        if activityL.text == "0" {
+            activityL.removeFromSuperview()
+        }
+        if chid.valueForKey("commentArr") != nil {
+            
+            let arr = chid.valueForKey("commentArr") as! NSArray
+            commentL.text = String(arr.count)
+        }else{
+            commentL.removeFromSuperview()
+        }
+        if commentL.text == "0" {
+            commentL.removeFromSuperview()
+        }
+        
+
+    }
+    func game(count:NSNotification){
+        let arr = count.object as! NSArray
+        deliveryL.text = String(arr.count)
+        deliveryL.textAlignment = .Center
+        deliveryL.textColor=UIColor.whiteColor()
+        if deliveryL.text != "0" {
+           btn4.addSubview(deliveryL)
+        }
+        
+        
+    }
+    func game2(count:NSNotification){
+        let arr = count.object as! NSArray
+        leaveL.text = String(arr.count)
+        leaveL.textAlignment = .Center
+        leaveL.textColor=UIColor.whiteColor()
+        if leaveL.text != "0" {
+            btn5.addSubview(leaveL)
+        }
+    }
+    func game3(count:NSNotification){
+        let arr = count.object as! NSArray
+        activityL.text = String(arr.count)
+        activityL.textAlignment = .Center
+        activityL.textColor = UIColor.whiteColor()
+        if activityL.text != "0" {
+            btn15.addSubview(activityL)
+        }
+    }
+    func game4(count:NSNotification){
+        let arr = count.object as! NSArray
+        commentL.text = String(arr.count)
+        commentL.textAlignment = .Center
+        commentL.textColor = UIColor.whiteColor()
+        if commentL.text != "0" {
+            btn9.addSubview(commentL)
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 5
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -115,9 +235,6 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             return 3
         }
         if(section == 4){
-            return 3
-        }
-        if(section == 5){
             return 1
         }
         return 0
@@ -143,31 +260,20 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 return 34
             }
             if(indexPath.row == 1){
-                return 181
-            }
-            if(indexPath.row == 2){
-                return 60
-            }
-        }
-        if(indexPath.section == 4){
-            if(indexPath.row == 0){
-                return 34
-            }
-            if(indexPath.row == 1){
                 return 135
             }
             if(indexPath.row == 2){
                 return 40
             }
         }
-        if(indexPath.section == 5){
+        if(indexPath.section == 4){
             return 68
         }
         return 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        let user = NSUserDefaults.standardUserDefaults()
         let cell = UITableViewCell(style:.Value1, reuseIdentifier:"userInfoCell")
         if(indexPath.section == 0){
             let cell = UITableViewCell(style:.Value1, reuseIdentifier:"userInfoCell")
@@ -175,16 +281,25 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             avatorImage.frame = CGRectMake(15, 60, 80, 80)
             avatorImage.layer.cornerRadius = 40
             avatorImage.layer.masksToBounds = true
-            avatorImage.image = UIImage(named: "Logo")
+            let bt = UIButton(frame: CGRectMake(15, 60, 80, 80))
+            bt.addTarget(self, action: #selector(changeInfo), forControlEvents: .TouchUpInside)
+            
+            let photo = user.stringForKey("photo")
+            let url = imageUrl+photo!
+            avatorImage.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
+            
             nameLabel.frame = CGRectMake(100, 85, 100, 20)
             nameLabel.font = UIFont.systemFontOfSize(16)
             nameLabel.textColor = UIColor(red: 54.0 / 255.0, green: 190.0 / 255.0, blue: 100.0 / 255.0, alpha: 1.0)
-            nameLabel.text = "王丹老师"
+            
+            let username = user.stringForKey("username")
+            nameLabel.text = username
             schoolLabel.frame = CGRectMake(100, 105, 200, 15)
             schoolLabel.font = UIFont.systemFontOfSize(11)
             schoolLabel.textColor = UIColor.grayColor()
             schoolLabel.text = "清华幼儿园·大班三班"
             cell.contentView.addSubview(avatorImage)
+            cell.contentView.addSubview(bt)
             cell.contentView.addSubview(nameLabel)
             cell.contentView.addSubview(schoolLabel)
             return cell
@@ -204,7 +319,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             paiMingLabel.frame = CGRectMake(0, 27, 25, 13)
             paiMingLabel.font = UIFont.systemFontOfSize(18)
             paiMingLabel.textColor = UIColor(red: 203.0 / 255.0, green: 225.0 / 255.0, blue: 139.0 / 255.0, alpha: 1.0)
-            paiMingLabel.text = "13"
+//            paiMingLabel.text = "13"
             paiMingLabel.frame.origin.x = (self.view.bounds.width/9)*2 + 10
             jiFenImage.frame = CGRectMake(0, 12, 40, 40)
             jiFenImage.layer.cornerRadius = 20
@@ -217,7 +332,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             jiFen.center.x = (self.view.bounds.width/9)*5
             jiFenLabel.frame = CGRectMake(0, 27, 35, 13)
             jiFenLabel.font = UIFont.systemFontOfSize(18)
-            jiFenLabel.text = "23"
+//            jiFenLabel.text = "23"
             jiFenLabel.frame.origin.x = (self.view.bounds.width/9)*5 + 10
             jiFenLabel.textColor = UIColor(red: 175.0 / 255.0, green: 216.0 / 255.0, blue: 246.0 / 255.0, alpha: 1.0)
             dengJiImage.frame = CGRectMake(0, 12, 40, 40)
@@ -231,7 +346,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             dengJi.center.x = (self.view.bounds.width/9)*8
             dengJiLabel.frame = CGRectMake(0, 27, 35, 13)
             dengJiLabel.font = UIFont.systemFontOfSize(18)
-            dengJiLabel.text = "11"
+//            dengJiLabel.text = "11"
             dengJiLabel.textColor = UIColor(red: 234.0 / 255.0, green: 200.0 / 255.0, blue: 84.0 / 255.0, alpha: 1.0)
             dengJiLabel.frame.origin.x = (self.view.bounds.width/9)*8 + 10
             cell.contentView.addSubview(paiMingLabel)
@@ -289,17 +404,27 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 btn3.center.x = (viewWidth/8)*5
                 btn3.addTarget(self, action: #selector(FunctionViewController.ChengZhangView), forControlEvents: .TouchUpInside)
                 btn4.frame = CGRectMake(0, 16, 44, 44)
-                btn4.layer.cornerRadius = 22
-                btn4.layer.masksToBounds = true
+//                btn4.layer.cornerRadius = 22
+//                btn4.layer.masksToBounds = true
                 btn4.setBackgroundImage(UIImage(named: "代接确认"), forState: UIControlState.Normal)
                 btn4.center.x = (viewWidth/8)*7
                 btn4.addTarget(self, action: #selector(FunctionViewController.DaiJieView), forControlEvents: .TouchUpInside)
+                deliveryL.frame=CGRectMake(44-18, 0, 18, 18)
+                deliveryL.backgroundColor=UIColor.redColor()
+                deliveryL.layer.masksToBounds=true
+                deliveryL.layer.cornerRadius=9
+                
                 btn5.frame = CGRectMake(0, 100, 44, 44)
-                btn5.layer.cornerRadius = 22
-                btn5.layer.masksToBounds = true
+//                btn5.layer.cornerRadius = 22
+//                btn5.layer.masksToBounds = true
                 btn5.setBackgroundImage(UIImage(named: "在线请假"), forState: UIControlState.Normal)
                 btn5.center.x = (viewWidth/8)
                 btn5.addTarget(self, action: #selector(FunctionViewController.QingJiaView), forControlEvents: .TouchUpInside)
+                leaveL.frame=CGRectMake(44-18, 0, 18, 18)
+                leaveL.backgroundColor=UIColor.redColor()
+                leaveL.layer.masksToBounds=true
+                leaveL.layer.cornerRadius=9
+                
                 btn6.frame = CGRectMake(0, 100, 44, 44)
                 btn6.layer.cornerRadius = 22
                 btn6.layer.masksToBounds = true
@@ -319,11 +444,16 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 btn8.center.x = (viewWidth/8)*7
                 btn8.addTarget(self, action: #selector(FunctionViewController.KaoQinView), forControlEvents: .TouchUpInside)
                 btn9.frame = CGRectMake(0, 16, 44, 44)
-                btn9.layer.cornerRadius = 22
-                btn9.layer.masksToBounds = true
+//                btn9.layer.cornerRadius = 22
+//                btn9.layer.masksToBounds = true
                 btn9.setBackgroundImage(UIImage(named: "老师点评"), forState: UIControlState.Normal)
                 btn9.center.x = (viewWidth/8)*9
                 btn9.addTarget(self, action: #selector(FunctionViewController.TeacherDPView), forControlEvents: .TouchUpInside)
+                commentL.frame=CGRectMake(44-18, 0, 18, 18)
+                commentL.backgroundColor=UIColor.redColor()
+                commentL.layer.masksToBounds=true
+                commentL.layer.cornerRadius=9
+                
                 btn10.frame = CGRectMake(0, 16, 44, 44)
                 btn10.layer.cornerRadius = 22
                 btn10.layer.masksToBounds = true
@@ -355,11 +485,16 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 btn14.center.x = (viewWidth/8)*11
                 btn14.addTarget(self, action: #selector(FunctionViewController.BBkeChengView), forControlEvents: .TouchUpInside)
                 btn15.frame = CGRectMake(0, 100, 44, 44)
-                btn15.layer.cornerRadius = 22
-                btn15.layer.masksToBounds = true
+//                btn15.layer.cornerRadius = 22
+//                btn15.layer.masksToBounds = true
                 btn15.setBackgroundImage(UIImage(named: "班级活动"), forState: UIControlState.Normal)
                 btn15.center.x = (viewWidth/8)*13
                 btn15.addTarget(self, action: #selector(FunctionViewController.huoDongView), forControlEvents: .TouchUpInside)
+                activityL.frame=CGRectMake(44-18, 0, 18, 18)
+                activityL.backgroundColor=UIColor.redColor()
+                activityL.layer.masksToBounds=true
+                activityL.layer.cornerRadius=9
+                
                 btn16.frame = CGRectMake(0, 100, 44, 44)
                 btn16.layer.cornerRadius = 22
                 btn16.layer.masksToBounds = true
@@ -488,41 +623,8 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 return cell
             }
         }
+        
         if(indexPath.section == 3){
-            if(indexPath.row == 0){
-                let cell = UITableViewCell(style: .Value1, reuseIdentifier: "baobaoleyuan")
-                cell.selectionStyle = .None
-                cell.accessoryType = .DisclosureIndicator
-                baobaoLeYuan.frame = CGRectMake(11, 13, 14, 14)
-                baobaoLeYuan.image = UIImage(named: "宝宝乐园")
-                baobaoLeYuanLabel.frame = CGRectMake(31, 13, 60, 13)
-                baobaoLeYuanLabel.font = UIFont.systemFontOfSize(14)
-                baobaoLeYuanLabel.text = "宝宝乐园"
-                cell.contentView.addSubview(baobaoLeYuanLabel)
-                cell.contentView.addSubview(baobaoLeYuan)
-                return cell
-            }
-            if(indexPath.row == 1){
-                let cell = UITableViewCell(style: .Value1, reuseIdentifier: "baobaoLeYuanImage")
-                cell.selectionStyle = .None
-                baobaoLeYuanImage.frame = CGRectMake(5, 3, self.view.bounds.width - 10, 175)
-                baobaoLeYuanImage.image = UIImage(named: "无网络的背景")
-                cell.contentView.addSubview(baobaoLeYuanImage)
-                return cell
-            }
-            if(indexPath.row == 2){
-                let cell = UITableViewCell(style: .Value1, reuseIdentifier: "baobaoLeYuanContent")
-                cell.selectionStyle = .None
-                baobaoLeYuanContent.numberOfLines = 0
-                baobaoLeYuanContent.text = "如果你无法表达你的想法，那只能说明你对这个事物还不够了解"
-                baobaoLeYuanContent.frame = CGRectMake(5, 3, self.view.bounds.width - 10, 50)
-                baobaoLeYuanContent.font = UIFont.systemFontOfSize(13)
-                baobaoLeYuanContent.textColor = UIColor.grayColor()
-                cell.contentView.addSubview(baobaoLeYuanContent)
-                return cell
-            }
-        }
-        if(indexPath.section == 4){
             if(indexPath.row == 0){
                 let cell = UITableViewCell(style: .Value1, reuseIdentifier: "baobaoShiPin")
                 cell.selectionStyle = .None
@@ -559,7 +661,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 return cell
             }
         }
-        if(indexPath.section == 5){
+        if(indexPath.section == 4){
             fangDiu.frame = CGRectMake(9, 11, 38, 38)
             fangDiu.layer.cornerRadius = 19
             fangDiu.layer.masksToBounds = true
@@ -597,8 +699,14 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func ChengZhangView(){
-        let ChengZhang = ChengZhangViewController()
-        self.navigationController?.pushViewController(ChengZhang, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "功能暂未实现，敬请期待"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+//        let ChengZhang = ChengZhangViewController()
+//        self.navigationController?.pushViewController(ChengZhang, animated: true)
     }
     
     func QingJiaView(){
@@ -612,7 +720,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func KaoQinView(){
-        let kaoqin = bbKaoQinViewController()
+        let kaoqin = ClassKaoqinViewController()
         self.navigationController?.pushViewController(kaoqin, animated: true)
     }
     
@@ -632,7 +740,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func BBkeChengView(){
-        let bbkc = BBKeTangViewController()
+        let bbkc = ClassScheduleTableViewController()
         self.navigationController?.pushViewController(bbkc, animated: true)
     }
     
@@ -642,17 +750,22 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func DingzhuView(){
-        let dingzhu = DingzhuViewController()
-        self.navigationController?.pushViewController(dingzhu, animated: true)
+   
     }
     
     func XinxiView(){
-        let xinxi = XinXiViewController()
-        self.navigationController?.pushViewController(xinxi, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "功能暂未实现，敬请期待"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+//        let xinxi = XinXiViewController()
+//        self.navigationController?.pushViewController(xinxi, animated: true)
     }
     
     func daKaView(){
-        let daka = daKaViewController()
+        let daka = KaoQinViewController()
         self.navigationController?.pushViewController(daka, animated: true)
     }
     
@@ -665,23 +778,8 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
         return 8
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
         if (indexPath.section == 3) {
-            if (indexPath.row == 0) {
-                
-                let paradise = ParadiseViewController()
-                self.navigationController?.pushViewController(paradise, animated: true)
-                
-                print("0")
-            }
-            if (indexPath.row == 1) {
-                
-                let paradiseShow = ParadiseShowViewController()
-                self.navigationController?.pushViewController(paradiseShow, animated: true)
-                
-                print("1")
-            }
-        }
-        if (indexPath.section == 4) {
             if (indexPath.row == 0) {
                 
                 let videos = VideosViewController()
@@ -696,12 +794,17 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
                 print("1")
             }
         }
-        if (indexPath.section == 5) {
+        if (indexPath.section == 4) {
             let fangdiu = FangDiuViewController()
             self.navigationController?.pushViewController(fangdiu, animated: true)
             
             print("防丢失")
         }
+    }
+    func changeInfo(){
+        let vc = PersonInformation()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }
 
