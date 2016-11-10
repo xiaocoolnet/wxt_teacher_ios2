@@ -27,23 +27,24 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
-//                self.DropDownUpdate()
-        self.loadData()
+                self.DropDownUpdate()
+//        self.loadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        heightrow = 100
         self.title = "消息群发"
         self.createTable()
-        self.loadData()
+//        self.loadData()
 
-//        DropDownUpdate()
+        DropDownUpdate()
     }
         //    开始刷新
         func DropDownUpdate(){
-            self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(HomeworkViewController.loadData))
-            self.table.reloadData()
+            self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadData))
+//            self.table.reloadData()
             self.table.headerView?.beginRefreshing()
         }
     //    创建表
@@ -195,6 +196,7 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
     
         //判断图片张数显示
         if(pic.count>0&&pic.count<=3){
+         
             image_h=(WIDTH - 40)/3.0
             for i in 1...pic.count{
                 var x = 12
@@ -208,10 +210,16 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
+                        
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
 
                         button = UIButton()
+                      
                         button!.frame = CGRectMake(CGFloat(x), contentheight+10, (WIDTH - 40)/3.0, (WIDTH - 40)/3.0)
+                        if pic.count==1{
+                            button!.frame.size.width = WIDTH-20
+//                            button!.frame.size.height=300
+                        }
                         let imgTmp = UIImage(data: data!)
 
                         button!.setImage(imgTmp, forState: .Normal)
