@@ -109,7 +109,7 @@ let DaiBanTableView = UITableView()
         
 //        判断图片张数显示
         if(daibaninfo.picCount>0&&daibaninfo.picCount<=3){
-            image_h=80
+            image_h=300
             if daibaninfo.picCount==1 {
                 
                 let pciInfo = daibaninfo.pic[0]
@@ -122,7 +122,7 @@ let DaiBanTableView = UITableView()
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         
-                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 80))
+                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 300))
                         let imgTmp = UIImage(data: data!)
                         //self.imageCache[imgUrl] = imgTmp
                         blogimage!.image = imgTmp
@@ -145,8 +145,8 @@ let DaiBanTableView = UITableView()
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*85)
-                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                        x = x+((i-1)*(intmax_t)((WIDTH-40)/3+5))
+                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                         let imgTmp = UIImage(data: data!)
                         //self.imageCache[imgUrl] = imgTmp
                         blogimage!.image = imgTmp
@@ -174,8 +174,8 @@ let DaiBanTableView = UITableView()
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                                x = x+((i-1)*(intmax_t)((WIDTH-40)/3+5))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -196,7 +196,7 @@ let DaiBanTableView = UITableView()
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
                                 x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25+85, 80, 80))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25+85, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -223,8 +223,8 @@ let DaiBanTableView = UITableView()
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                                x = x+((i-1)*(intmax_t)((WIDTH-40)/3+5))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -245,8 +245,8 @@ let DaiBanTableView = UITableView()
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85, 80, 80))
+                                x = x+((i-4)*(intmax_t)((WIDTH-40)/3+5))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -267,8 +267,8 @@ let DaiBanTableView = UITableView()
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-7)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85+85, 80, 80))
+                                x = x+((i-7)*(intmax_t)((WIDTH-40)/3+5))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85+85, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp

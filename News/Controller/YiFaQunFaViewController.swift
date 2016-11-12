@@ -205,7 +205,7 @@ class YiFaQunFaViewController: UIViewController,UITableViewDelegate,UITableViewD
                         x = x+((i-1)*Int((WIDTH - 40)/3.0 + 10))
                         
                         button = UIButton()
-                        button!.frame = CGRectMake(CGFloat(x), contentheight+10, WIDTH - 40, 300)
+                        button!.frame = CGRectMake(CGFloat(x), contentheight+10, WIDTH - 20, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)

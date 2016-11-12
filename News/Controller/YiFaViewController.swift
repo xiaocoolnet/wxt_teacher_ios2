@@ -110,7 +110,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         
         //        判断图片张数显示
         if(daibaninfo.picCount>0&&daibaninfo.picCount<=3){
-            image_h=80
+            image_h=300
             if daibaninfo.picCount==1 {
                 
                 let pciInfo = daibaninfo.pic[0]
@@ -123,7 +123,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         
-                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 80))
+                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 300))
                         let imgTmp = UIImage(data: data!)
                         //self.imageCache[imgUrl] = imgTmp
                         blogimage!.image = imgTmp
@@ -146,8 +146,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                 
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
-                        x = x+((i-1)*85)
-                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                        x = x+((i-1)*(intmax_t)((WIDTH-40)/3+10))
+                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                         let imgTmp = UIImage(data: data!)
                         //self.imageCache[imgUrl] = imgTmp
                         blogimage!.image = imgTmp
@@ -162,7 +162,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                 }}
         }
         if(daibaninfo.picCount>3&&daibaninfo.picCount<=6){
-            image_h=170
+            image_h=(WIDTH-40)/3*2+10
             for i in 1...daibaninfo.picCount{
                 if i <= 3 {
                     var x = 8
@@ -178,8 +178,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                                x = x+((i-1)*(intmax_t)((WIDTH-40)/3+10))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -201,8 +201,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25+85, 80, 80))
+                                x = x+((i-4)*(intmax_t)((WIDTH-40)/3+10))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25+((WIDTH-40)/3+5), (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -217,7 +217,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                 }
             }}
         if(daibaninfo.picCount>6&&daibaninfo.picCount<=9){
-            image_h=260
+            image_h=(WIDTH-40)/3*3+10*2
             for i in 1...daibaninfo.picCount{
                 if i <= 3 {
                     var x = 8
@@ -231,8 +231,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
+                                x = x+((i-1)*(intmax_t)((WIDTH-40)/3+10))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -255,8 +255,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85, 80, 80))
+                                x = x+((i-4)*(intmax_t)((WIDTH-40)/3+10))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+((WIDTH-40)/3+5)*2, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp
@@ -279,8 +279,8 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                         
                         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                             if(data != nil){
-                                x = x+((i-7)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85+85, 80, 80))
+                                x = x+((i-7)*(intmax_t)((WIDTH-40)/3+10))
+                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+((WIDTH-40)/3+5)*2, (WIDTH-40)/3, (WIDTH-40)/3))
                                 let imgTmp = UIImage(data: data!)
                                 //self.imageCache[imgUrl] = imgTmp
                                 blogimage!.image = imgTmp

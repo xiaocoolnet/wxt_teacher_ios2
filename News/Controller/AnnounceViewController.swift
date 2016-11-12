@@ -16,8 +16,8 @@ class AnnounceViewController: UIViewController {
         let shou = ReciveAnnounceViewController()
         let yifa = TongZhiGonggaoViewController()
         
-        shou.title = "我收到的"
-        yifa.title = "我发出的"
+        shou.title = "获取的通知"
+        yifa.title = "发布的通知"
         
         
         let viewControllers = [shou, yifa]

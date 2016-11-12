@@ -22,8 +22,8 @@ class DaiBanViewController: UIViewController {
         let yishou = YiShouViewController()
         let yifa = YiFaViewController()
         
-        yishou.title = "已收待办事项"
-        yifa.title = "已发待办事项"
+        yishou.title = "已获取的事项"
+        yifa.title = "已发布的事项"
         
         
         let viewControllers = [yishou, yifa]

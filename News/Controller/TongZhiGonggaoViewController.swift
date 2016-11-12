@@ -102,19 +102,32 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         
         //  活动标题
         let titleLbl = UILabel()
-        titleLbl.frame = CGRectMake(10, 10, WIDTH - 20, 30)
-        
+        titleLbl.frame = CGRectMake(10, 0, WIDTH - 20, 50)
+          titleLbl.lineBreakMode =  NSLineBreakMode.ByWordWrapping
+        titleLbl.numberOfLines=0
         titleLbl.text = model.title
         titleLbl.textColor=biaotiColor
         titleLbl.font=biaotifont
         cell.contentView.addSubview(titleLbl)
+        
+        //        自适应行高
+        let option : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBound:CGRect = UIScreen.mainScreen().bounds
+        let boundingRects = String(titleLbl.text).boundingRectWithSize(CGSizeMake(screenBound.width, 0), options: option, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        
+        let contentH = boundingRects.size.height + 20
         //  活动内容
         let contentLbl = UILabel()
-        contentLbl.frame = CGRectMake(10, 50, WIDTH - 20, 60)
+        contentLbl.frame = CGRectMake(10, contentH, WIDTH - 20, 60)
         contentLbl.font = neirongfont
         contentLbl.textColor = neirongColor
         contentLbl.text = model.content
+        if indexPath.row==0{
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setValue(model.content, forKey: "gonggao")
+        }
         contentLbl.numberOfLines = 0
+        contentLbl.sizeToFit()
         
         cell.contentView.addSubview(contentLbl)
         
@@ -133,7 +146,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         //判断图片张数显示
         if pic.count == 1 {
             if !(pic.first!.pictureurl=="") && !(pic.first?.pictureurl=="null") {
-                image_h=(WIDTH - 40)/3.0
+                image_h=300
                 let pciInfo = pic[0]
                 let imgUrl = pictureUrl+(pciInfo.pictureurl)
                 let avatarUrl = NSURL(string: imgUrl)
@@ -141,7 +154,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
                 NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
                     if(data != nil){
                         button = UIButton()
-                        button!.frame = CGRectMake(12, height, WIDTH - 24, (WIDTH - 40)/3.0)
+                        button!.frame = CGRectMake(12, height, WIDTH - 24, 300)
                         let imgTmp = UIImage(data: data!)
                         
                         button!.setImage(imgTmp, forState: .Normal)
@@ -439,7 +452,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         cell.contentView.addSubview(imageView)
         
         let senderLbl = UILabel()
-        senderLbl.frame = CGRectMake(40, height + image_h + 10, 60, 20)
+        senderLbl.frame = CGRectMake(40, height + image_h + 10, 100, 20)
         senderLbl.font = timefont
         senderLbl.textColor=timeColor
         senderLbl.text = model.username
@@ -465,14 +478,14 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         cell.addSubview(line)
         
         let all = UILabel()
-        all.frame = CGRectMake(10, height + image_h + 50, 60, 20)
-        all.text = "总发 \(model.receive_list.count)"
+        all.frame = CGRectMake(10, height + image_h + 45, 60, 20)
+        all.text = "总发\(model.receive_list.count)"
         all.textColor = UIColor.orangeColor()
         all.font = timefont
         cell.contentView.addSubview(all)
         
         let already = UILabel()
-        already.frame = CGRectMake(80, height + image_h + 50, 80, 20)
+        already.frame = CGRectMake(55, height + image_h + 45, 60, 20)
         let array = NSMutableArray()
         for i in 0..<model.receive_list.count {
             let strr = model.receive_list[i].receivertype
@@ -480,16 +493,16 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
                 array.addObject(strr)
             }
         }
-        already.text = "已阅读 \(model.receive_list.count - array.count)"
+        already.text = "已阅读\(model.receive_list.count - array.count)"
         already.textColor = UIColor.orangeColor()
-        already.font = UIFont.systemFontOfSize(15)
+        already.font = timefont
         cell.contentView.addSubview(already)
         
         let wei = UILabel()
-        wei.frame = CGRectMake(170, height + image_h + 50, 60, 20)
-        wei.text = "未读 \(array.count)"
+        wei.frame = CGRectMake(110, height + image_h + 45, 60, 20)
+        wei.text = "未读\(array.count)"
         wei.textColor = UIColor.orangeColor()
-        wei.font = UIFont.systemFontOfSize(15)
+        wei.font = timefont
         cell.contentView.addSubview(wei)
         
         let view = UIView()

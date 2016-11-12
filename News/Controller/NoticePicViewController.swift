@@ -61,7 +61,8 @@ class NoticePicViewController: UIViewController, UICollectionViewDelegate, UICol
         cell.imgView.frame = CGRectMake(0, 0, frame.width, frame.height)
         cell.imgView.contentMode = .ScaleAspectFit
         cell.clipsToBounds = true
-        let str = arrayInfo[indexPath.item].pictureurl
+        let str = arrayInfo[indexPath.item
+            ].pictureurl
         let imgUrl = pictureUrl + str
         let photourl = NSURL(string: imgUrl)
         cell.imgView.yy_setImageWithURL(photourl, placeholder: UIImage(named: "4"))

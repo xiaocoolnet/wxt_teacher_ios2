@@ -813,14 +813,14 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
             cell.addSubview(line)
             
             let all = UILabel()
-            all.frame = CGRectMake(10, height + image_h + 20, 60, 20)
-            all.text = "总发 \(model!.receive_list.count)"
+            all.frame = CGRectMake(10, height + image_h + 15, 60, 20)
+            all.text = "总发\(model!.receive_list.count)"
             all.textColor = UIColor.orangeColor()
-            all.font = UIFont.systemFontOfSize(15)
+            all.font = UIFont.systemFontOfSize(13)
             cell.contentView.addSubview(all)
             
             let already = UILabel()
-            already.frame = CGRectMake(80, height + image_h + 20, 80, 20)
+            already.frame = CGRectMake(55, height + image_h + 15, 60, 20)
             let array = NSMutableArray()
             for i in 0..<model!.receive_list.count {
                 let strr = model!.receive_list[i].receivertype
@@ -828,16 +828,16 @@ class NoticeDetailViewController: UIViewController , UITableViewDelegate, UITabl
                     array.addObject(strr)
                 }
             }
-            already.text = "已阅读 \(model!.receive_list.count - array.count)"
+            already.text = "已阅读\(model!.receive_list.count - array.count)"
             already.textColor = UIColor.orangeColor()
-            already.font = UIFont.systemFontOfSize(15)
+            already.font = UIFont.systemFontOfSize(13)
             cell.contentView.addSubview(already)
             
             let wei = UILabel()
-            wei.frame = CGRectMake(170, height + image_h + 20, 60, 20)
-            wei.text = "未读 \(array.count)"
+            wei.frame = CGRectMake(110, height + image_h + 15, 60, 20)
+            wei.text = "未读\(array.count)"
             wei.textColor = UIColor.orangeColor()
-            wei.font = UIFont.systemFontOfSize(15)
+            wei.font = UIFont.systemFontOfSize(13)
             cell.contentView.addSubview(wei)
             
             //        let view = UIView()
