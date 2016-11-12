@@ -90,7 +90,7 @@ class AddDianpingView: UIView {
     func clickBtn(sender:LittleDianpingView){
 //        sender.selected = true
     
-        for var index in 0...array.count-1 {
+        for index in 0...array.count-1 {
             let view = array[index]
             if view.type == sender.type {
                 view.btn.selected = true

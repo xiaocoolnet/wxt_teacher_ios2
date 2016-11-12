@@ -17,6 +17,7 @@
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import "WXApi.h"
 #import <ShareSDKUI/ShareSDK+SSUI.h>
+#import "AFNetworking.h"
 
 
 #import "WBPopMenuModel.h"
@@ -31,5 +32,5 @@
 //#import "EaseUI.h"
 //#import "EMChatManagerDefs.h"
 #import "FTPopOverMenu.h"
-
+#import "MAViewController.h"
 #endif

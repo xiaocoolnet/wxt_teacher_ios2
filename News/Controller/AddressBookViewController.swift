@@ -38,7 +38,7 @@ class AddressBookViewController: UIViewController {
         
         //设置按钮（注意顺序）
         self.navigationItem.rightBarButtonItems = [spacer,barButton2,gap,barButton1]
-        let jiaZhangView = JiaZhangViewController()
+        let jiaZhangView = MAViewController()
         let yuanDingView = TeacherListViewController()
         let qunLiaoView = JiaZhangViewController()
         
