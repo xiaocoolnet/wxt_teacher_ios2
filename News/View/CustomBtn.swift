@@ -12,6 +12,16 @@ class CustomBtn: UIButton {
 
     var sections : NSInteger?
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        //do something what you want
+        self.imageView?.contentMode = .ScaleAspectFill
+    }
+//    重写的话Swift规定不可以缺少这个request init方法：（编译器会自动提示）
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
+    }
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

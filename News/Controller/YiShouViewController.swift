@@ -21,6 +21,7 @@ let DaiBanTableView = UITableView()
         DaiBanTableView.frame = CGRectMake(0, 0, frame.width, frame.height - 64-44)
         DaiBanTableView.delegate = self
         DaiBanTableView.dataSource = self
+        DaiBanTableView.separatorStyle = .None
         DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
         loadData()
         self.view.addSubview(DaiBanTableView)
@@ -76,7 +77,6 @@ let DaiBanTableView = UITableView()
         
         let cell = UITableViewCell(style: .Default, reuseIdentifier: String(indexPath.row))
         let titleL = UILabel()
-        titleL.frame=CGRectMake(10,5,frame.width-20,20)
         cell.contentView.addSubview(titleL)
         titleL.text=daibaninfo.title!
         titleL.textColor=biaotiColor
@@ -85,11 +85,9 @@ let DaiBanTableView = UITableView()
         //计算lable的高度
         let titleL_h = calculateHeight(titleL.text!, size: 17, width: frame.width-20)
         titleL.numberOfLines=0
-        titleL.frame.size.height=titleL_h
+        titleL.frame=CGRectMake(10,10,WIDTH-20,titleL_h)
         let contentL = UILabel()
-        contentL.frame=CGRectMake(10,titleL_h+15,frame.width-20,20)
         cell.contentView.addSubview(contentL)
-        contentL.textColor=UIColor.grayColor()
         contentL.text=daibaninfo.content!
         if indexPath.row==0 {
             let user = NSUserDefaults.standardUserDefaults()
@@ -101,206 +99,46 @@ let DaiBanTableView = UITableView()
         //计算lable的高度
         let contentL_h = calculateHeight(contentL.text!, size: 15, width: frame.width-20)
         contentL.numberOfLines=0
-        contentL.frame.size.height=contentL_h
-        
-        
-        var blogimage:UIImageView?
+    
+        contentL.frame=CGRectMake(10,titleL_h+20,WIDTH-20,contentL_h)
         var image_h = CGFloat()
         
 //        判断图片张数显示
-        if(daibaninfo.picCount>0&&daibaninfo.picCount<=3){
-            image_h=80
-            if daibaninfo.picCount==1 {
-                
-                let pciInfo = daibaninfo.pic[0]
-                let imgUrl = pictureUrl+(pciInfo.picture_url)!
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
-                let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        
-                        blogimage = UIImageView(frame: CGRectMake(20, titleL_h+contentL_h+25, frame.width-40, 80))
-                        let imgTmp = UIImage(data: data!)
-                        //self.imageCache[imgUrl] = imgTmp
-                        blogimage!.image = imgTmp
-                        if blogimage?.image==nil{
-                            blogimage?.image=UIImage(named: "Logo")
-                        }
-                        cell.contentView.addSubview(blogimage!)
-                        
-                    }
-                })
-            }else{
-                for i in 2...daibaninfo.picCount{
-                var x = 8
-                let pciInfo = daibaninfo.pic[i-1]
-                let imgUrl = pictureUrl+(pciInfo.picture_url)!
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
-                let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        x = x+((i-1)*85)
-                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
-                        let imgTmp = UIImage(data: data!)
-                        //self.imageCache[imgUrl] = imgTmp
-                        blogimage!.image = imgTmp
-                        cell.contentView.addSubview(blogimage!)
-                        
-                    }
-                })
-                
-                }}
+        var pics = Array<String>()
+        for item in daibaninfo.pic {
+            pics.append(item.picture_url!)
         }
-        if(daibaninfo.picCount>3&&daibaninfo.picCount<=6){
-            image_h=170
-            for i in 1...daibaninfo.picCount{
-                if i <= 3 {
-                    var x = 8
-                    let pciInfo = daibaninfo.pic[i-1]
-                    if pciInfo.picture_url != nil {
-                        
-                        
-                        let imgUrl = picUrl+(pciInfo.picture_url)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                    }}else{
-                    var x = 8
-                    let pciInfo = daibaninfo.pic[i-1]
-                    if pciInfo.picture_url != nil {
-                        let imgUrl = picUrl+(pciInfo.picture_url)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }
-                }
-            }}
-        if(daibaninfo.picCount>6&&daibaninfo.picCount<=9){
-            image_h=260
-            for i in 1...daibaninfo.picCount{
-                if i <= 3 {
-                    var x = 8
-                    let pciInfo = daibaninfo.pic[i-1]
-                    if pciInfo.picture_url != nil {
-                        let imgUrl = picUrl+(pciInfo.picture_url)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), titleL_h+contentL_h+25, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }}else if (i>3&&i<=6){
-                    var x = 8
-                    let pciInfo = daibaninfo.pic[i-1]
-                    if pciInfo.picture_url != nil {
-                        let imgUrl = picUrl+(pciInfo.picture_url)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    } }else{
-                    var x = 8
-                    let pciInfo = daibaninfo.pic[i-1]
-                    if pciInfo.picture_url != nil {
-                        let imgUrl = picUrl+(pciInfo.picture_url)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-7)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 25+titleL_h+contentL_h+85+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }
-                    
-                }
-                
-            }}
-        let senderIV = UIImageView(frame: CGRectMake(10, titleL_h+image_h+25+contentL_h, 20, 20))
+        let picView = NinePicView(frame:CGRectMake(0, titleL_h + contentL_h + 30, WIDTH,0),pic:pics,vc:self)
+        cell.contentView.addSubview(picView)
+        image_h = picView.image_h
+        
+        
+        
+        let senderIV = UIImageView(frame: CGRectMake(10, titleL_h + contentL_h + image_h + 40, 20, 20))
         senderIV.image=UIImage(named: "ic_fasong")
         cell.contentView.addSubview(senderIV)
-        let senderL = UILabel(frame: CGRectMake(35,titleL_h+image_h+25+contentL_h,120,20))
+        let senderL = UILabel(frame: CGRectMake(35,titleL_h + contentL_h + image_h + 40,120,20))
         if daibaninfo.name != nil {
             senderL.text=daibaninfo.name!
         }
         senderL.font=timefont
         senderL.textColor=timeColor
         cell.contentView.addSubview(senderL)
-        let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h+image_h+25+contentL_h,140,20))
+        let timeL = UILabel(frame: CGRectMake(frame.width-150,titleL_h + contentL_h + image_h + 40,140,20))
         timeL.textAlignment = .Right
         timeL.textColor=timeColor
         timeL.font=timefont
         timeL.text=changeTime(daibaninfo.create_time!)
         cell.contentView.addSubview(timeL)
 
-        tableView.rowHeight=titleL_h+contentL_h+40+image_h+20
+        let view = UIView()
+        view.frame = CGRectMake(0, titleL_h + contentL_h + image_h + 65, WIDTH, 20)
+        view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+        cell.addSubview(view)
+
+        tableView.rowHeight=titleL_h+contentL_h+image_h+85
         cell.selectionStyle = .None
+        tableView.separatorStyle = .None
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

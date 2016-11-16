@@ -43,6 +43,9 @@ class HomeworkInfo: JSONJoy{
     var title:String?
     var dianzanlist:JSONDecoder?
     var comment:JSONDecoder?
+    var subject:String?
+    
+    var receiverlist = Array<ReceiverInfo>()
     
     init() {
         
@@ -59,9 +62,15 @@ class HomeworkInfo: JSONJoy{
         title = decoder["title"].string
         dianzanlist = decoder["like"]
         comment = decoder["comment"]
+        subject = decoder["subject"].string
         if decoder["pic"].array != nil {
             for childs: JSONDecoder in decoder["pic"].array!{
                 self.pic.append(HomeworkPicInfo(childs))
+            }
+        }
+        if decoder["receiverlist"].array != nil {
+            for recivers: JSONDecoder in decoder["receiverlist"].array!{
+                self.receiverlist.append(ReceiverInfo(recivers))
             }
         }
     }
@@ -78,6 +87,49 @@ class HomeworkPicInfo: JSONJoy {
     required init(_ decoder: JSONDecoder){
         pictureurl = decoder["picture_url"].string ?? ""
     
+        
+    }
+    
+}
+
+class ReceiverInfo: JSONJoy {
+//    "id": "270",
+//    "homework_id": "164",
+//    "receiverid": "664",
+//    "read_time": "1475902248",
+//    "receiver_info": [
+//    {
+//    "name": "雷皓乐",
+//    "photo": "20161017111517664.png",
+//    "phone": ""
+//    }
+//    ]
+     var id:String
+     var homework_id:String
+     var receiverid:String
+     var read_time:String
+     var name:String
+     var photo:String
+     var phone:String
+
+    
+    required init(_ decoder: JSONDecoder){
+        id = decoder["id"].string ?? ""
+        homework_id = decoder["homework_id"].string ?? ""
+        receiverid = decoder["receiverid"].string ?? ""
+        read_time = decoder["read_time"].string ?? ""
+        if decoder["receiver_info"].array?.count>0 {
+            name = decoder["receiver_info"].array?.first!["name"].string ?? ""
+            photo = decoder["receiver_info"].array?.first!["photo"].string ?? ""
+            phone = decoder["receiver_info"].array?.first!["phone"].string ?? ""
+        }else{
+            name = ""
+            photo = ""
+            phone = ""
+        }
+            
+       
+        
         
     }
     

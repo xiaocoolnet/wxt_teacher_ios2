@@ -80,3 +80,32 @@ func changeTimeFour(string:String)->String{
     return str
 }
 
+//添加分割线
+func addCommentDividerOneLine(view : UIView,y:CGFloat)->CGFloat{
+    
+    let divider = UIView()
+    divider.frame = CGRectMake(0, y, view.bounds.width, 1)
+    divider.backgroundColor = RGBA(225.0, g: 225.0, b: 225.0, a: 1)
+    view.addSubview(divider)
+    return 1
+}
+
+func addDividerLongLine(view : UIView,y:CGFloat)->CGFloat{
+    
+    let divider = UIView()
+    divider.frame = CGRectMake(0, y, WIDTH, 20)
+    divider.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+    view.addSubview(divider)
+    
+    return 20
+}
+
+func addDividerLine(view : UIView,y:CGFloat,height:CGFloat)->UIView{
+    
+    let divider = UIView()
+    divider.frame = CGRectMake(0, y, WIDTH, height)
+    divider.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)
+    view.addSubview(divider)
+    
+    return divider
+}

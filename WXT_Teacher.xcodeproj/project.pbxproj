@@ -234,7 +234,10 @@
 		EAFAE7321C82E52B00A8BAF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7301C82E52B00A8BAF2 /* Assets.xcassets */; };
 		EAFAE7331C82E52B00A8BAF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7311C82E52B00A8BAF2 /* Main.storyboard */; };
 		EAFAE7391C82E56800A8BAF2 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE7381C82E56800A8BAF2 /* Podfile */; };
+		F601BC2E1DD99437003EA7FF /* NinePicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F601BC2D1DD99437003EA7FF /* NinePicView.swift */; };
 		F606ED021D74284C00FD390F /* ChooseTeacherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F606ED011D74284C00FD390F /* ChooseTeacherViewController.swift */; };
+		F60CD0FC1DDAFF2C00BA4D45 /* SYKeyboardTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CD0FA1DDAFF2C00BA4D45 /* SYKeyboardTextField.swift */; };
+		F60CD0FD1DDAFF2C00BA4D45 /* UIView+SYAutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60CD0FB1DDAFF2C00BA4D45 /* UIView+SYAutoLayout.swift */; };
 		F60F5D851D22742F00CEFC30 /* HomeworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D841D22742F00CEFC30 /* HomeworkViewController.swift */; };
 		F60F5D891D227AF800CEFC30 /* HCommentList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D871D227AF800CEFC30 /* HCommentList.swift */; };
 		F60F5D8A1D227AF800CEFC30 /* HomeworkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F60F5D881D227AF800CEFC30 /* HomeworkList.swift */; };
@@ -408,6 +411,7 @@
 		F66AA0AF1D42024F0092E636 /* DaiBanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66AA0AE1D42024F0092E636 /* DaiBanModel.swift */; };
 		F6879A121CB75059009C06FC /* EditPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6879A111CB75059009C06FC /* EditPhoneViewController.swift */; };
 		F6889E621D4CA1D10004E903 /* PingLunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6889E611D4CA1D10004E903 /* PingLunView.swift */; };
+		F6C057E11DDC603C00C3121C /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C057E01DDC603C00C3121C /* ImagesViewController.swift */; };
 		F6D802D31D3DCBCB0054682B /* SchoolListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D802D21D3DCBCB0054682B /* SchoolListCell.swift */; };
 		F6D802D51D3E01420054682B /* SchoolListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D802D41D3E01420054682B /* SchoolListModel.swift */; };
 		F6DF2BFC1CFEBD0300ADD1EB /* JZdingzhuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DF2BFB1CFEBD0300ADD1EB /* JZdingzhuViewController.swift */; };
@@ -663,7 +667,10 @@
 		EAFAE7311C82E52B00A8BAF2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EAFAE7341C82E55400A8BAF2 /* WXT_Teacher-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WXT_Teacher-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		EAFAE7381C82E56800A8BAF2 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F601BC2D1DD99437003EA7FF /* NinePicView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NinePicView.swift; sourceTree = "<group>"; };
 		F606ED011D74284C00FD390F /* ChooseTeacherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseTeacherViewController.swift; sourceTree = "<group>"; };
+		F60CD0FA1DDAFF2C00BA4D45 /* SYKeyboardTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SYKeyboardTextField.swift; sourceTree = "<group>"; };
+		F60CD0FB1DDAFF2C00BA4D45 /* UIView+SYAutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+SYAutoLayout.swift"; sourceTree = "<group>"; };
 		F60F5D841D22742F00CEFC30 /* HomeworkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkViewController.swift; sourceTree = "<group>"; };
 		F60F5D871D227AF800CEFC30 /* HCommentList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HCommentList.swift; sourceTree = "<group>"; };
 		F60F5D881D227AF800CEFC30 /* HomeworkList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeworkList.swift; sourceTree = "<group>"; };
@@ -892,6 +899,7 @@
 		F66AA0AE1D42024F0092E636 /* DaiBanModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaiBanModel.swift; sourceTree = "<group>"; };
 		F6879A111CB75059009C06FC /* EditPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPhoneViewController.swift; sourceTree = "<group>"; };
 		F6889E611D4CA1D10004E903 /* PingLunView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingLunView.swift; sourceTree = "<group>"; };
+		F6C057E01DDC603C00C3121C /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		F6D802D21D3DCBCB0054682B /* SchoolListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolListCell.swift; sourceTree = "<group>"; };
 		F6D802D41D3E01420054682B /* SchoolListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolListModel.swift; sourceTree = "<group>"; };
 		F6DF2BFB1CFEBD0300ADD1EB /* JZdingzhuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JZdingzhuViewController.swift; sourceTree = "<group>"; };
@@ -1735,6 +1743,7 @@
 				F6DF2C021CFEE51E00ADD1EB /* ParentsExhortTableViewCell.xib */,
 				F646512A1CFD8634005599CD /* HomeworkTableViewCell.swift */,
 				F646512B1CFD8634005599CD /* HomeworkTableViewCell.xib */,
+				F601BC2D1DD99437003EA7FF /* NinePicView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1742,6 +1751,7 @@
 		EAFAE6361C82E50900A8BAF2 /* Third Package */ = {
 			isa = PBXGroup;
 			children = (
+				F60CD0F91DDAFF2C00BA4D45 /* SYKeyboardTextField */,
 				F63D757F1DD705ED00D118B5 /* MJExtension */,
 				F63D75321DD701C200D118B5 /* AFNetworking */,
 				F63D75571DD701C200D118B5 /* YKMultiLevelTableView */,
@@ -1958,6 +1968,7 @@
 		EAFAE69C1C82E50900A8BAF2 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F6C057E01DDC603C00C3121C /* ImagesViewController.swift */,
 				EAFAE69D1C82E50900A8BAF2 /* CornerRadiusViewController.swift */,
 				EAFAE69E1C82E50900A8BAF2 /* Jsonjoy */,
 				EAFAE6A21C82E50900A8BAF2 /* Url.swift */,
@@ -1975,6 +1986,15 @@
 				EAFAE6A11C82E50900A8BAF2 /* JSONJoy.swift */,
 			);
 			path = Jsonjoy;
+			sourceTree = "<group>";
+		};
+		F60CD0F91DDAFF2C00BA4D45 /* SYKeyboardTextField */ = {
+			isa = PBXGroup;
+			children = (
+				F60CD0FA1DDAFF2C00BA4D45 /* SYKeyboardTextField.swift */,
+				F60CD0FB1DDAFF2C00BA4D45 /* UIView+SYAutoLayout.swift */,
+			);
+			path = SYKeyboardTextField;
 			sourceTree = "<group>";
 		};
 		F60F5D861D227AE900CEFC30 /* model */ = {
@@ -2536,6 +2556,7 @@
 				F65499941D3F687A00F6FD7D /* SetUpViewController.swift in Sources */,
 				F6DF2BFE1CFEC28D00ADD1EB /* GongGaoModel.swift in Sources */,
 				EAFAE6F91C82E50900A8BAF2 /* UIView+Haneke.swift in Sources */,
+				F6C057E11DDC603C00C3121C /* ImagesViewController.swift in Sources */,
 				EAFAE70C1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallZigZagDeflect.swift in Sources */,
 				18B369021CB5ED66007DC602 /* ContactList.swift in Sources */,
 				EAFAE6EC1C82E50900A8BAF2 /* Fetch.swift in Sources */,
@@ -2552,6 +2573,7 @@
 				F657953E1D65A0490059301F /* WBTableViewDataSource.m in Sources */,
 				F6579FF41D77D12F0049932E /* ClassInfo.swift in Sources */,
 				EAFAE72C1C82E50900A8BAF2 /* Httpresult.swift in Sources */,
+				F60CD0FC1DDAFF2C00BA4D45 /* SYKeyboardTextField.swift in Sources */,
 				EAFAE6BE1C82E50900A8BAF2 /* RegisterGetCodeViewController.swift in Sources */,
 				F606ED021D74284C00FD390F /* ChooseTeacherViewController.swift in Sources */,
 				F64E83B91D603F9E0044528F /* ReciveAnnounceModel.swift in Sources */,
@@ -2664,6 +2686,7 @@
 				EAC2008E1C9D36A400A6A613 /* DingZhuTableViewCell.swift in Sources */,
 				F66AA0AD1D41BAA40092E636 /* YiFaViewController.swift in Sources */,
 				EAFAE6F71C82E50900A8BAF2 /* UIImage+Haneke.swift in Sources */,
+				F60CD0FD1DDAFF2C00BA4D45 /* UIView+SYAutoLayout.swift in Sources */,
 				F63D75651DD701C200D118B5 /* AFNetworkReachabilityManager.m in Sources */,
 				EAFAE7071C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallScaleRipple.swift in Sources */,
 				F63D759D1DD705ED00D118B5 /* NSObject+MJCoding.m in Sources */,
@@ -2695,6 +2718,7 @@
 				F63F68E31DB8AC2000C8B03B /* QCDetailsInformVC.swift in Sources */,
 				EA8B7C461CA2350D007AFED0 /* TongZhiGonggaoViewController.swift in Sources */,
 				EAFAE7041C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallRotateChase.swift in Sources */,
+				F601BC2E1DD99437003EA7FF /* NinePicView.swift in Sources */,
 				F65795211D659E760059301F /* AddQunFaViewController.swift in Sources */,
 				F65499921D3F14C300F6FD7D /* SchoolNoticesModel.swift in Sources */,
 				EAFAE6D61C82E50900A8BAF2 /* FlexibleTableView.swift in Sources */,

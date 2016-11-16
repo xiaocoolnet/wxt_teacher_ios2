@@ -119,216 +119,223 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         
         
         var image_h = CGFloat()
-        
+        let pic = JZDZinfo.pic
+        var pics = Array<String>()
+        for item in pic {
+            pics.append(item.pictureurl!)
+        }
+        let picView = NinePicView(frame:CGRectMake(0, titleL_h + 10, WIDTH,0),pic:pics,vc:self)
+        cell.contentView.addSubview(picView)
+        image_h = picView.image_h
         //判断图片张数显示
-            if(JZDZinfo.picCount>0&&JZDZinfo.picCount<=3){
-                image_h=80
-                if  JZDZinfo.picCount==1{
-                   
-                    let pciInfo = JZDZinfo.pic[0]
-                    var imgUrl=String()
-                    if pciInfo.pictureurl != nil {
-                        imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                    }
-                    
-                    //let image = self.imageCache[imgUrl] as UIImage?
-                    let avatarUrl = NSURL(string: imgUrl)
-                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                    
-                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                        if(data != nil){
-                            
-                            blogimage = UIButton(frame: CGRectMake(20, 20+titleL_h, frame.width-40, 80))
-                            
-                            let imgTmp = UIImage(data: data!)
-                            //self.imageCache[imgUrl] = imgTmp
-                            blogimage!.setImage(imgTmp, forState: .Normal)
-                            if blogimage!.imageView!.image==nil{
-                                blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                            }
-                            
-                            blogimage?.tag=indexPath.row
-                            blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                            cell.contentView.addSubview(blogimage!)
-                            
-                            
-                        }
-                    })
-                }else{
-                for i in 1...JZDZinfo.picCount{
-                    var x = 8
-                    let pciInfo = JZDZinfo.pic[i-1]
-                    var imgUrl=String()
-                    if pciInfo.pictureurl != nil {
-                         imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                    }
-                    
-                    //let image = self.imageCache[imgUrl] as UIImage?
-                    let avatarUrl = NSURL(string: imgUrl)
-                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                    
-                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                        if(data != nil){
-                            x = x+((i-1)*85)
-                            blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
-                          
-                            let imgTmp = UIImage(data: data!)
-                            //self.imageCache[imgUrl] = imgTmp
-                            blogimage!.setImage(imgTmp, forState: .Normal)
-                            if blogimage!.imageView!.image==nil{
-                               blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                            }
-
-                           blogimage?.tag=indexPath.row
-                            blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                            cell.contentView.addSubview(blogimage!)
-                           
-                            
-                        }
-                    })
-                    }}
-            }
-            if(JZDZinfo.picCount>3&&JZDZinfo.picCount<=6){
-                image_h=170
-                for i in 1...JZDZinfo.picCount{
-                    if i <= 3 {
-                        var x = 8
-                        let pciInfo = JZDZinfo.pic[i-1]
-                        if pciInfo.pictureurl != nil {
-                            
-                        
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.imageView!.image = imgTmp
-                                if blogimage!.imageView!.image==nil{
-                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                                }
-                                blogimage?.tag=indexPath.row
-                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                cell.contentView.addSubview(blogimage!)
-                        }
-                        })
-                        }}else{
-                        var x = 8
-                        let pciInfo = JZDZinfo.pic[i-1]
-                        if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                               blogimage!.setImage(imgTmp, forState: .Normal)
-                                if blogimage!.imageView!.image==nil{
-                                   blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                                }
-                                blogimage?.tag=indexPath.row
-                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }
-                }
-                }}
-            if(JZDZinfo.picCount>6&&JZDZinfo.picCount<=9){
-                image_h=260
-                for i in 1...JZDZinfo.picCount{
-                    if i <= 3 {
-                        var x = 8
-                        let pciInfo = JZDZinfo.pic[i-1]
-                        if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                 blogimage!.setImage(imgTmp, forState: .Normal)
-                                if blogimage!.imageView!.image==nil{
-                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                                }
-                                blogimage?.tag=indexPath.row
-                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                        }}else if (i>3&&i<=6){
-                        var x = 8
-                        let pciInfo = JZDZinfo.pic[i-1]
-                        if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.setImage(imgTmp, forState: .Normal)
-                                if blogimage!.imageView!.image==nil{
-                                   blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                                }
-                                blogimage?.tag=indexPath.row
-                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                        } }else{
-                        var x = 8
-                        let pciInfo = JZDZinfo.pic[i-1]
-                            if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-7)*85)
-                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85+85, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.setImage(imgTmp, forState: .Normal)
-                                if blogimage!.imageView!.image==nil{
-                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
-                                }
-                                blogimage?.tag=indexPath.row
-                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                    }
-                    }
-                }}
+//            if(JZDZinfo.picCount>0&&JZDZinfo.picCount<=3){
+//                image_h=80
+//                if  JZDZinfo.picCount==1{
+//                   
+//                    let pciInfo = JZDZinfo.pic[0]
+//                    var imgUrl=String()
+//                    if pciInfo.pictureurl != nil {
+//                        imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                    }
+//                    
+//                    //let image = self.imageCache[imgUrl] as UIImage?
+//                    let avatarUrl = NSURL(string: imgUrl)
+//                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                    
+//                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                        if(data != nil){
+//                            
+//                            blogimage = UIButton(frame: CGRectMake(20, 20+titleL_h, frame.width-40, 80))
+//                            
+//                            let imgTmp = UIImage(data: data!)
+//                            //self.imageCache[imgUrl] = imgTmp
+//                            blogimage!.setImage(imgTmp, forState: .Normal)
+//                            if blogimage!.imageView!.image==nil{
+//                                blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                            }
+//                            
+//                            blogimage?.tag=indexPath.row
+//                            blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                            cell.contentView.addSubview(blogimage!)
+//                            
+//                            
+//                        }
+//                    })
+//                }else{
+//                for i in 1...JZDZinfo.picCount{
+//                    var x = 8
+//                    let pciInfo = JZDZinfo.pic[i-1]
+//                    var imgUrl=String()
+//                    if pciInfo.pictureurl != nil {
+//                         imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                    }
+//                    
+//                    //let image = self.imageCache[imgUrl] as UIImage?
+//                    let avatarUrl = NSURL(string: imgUrl)
+//                    let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                    
+//                    NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                        if(data != nil){
+//                            x = x+((i-1)*85)
+//                            blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
+//                          
+//                            let imgTmp = UIImage(data: data!)
+//                            //self.imageCache[imgUrl] = imgTmp
+//                            blogimage!.setImage(imgTmp, forState: .Normal)
+//                            if blogimage!.imageView!.image==nil{
+//                               blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                            }
+//
+//                           blogimage?.tag=indexPath.row
+//                            blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                            cell.contentView.addSubview(blogimage!)
+//                           
+//                            
+//                        }
+//                    })
+//                    }}
+//            }
+//            if(JZDZinfo.picCount>3&&JZDZinfo.picCount<=6){
+//                image_h=170
+//                for i in 1...JZDZinfo.picCount{
+//                    if i <= 3 {
+//                        var x = 8
+//                        let pciInfo = JZDZinfo.pic[i-1]
+//                        if pciInfo.pictureurl != nil {
+//                            
+//                        
+//                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                        
+//                        //let image = self.imageCache[imgUrl] as UIImage?
+//                        let avatarUrl = NSURL(string: imgUrl)
+//                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                        
+//                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                            if(data != nil){
+//                                x = x+((i-1)*85)
+//                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
+//                                let imgTmp = UIImage(data: data!)
+//                                //self.imageCache[imgUrl] = imgTmp
+//                                blogimage!.imageView!.image = imgTmp
+//                                if blogimage!.imageView!.image==nil{
+//                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                                }
+//                                blogimage?.tag=indexPath.row
+//                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                                cell.contentView.addSubview(blogimage!)
+//                        }
+//                        })
+//                        }}else{
+//                        var x = 8
+//                        let pciInfo = JZDZinfo.pic[i-1]
+//                        if pciInfo.pictureurl != nil {
+//                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                        
+//                        //let image = self.imageCache[imgUrl] as UIImage?
+//                        let avatarUrl = NSURL(string: imgUrl)
+//                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                        
+//                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                            if(data != nil){
+//                                x = x+((i-4)*85)
+//                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85, 80, 80))
+//                                let imgTmp = UIImage(data: data!)
+//                               blogimage!.setImage(imgTmp, forState: .Normal)
+//                                if blogimage!.imageView!.image==nil{
+//                                   blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                                }
+//                                blogimage?.tag=indexPath.row
+//                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                                cell.contentView.addSubview(blogimage!)
+//                            }
+//                        })
+//                        
+//                    }
+//                }
+//                }}
+//            if(JZDZinfo.picCount>6&&JZDZinfo.picCount<=9){
+//                image_h=260
+//                for i in 1...JZDZinfo.picCount{
+//                    if i <= 3 {
+//                        var x = 8
+//                        let pciInfo = JZDZinfo.pic[i-1]
+//                        if pciInfo.pictureurl != nil {
+//                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                        
+//                        //let image = self.imageCache[imgUrl] as UIImage?
+//                        let avatarUrl = NSURL(string: imgUrl)
+//                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                        
+//                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                            if(data != nil){
+//                                x = x+((i-1)*85)
+//                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h, 80, 80))
+//                                let imgTmp = UIImage(data: data!)
+//                                //self.imageCache[imgUrl] = imgTmp
+//                                 blogimage!.setImage(imgTmp, forState: .Normal)
+//                                if blogimage!.imageView!.image==nil{
+//                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                                }
+//                                blogimage?.tag=indexPath.row
+//                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                                cell.contentView.addSubview(blogimage!)
+//                            }
+//                        })
+//                        
+//                        }}else if (i>3&&i<=6){
+//                        var x = 8
+//                        let pciInfo = JZDZinfo.pic[i-1]
+//                        if pciInfo.pictureurl != nil {
+//                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                        
+//                        //let image = self.imageCache[imgUrl] as UIImage?
+//                        let avatarUrl = NSURL(string: imgUrl)
+//                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                        
+//                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                            if(data != nil){
+//                                x = x+((i-4)*85)
+//                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85, 80, 80))
+//                                let imgTmp = UIImage(data: data!)
+//                                //self.imageCache[imgUrl] = imgTmp
+//                                blogimage!.setImage(imgTmp, forState: .Normal)
+//                                if blogimage!.imageView!.image==nil{
+//                                   blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                                }
+//                                blogimage?.tag=indexPath.row
+//                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                                cell.contentView.addSubview(blogimage!)
+//                            }
+//                        })
+//                        
+//                        } }else{
+//                        var x = 8
+//                        let pciInfo = JZDZinfo.pic[i-1]
+//                            if pciInfo.pictureurl != nil {
+//                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
+//                        
+//                        //let image = self.imageCache[imgUrl] as UIImage?
+//                        let avatarUrl = NSURL(string: imgUrl)
+//                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+//                        
+//                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
+//                            if(data != nil){
+//                                x = x+((i-7)*85)
+//                                blogimage = UIButton(frame: CGRectMake(CGFloat(x), 20+titleL_h+85+85, 80, 80))
+//                                let imgTmp = UIImage(data: data!)
+//                                //self.imageCache[imgUrl] = imgTmp
+//                                blogimage!.setImage(imgTmp, forState: .Normal)
+//                                if blogimage!.imageView!.image==nil{
+//                                    blogimage!.setImage(UIImage(named: "4"), forState: .Normal)
+//                                }
+//                                blogimage?.tag=indexPath.row
+//                                blogimage?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
+//                                cell.contentView.addSubview(blogimage!)
+//                            }
+//                        })
+//                    }
+//                    }
+//                }}
         //下面的评论视图
         let senderIV = UIImageView(frame: CGRectMake(10, titleL_h+image_h+25, 20, 20))
         senderIV.image=UIImage(named: "ic_fasong")

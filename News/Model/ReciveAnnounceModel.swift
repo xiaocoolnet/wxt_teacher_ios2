@@ -79,7 +79,7 @@ class ReciveAnnounceInfo: JSONJoy{
     required init(_ decoder: JSONDecoder){
         
         content = decoder["notice_info"].array?.first?["content"].string ?? ""
-        create_time = decoder["create_time"].string ?? ""
+        create_time = decoder["notice_info"].array?.first?["create_time"].string ?? ""
         id = decoder["noticeid"].string ?? ""
         avatar = decoder["notice_info"].array?.first?["photo"].string ?? ""
         userid = decoder["receiverid"].string ?? ""
