@@ -108,11 +108,22 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         titleLbl.font=biaotifont
         titleLbl.numberOfLines = 0
         cell.contentView.addSubview(titleLbl)
+        
+        //        自适应行高
+        let option : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBound:CGRect = UIScreen.mainScreen().bounds
+        let boundingRects = String(titleLbl.text).boundingRectWithSize(CGSizeMake(screenBound.width, 0), options: option, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        
+        let contentH = boundingRects.size.height + 20
         //  活动内容
         let contentLbl = UILabel()
         contentLbl.font = neirongfont
         contentLbl.textColor = neirongColor
         contentLbl.text = model.content
+        if indexPath.row==0{
+            let user = NSUserDefaults.standardUserDefaults()
+            user.setValue(model.content, forKey: "gonggao")
+        }
         contentLbl.numberOfLines = 0
         cell.contentView.addSubview(contentLbl)
         

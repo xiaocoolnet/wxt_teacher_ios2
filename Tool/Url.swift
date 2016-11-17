@@ -36,7 +36,7 @@ var pinglunColor = UIColor.init(red: 81.0/255, green: 80.0/255, blue: 80.0/255, 
 var biaotifont = UIFont.systemFontOfSize(17)
 var shiliufont = UIFont.systemFontOfSize(16)
 var neirongfont = UIFont.systemFontOfSize(15)
-var timefont = UIFont.systemFontOfSize(14)
+var timefont = UIFont.systemFontOfSize(13)
 
 
 

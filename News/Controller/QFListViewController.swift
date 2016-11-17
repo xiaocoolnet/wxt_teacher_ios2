@@ -14,12 +14,12 @@ class QFListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "群发消息"
+        self.title = "信息群发"
         let shou = XiaoXiQunFaViewController()
         let yifa = YiFaQunFaViewController()
         
-        shou.title = "我收到的"
-        yifa.title = "我发出的"
+        shou.title = "获取的信息"
+        yifa.title = "发布的信息"
         
         
         let viewControllers = [shou, yifa]
