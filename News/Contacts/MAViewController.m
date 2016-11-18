@@ -13,7 +13,10 @@
 #import "HttpModel.h"
 #import "ETBaseHelper.h"
 #import "ClassParentModel.h"
+#import "ChetNewsViewController.h"
 @interface MAViewController ()
+
+@property(nonatomic,strong)YKMultiLevelTableView * mutableTable;
 
 @end
 
@@ -26,15 +29,16 @@
 }
 
 - (void)returnData{
+    
     NSMutableArray * array = [NSMutableArray array];
     //服务器给的域名
     NSString *domainStr = @"http://wxt.xiaocool.net/index.php?g=apps&m=index&a=ParentContacts";
-    
+    NSString * userid = [[NSUserDefaults standardUserDefaults] objectForKey:@"userid"];
     //假如需要提交给服务器的参数是key＝1,class_id=100
     //创建一个可变字典
     NSMutableDictionary *parametersDic = [NSMutableDictionary dictionary];
     //往字典里面添加需要提交的参数
-    [parametersDic setObject:@"605" forKey:@"userid"];
+    [parametersDic setObject:userid forKey:@"userid"];
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
     
     [session GET:domainStr parameters:parametersDic success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -64,7 +68,7 @@
         }
         CGRect rect = self.view.frame;
         CGRect frame = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect)-44);
-        YKMultiLevelTableView *mutableTable = [[YKMultiLevelTableView alloc] initWithFrame:frame
+        self.mutableTable = [[YKMultiLevelTableView alloc] initWithFrame:frame
                                                                                      nodes:array
                                                                                 rootNodeID:@""
                                                                           needPreservation:YES
@@ -72,11 +76,21 @@
                                                                                 
                                                                                    
                                                                                }callBlock:^(YKNodeModel *node) {
+                                                                                   NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@",node.phone];
+                                                                                   UIWebView * callWebview = [[UIWebView alloc] init];
+                                                                                   [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+                                                                                   [self.view addSubview:callWebview];
+                                                                                  
                                                                                              NSLog(@"--select node phone=%@", node.phone);
                                                                                } messageBlock:^(YKNodeModel *node) {
-                                                                                   
-                                                                                            NSLog(@"--select node id=%@", node.childrenID);                 }];
-        [self.view addSubview:mutableTable];
+                                                                                   ChetNewsViewController * vc = [[ChetNewsViewController alloc] init];
+                                                                                   vc.usertype = @"0";
+                                                                                   vc.title = node.name;
+                                                                                   vc.receive_uid = node.childrenID;
+                                                                                   [self.navigationController pushViewController:vc animated:true];
+                                                                                            NSLog(@"--select node id=%@", node.childrenID);
+                                                                               }];
+        [self.view addSubview:_mutableTable];
 
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
 protocol sendteachernameidArray:NSObjectProtocol {
     func sendteachernameid(name:NSMutableArray,id:NSMutableArray)
 }
@@ -90,9 +89,7 @@ class ChooseTeacherViewController: UIViewController,UITableViewDelegate,UITableV
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadStudentData))
-        self.tableView.reloadData()
-        self.tableView.headerView?.beginRefreshing()
+      
     }
     
     
@@ -130,7 +127,7 @@ class ChooseTeacherViewController: UIViewController,UITableViewDelegate,UITableV
                     self.dataSource = ChooseTeacherModel(status.data!)
                     
                     self.tableView.reloadData()
-                    self.tableView.headerView?.endRefreshing()
+    
                 }
             }
         }

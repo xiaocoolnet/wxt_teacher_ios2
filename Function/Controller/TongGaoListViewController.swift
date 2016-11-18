@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+
 
 class TongGaoListViewController:UIViewController,UITableViewDataSource,UITableViewDelegate {
     

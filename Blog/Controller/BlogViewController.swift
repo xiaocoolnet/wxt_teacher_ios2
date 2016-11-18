@@ -10,8 +10,7 @@ import UIKit
 import Alamofire
 import YYWebImage
 import MBProgressHUD
-import XWSwiftRefresh
-
+import MJRefresh
 class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,SYKeyboardTextFieldDelegate {
 
     let blogTableView = UITableView()
@@ -30,7 +29,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var idtag = Int()
     var keyboardShowState = false
     var keyboardTextField : SYKeyboardTextField!
-    
+    var beginid = 0
     
     override func viewDidLoad() {
         self.title = "动态"
@@ -53,9 +52,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         blogTableView.tableHeaderView=headerview
         blogTableView.separatorStyle = .None
         self.view.addSubview(blogTableView)
-        let footerview = XWRefreshAutoNormalFooter(target: self, action: #selector(BlogViewController.GetDate))
-        self.blogTableView.footerView = footerview
-         print(footerview)
+    
         self.DropDownUpdate()
         loadCommentKeyBoardView()
     }
@@ -158,9 +155,18 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     //MARK: - 刷新列表
     func DropDownUpdate(){
-        self.blogTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(BlogViewController.GetDate))
-        self.blogTableView.reloadData()
-        self.blogTableView.headerView?.beginRefreshing()
+        self.blogTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.beginid = 0
+            self.GetDate()
+            self.blogTableView.mj_header.endRefreshing()
+        })
+        self.blogTableView.mj_header.beginRefreshing()
+        self.blogTableView.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.beginid = self.blogSource.count
+            self.GetDate()
+            self.blogTableView.mj_footer.endRefreshing()
+        })
+    
     }
     //MARK: - 获取动态列表数据
     func GetDate(){
@@ -179,7 +185,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             "schoolid":scidd,
             "classid":clidd,
             "type":"1",
-            "beginid":"",
+            "beginid":"\(beginid)",
             "userid":uid
         ]
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
@@ -203,7 +209,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.blogSource = MyBlogList(status.data!)
 //                    self.blogTableView.reloadSections(NSIndexSet (index: 0), withRowAnimation: UITableViewRowAnimation.Automatic)
                     self.blogTableView.reloadData()
-                    self.blogTableView.headerView?.endRefreshing()
+                    
                 }
             }
         }
@@ -223,7 +229,7 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let senderIV = UIImageView(frame: CGRectMake(5, 10, 40, 40))
         let photo = photoinfo.photo
         let url = imageUrl+photo!
-        senderIV.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
+        senderIV.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "图片默认加载"))
         senderIV.layer.masksToBounds=true
         senderIV.layer.cornerRadius=20
         cell.contentView.addSubview(senderIV)
@@ -299,12 +305,47 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.contentView.addSubview(plBT)
   
         
+        let dzView = UIImageView(frame: CGRectMake(50, plBT.frame.maxY+5, 20, 20))
+        dzView.image = UIImage(named: "已点赞")
+         dzView.hidden = false
+        cell.contentView.addSubview(dzView)
+        var dzHeight:CGFloat = 30
+        let dzPsonView = UILabel(frame: CGRectMake(70, plBT.frame.maxY+5, frame.width-80, 20))
+        dzPsonView.textAlignment = .Left
+        dzPsonView.textColor = themeColor
+        dzPsonView.font = timefont
+        cell.contentView.addSubview(dzPsonView)
+        var dzNames = ""
+        if photoinfo.like.count>0&&photoinfo.like.count<3{
+            for item in 0...photoinfo.like.count-1{
+                if item==photoinfo.like.count-1 {
+                    dzNames = dzNames + photoinfo.like[item].name
+                    break
+                }
+                dzNames = dzNames + photoinfo.like[item].name + "，"
+            }
+        }else if photoinfo.like.count>=3{
+            var flag = 0
+            for item in photoinfo.like {
+                if flag == 3{
+                    dzNames = dzNames + item.name + "等"
+                    break
+                }
+                dzNames = dzNames + item.name + "，"
+                flag = flag + 1
+            }
+        }else{
+            dzHeight = 0
+            dzView.hidden = true
+        }
+        dzPsonView.text = dzNames
+        dzPsonView.frame = CGRectMake(70, plBT.frame.maxY+5, frame.width-80, dzHeight-10)
         //下面的评论视图
         if photoinfo.comment.count != 0 {
             var commentHeight = CGFloat()
             for item in 0...photoinfo.comment.count-1 {
                 let oldCommentHeight = commentHeight
-                let y = titleL_h+image_h+25+30+40+25+oldCommentHeight
+                let y = titleL_h+image_h+25+30+40+25+oldCommentHeight+dzHeight
                 let pinglunView = UIView()
                 pinglunView.backgroundColor = bkColor
                 cell.contentView.addSubview(pinglunView)
@@ -326,12 +367,12 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 timec.text=changeTime(photoinfo.comment[item].comment_time)
                 pinglunView.addSubview(timec)
                 
-                let contentL = UILabel(frame: CGRectMake(60,30,frame.width-70,20))
+                let contentL = UILabel(frame: CGRectMake(60,30,WIDTH-120,20))
                 contentL.textColor=pinglunColor
                 contentL.numberOfLines=0
                 contentL.text=photoinfo.comment[item].content
                 contentL.font=UIFont.systemFontOfSize(14)
-                let content_h = calculateHeight(contentL.text!, size: 14, width: frame.width-70)
+                let content_h = calculateHeight(contentL.text!, size: 14, width: WIDTH-120)
                 
                 pinglunView.frame.size.height=40+content_h
                 contentL.frame.size.height=content_h
@@ -347,11 +388,11 @@ class BlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 pinglunView.addSubview(contentL)
 
             }
-             tableView.rowHeight=titleL_h+image_h+20+40+commentHeight+40+20+27
+             tableView.rowHeight=titleL_h+image_h+20+40+commentHeight+40+20+27+dzHeight
 //            tableView.rowHeight=30+titleL_h+image_h+20+40+60*CGFloat(photoinfo.comment.count)+30+40+20
         }else{
 //            tableView.rowHeight=30+titleL_h+image_h+20+40+30+40
-            tableView.rowHeight=titleL_h+image_h+20+40+40+20+27
+            tableView.rowHeight=titleL_h+image_h+20+40+40+20+27+dzHeight
         }
         
         let view = UIView(frame: CGRectMake(0,tableView.rowHeight-20,frame.width,20))

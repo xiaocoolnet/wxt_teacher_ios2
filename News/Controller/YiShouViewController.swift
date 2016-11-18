@@ -9,10 +9,13 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
+import MJRefresh
 class YiShouViewController: UIViewController ,UITableViewDataSource,UITableViewDelegate{
 let DaiBanTableView = UITableView()
     var DaibanSource = DaiBanModel()
     
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -25,7 +28,11 @@ let DaiBanTableView = UITableView()
         DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
         loadData()
         self.view.addSubview(DaiBanTableView)
-        
+        self.DaiBanTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadData()
+            self.DaiBanTableView.mj_header.endRefreshing()
+        })
+        self.DaiBanTableView.mj_header.beginRefreshing()
         // Do any additional setup after loading the view.
     }
     //MARK: -    获取数据
@@ -63,7 +70,7 @@ let DaiBanTableView = UITableView()
                 if(status.status == "success"){
                     self.DaibanSource = DaiBanModel(status.data!)
                     self.DaiBanTableView.reloadData()
-                    self.DaiBanTableView.headerView?.endRefreshing()
+              
                 }
             }
         }
@@ -149,7 +156,8 @@ let DaiBanTableView = UITableView()
         
     }
     override func viewWillAppear(animated: Bool) {
-        DaiBanTableView.reloadData()
+        super.viewWillAppear(animated)
+        self.loadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

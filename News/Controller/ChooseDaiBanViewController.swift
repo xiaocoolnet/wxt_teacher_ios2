@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
 
 class ChooseDaiBanViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -48,9 +47,7 @@ class ChooseDaiBanViewController: UIViewController,UITableViewDataSource,UITable
     
     //    开始刷新
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadStudentData))
-        self.tableView.reloadData()
-        self.tableView.headerView?.beginRefreshing()
+
     }
     
     
@@ -88,7 +85,7 @@ class ChooseDaiBanViewController: UIViewController,UITableViewDataSource,UITable
                     self.dataSource = ChooseTeacherModel(status.data!)
                     
                     self.tableView.reloadData()
-                    self.tableView.headerView?.endRefreshing()
+    
                 }
             }
         }

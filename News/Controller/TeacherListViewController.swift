@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 protocol sendteacherArray:NSObjectProtocol {
     func sendteachernameid(name:String,id:String)
 }
@@ -42,7 +42,7 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .None
-        tableView.registerClass(ChooseUserTableViewCell.self, forCellReuseIdentifier: "chooseReciverCell")
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         self.view.addSubview(tableView)
 
      
@@ -50,9 +50,11 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
     }
         //    开始刷新
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadStudentData))
-        self.tableView.reloadData()
-        self.tableView.headerView?.beginRefreshing()
+       self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.loadStudentData()
+            self.tableView.mj_header.endRefreshing()
+       })
+        self.tableView.mj_header.beginRefreshing()
     }
     
     
@@ -90,7 +92,7 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.dataSource = ChooseTeacherModel(status.data!)
                     
                     self.tableView.reloadData()
-                    self.tableView.headerView?.endRefreshing()
+          
                 }
             }
         }
@@ -128,6 +130,7 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let headerView = UIView()
         headerView.frame = CGRectMake(0, 0, WIDTH, 40)
+        headerView.backgroundColor = UIColor.whiteColor()
         
         //展开折叠按钮
         let big_select_btn = UIButton()
@@ -149,9 +152,10 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         
         //组名
         let titlelabel = UILabel()
-        titlelabel.frame = CGRectMake(40, 10, WIDTH - 80, 20)
+        titlelabel.frame = CGRectMake(35, 10, WIDTH - 80, 20)
         titlelabel.text = "老师"
-        titlelabel.textColor = UIColor.blackColor()
+        titlelabel.textColor = biaotiColor
+        titlelabel.font = neirongfont
         headerView.addSubview(titlelabel)
         
         //分割线
@@ -178,17 +182,31 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCellWithIdentifier("chooseReciverCell", forIndexPath: indexPath) as! ChooseUserTableViewCell
-        
+
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         let model = self.dataSource.objectlist[indexPath.row]
         
         
-        cell.nameLabel.text = model.name
-        cell.nameLabel.textColor = neirongColor
-        cell.nameLabel.font=neirongfont
-        print(model.name)
-        cell.select.hidden=true
+        let nodeLabel = UILabel(frame: CGRectMake(45,8,200,20))
+        nodeLabel.font = neirongfont
+        nodeLabel.textColor = neirongColor
+        nodeLabel.text = model.name
+        cell.contentView.addSubview(nodeLabel)
+        
+        let callButton = UIButton(frame: CGRectMake(cell.bounds.size.width - 35, 8, 35, 35))
+        callButton.setImage(UIImage(named: "ic_hujiao"), forState: .Normal)
+        callButton.tag = indexPath.row
+        callButton.addTarget(self, action: #selector(self.call), forControlEvents: .TouchUpInside)
+        cell.contentView.addSubview(callButton)
+        
+        
+        let messageButton = UIButton(frame: CGRectMake(cell.size.width - callButton.frame.size.width - 10 - 35, 8, 35, 35))
+        messageButton.tag = indexPath.row
+        messageButton.addTarget(self, action: #selector(self.message), forControlEvents: .TouchUpInside)
+        messageButton.setImage(UIImage(named: "ic_xiaoxi"), forState:.Normal)
+        cell.contentView.addSubview(messageButton)
+
+    
         
         
         
@@ -203,4 +221,22 @@ class TeacherListViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
+    func call(button:UIButton){
+        let tel = String(self.dataSource.objectlist[button.tag].phone)
+        print(tel)
+        let url = NSURL(string: "tel://"+tel)
+        if button.titleLabel?.text != nil {
+            UIApplication.sharedApplication().openURL(url!)
+        }
+
+    }
+    
+    func message(button:UIButton){
+        let model = self.dataSource.objectlist[button.tag]
+        let vc = ChetNewsViewController()
+        vc.usertype = "1";
+        vc.title = model.name;
+        vc.receive_uid = model.id;
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

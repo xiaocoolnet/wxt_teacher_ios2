@@ -8,9 +8,8 @@
 
 import UIKit
 import Alamofire
-import XWSwiftRefresh
 import MBProgressHUD
-
+import MJRefresh
 //  班级课程的界面
 
 //  需要进行网络数据请求得到对应的课程
@@ -33,14 +32,17 @@ class ClassScheduleTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        GETData()
         //  刷新
 //        tableView.registerClass(ClassScheduleTableViewCell.self, forCellReuseIdentifier: "cell")
         self.tableView.frame=CGRectMake(0, 0, frame.width, frame.height)
 //        tableSource.delegate=self
 //        tableSource.dataSource=self
         self.tabBarController?.tabBar.hidden=true
-        
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.GETData()
+            self.tableView.mj_header.endRefreshing()
+        })
+        self.tableView.mj_header.beginRefreshing()
     }
     
     func GETData(){
@@ -205,6 +207,9 @@ class ClassScheduleTableViewController: UITableViewController {
         self.tabBarController?.tabBar.hidden=false
     }
     
-    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.GETData()
+    }
 
 }

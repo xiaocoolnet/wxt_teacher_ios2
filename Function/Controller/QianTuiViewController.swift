@@ -187,7 +187,7 @@ class QianTuiViewController: UIViewController,UICollectionViewDataSource,UIColle
                     self.shiDaoCount.text = "未到:\(weidao)"
                     self.qingJiaCount.text = "请假:\(self.dataSource.objectlist.count-dao-weidao)"
                     self.avatorCollection.reloadData()
-                    self.avatorCollection.headerView?.endRefreshing()
+             
                 }
             }
         }
@@ -399,8 +399,7 @@ class QianTuiViewController: UIViewController,UICollectionViewDataSource,UIColle
                     
                     let sign_date = "\(self.dateSelect!)-00-00-00"
                     self.loadData(stringToTimeStamp(sign_date))
-                    
-                    self.avatorCollection.headerView?.endRefreshing()
+          
                 }
             }
         }

@@ -188,7 +188,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
                     self.shiDaoCount.text = "未到人数:\(weidao)"
                     self.qingJiaCount.text = "请假人数:\(self.dataSource.objectlist.count-dao-weidao)"
                     self.avatorCollection.reloadData()
-                    self.avatorCollection.headerView?.endRefreshing()
+           
                 }
             }
         }
@@ -298,7 +298,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
             dateSelect = tomorrow
             let sign_date = "\(dateSelect!)-00-00-00"
             loadData(stringToTimeStamp(sign_date))
-        
+             self.selecBtn.selected = false
         }
         
        
@@ -314,6 +314,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         dateSelect = yesterday
         let sign_date = "\(dateSelect!)-00-00-00"
         loadData(stringToTimeStamp(sign_date))
+         self.selecBtn.selected = false
     }
     
     func LastMonth(){
@@ -326,6 +327,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         dateSelect = lastMonth
         let sign_date = "\(dateSelect!)-00-00-00"
         loadData(stringToTimeStamp(sign_date))
+         self.avatorCollection.reloadData()
     }
     
     func NextMonth(){
@@ -338,6 +340,7 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
         dateSelect = nextMonth
         let sign_date = "\(dateSelect!)-00-00-00"
        loadData(stringToTimeStamp(sign_date))
+         self.selecBtn.selected = false
     }
 
 
@@ -401,9 +404,11 @@ class bbKaoQinViewController: UIViewController,UICollectionViewDataSource,UIColl
          
                     let sign_date = "\(self.dateSelect!)-00-00-00"
                     self.loadData(stringToTimeStamp(sign_date))
-                    
-                    self.avatorCollection.headerView?.endRefreshing()
+                    self.selecBtn.selected = false
+
+             
                 }
+                
             }
         }
 

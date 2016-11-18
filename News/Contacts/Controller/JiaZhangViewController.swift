@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 
 
 class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
@@ -64,7 +64,6 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
                 if(status.status == "success"){
                     self.contactSource = JiazhangModel(status.data!)
                     self.tableView.refreshData()
-                    self.tableView.headerView?.endRefreshing()
 //                    print(self.contactSource?.objectlist[0].teacherlist[0].name)
                     print("fu")
                     print(self.contactSource?.count)
@@ -90,9 +89,11 @@ class JiaZhangViewController: UIViewController,FlexibleTableViewDelegate {
     
     
     func DropDownUpdate(){
-//        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(JiaZhangViewController.GetDate))
-//        self.tableView.refreshData()
-//        self.tableView.headerView?.beginRefreshing()
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.GetDate()
+            self.tableView.mj_header.endRefreshing()
+        })
+        self.tableView.mj_header.beginRefreshing()
     }
     
     

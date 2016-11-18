@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+
 protocol sendnameidArray:NSObjectProtocol {
     func sendnameid(name:NSMutableArray,id:NSMutableArray)
 }
@@ -89,9 +89,7 @@ class ChooseReciveViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadStudentData))
-        self.tableView.reloadData()
-        self.tableView.headerView?.beginRefreshing()
+      
     }
 
     
@@ -129,7 +127,7 @@ class ChooseReciveViewController: UIViewController,UITableViewDelegate,UITableVi
                     self.dataSource = ChooseUserList(status.data!)
                     
                     self.tableView.reloadData()
-                    self.tableView.headerView?.endRefreshing()
+                
                 }
             }
         }

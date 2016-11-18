@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let TongZhiTableView = UITableView()
@@ -18,6 +18,13 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
     var activitySource = ClassNoticeList()
     var commentSource = ACommentList()
     let arrayPeople = NSMutableArray()
+    
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.GetDate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         DropDownUpdate()
@@ -38,9 +45,11 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.TongZhiTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TongZhiGonggaoViewController.GetDate))
-        self.TongZhiTableView.reloadData()
-        self.TongZhiTableView.headerView?.beginRefreshing()
+        self.TongZhiTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.GetDate()
+            self.TongZhiTableView.mj_header.endRefreshing()
+        })
+        self.TongZhiTableView.mj_header.beginRefreshing()
     }
 //MARK: -    获取活动列表
     func GetDate(){
@@ -78,7 +87,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
                 if(status.status == "success"){
                    self.activitySource = ClassNoticeList(status.data!)
                     self.TongZhiTableView.reloadData()
-                    self.TongZhiTableView.headerView?.endRefreshing()
+              
                 }
             }
         }
@@ -117,6 +126,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         let contentH = boundingRects.size.height + 20
         //  活动内容
         let contentLbl = UILabel()
+        contentLbl.frame = CGRectMake(10, contentH, WIDTH - 20, 60)
         contentLbl.font = neirongfont
         contentLbl.textColor = neirongColor
         contentLbl.text = model.content
@@ -125,6 +135,8 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
             user.setValue(model.content, forKey: "gonggao")
         }
         contentLbl.numberOfLines = 0
+        contentLbl.sizeToFit()
+        
         cell.contentView.addSubview(contentLbl)
         
         //        自适应行高
@@ -188,6 +200,13 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         all.textColor = UIColor.orangeColor()
         all.font = timefont
         cell.contentView.addSubview(all)
+        
+        let wei = UILabel()
+        wei.frame = CGRectMake(110, height + image_h + 45, 60, 20)
+        wei.text = "未读\(array.count)"
+        wei.textColor = UIColor.orangeColor()
+        wei.font = timefont
+        cell.contentView.addSubview(wei)
         
         let view = UIView()
         view.frame = CGRectMake(0, height + image_h + 75, WIDTH, 20)

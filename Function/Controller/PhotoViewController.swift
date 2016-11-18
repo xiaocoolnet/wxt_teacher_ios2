@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,SYKeyboardTextFieldDelegate{
     
     var tableview = UITableView()
@@ -19,10 +19,13 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
     var beginid = "0"
     
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "班级相册"
-        loadData()
         self.view.backgroundColor = UIColor.whiteColor()
         self.tabBarController?.tabBar.hidden = true
         tableview.frame=CGRectMake(0, 0, WIDTH , HEIGHT)
@@ -34,13 +37,8 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
         self.view.addSubview(tableview)
         //评论弹出view
         loadCommentKeyBoardView()
-        
-        self.tableview.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.DropDownUpdate))
-        let footer = XWRefreshAutoNormalFooter(target: self, action: #selector(PhotoViewController.footerReresh))
-        self.tableview.footerView = footer
-        print(footer)
-        self.tableview.headerView?.beginRefreshing()
+        DropDownUpdate()
+      
     }
     
     func loadCommentKeyBoardView(){
@@ -66,16 +64,22 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.beginid = "0"
-        self.loadData()
+        
+        self.tableview.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableview.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.beginid = "0"
+            self.loadData()
+            self.tableview.mj_header.endRefreshing()
+        })
+        self.tableview.mj_header.beginRefreshing()
+        self.tableview.mj_footer = MJRefreshAutoNormalFooter(refreshingBlock: {
+            self.beginid = "\(self.PhotoSource.count)"
+            self.loadData()
+            self.tableview.mj_footer.endRefreshing()
+        })
        
     }
 
-    func footerReresh(){
-        self.beginid = "\(self.PhotoSource.count)"
-        self.loadData()
-  
-    }
     //MARK: -    获取数据
     func loadData(){
         
@@ -115,10 +119,10 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
                 }
                 if(status.status == "success"){
                     self.PhotoSource=PhotoModel(status.data!)
-                    self.tableview.reloadSections(NSIndexSet (index: 0), withRowAnimation: UITableViewRowAnimation.None)
+                    self.tableview.reloadData()
+//                    self.tableview.reloadSections(NSIndexSet (index: 0), withRowAnimation: UITableViewRowAnimation.None)
 //                    self.keyboardTextField.hide()
-                    self.tableview.headerView?.endRefreshing()
-                    self.tableview.footerView?.endRefreshing()
+    
                 }
             }
         }
@@ -200,11 +204,51 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
         plBT.addTarget(self, action: #selector(self.Pinglun(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         cell.contentView.addSubview(plBT) 
         
+        
+        let dzView = UIImageView(frame: CGRectMake(10, plBT.frame.maxY+5, 20, 20))
+        dzView.image = UIImage(named: "已点赞")
+        dzView.hidden = false
+        cell.contentView.addSubview(dzView)
+        
+        
+        var dzHeight:CGFloat = 30
+        let dzPsonView = UILabel(frame: CGRectMake(30, plBT.frame.maxY+5, frame.width-30, 20))
+        dzPsonView.textAlignment = .Left
+        dzPsonView.textColor = themeColor
+        dzPsonView.font = timefont
+        cell.contentView.addSubview(dzPsonView)
+        var dzNames = ""
+        if photoinfo.photolikelist.count>0&&photoinfo.photolikelist.count<3{
+            for item in 0...photoinfo.photolikelist.count-1{
+                if item==photoinfo.photolikelist.count-1 {
+                    dzNames = dzNames + photoinfo.photolikelist[item].name!
+                    break
+                }
+                dzNames = dzNames + photoinfo.photolikelist[item].name! + "，"
+            }
+        }else if photoinfo.photolikelist.count>=3{
+            var flag = 0
+            for item in photoinfo.photolikelist {
+                if flag == 3{
+                    dzNames = dzNames + item.name! + "等"
+                    break
+                }
+                dzNames = dzNames + item.name! + "，"
+                flag = flag + 1
+            }
+        }else{
+            dzHeight = 0
+            dzView.hidden = true
+        }
+        dzPsonView.text = dzNames
+        dzPsonView.frame = CGRectMake(30, plBT.frame.maxY+5, frame.width-40, dzHeight-10)
+        
+        
         if photoinfo.PhotoComment.count != 0 {
             var commentHeight = CGFloat()
             for item in 0...photoinfo.PhotoComment.count-1 {
                 let oldCommentHeight = commentHeight
-                let y = titleL_h+image_h+90+oldCommentHeight
+                let y = titleL_h+image_h+90+oldCommentHeight+dzHeight
                 let pinglunView = UIView()
                 pinglunView.backgroundColor = bkColor
                 cell.contentView.addSubview(pinglunView)
@@ -218,6 +262,14 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
                 nameL.text=photoinfo.PhotoComment[item].name
                 nameL.font=UIFont.systemFontOfSize(14)
                 pinglunView.addSubview(nameL)
+                
+                let timec = UILabel(frame: CGRectMake(frame.width-140,5,130,20))
+                timec.text=changeTime(photoinfo.PhotoComment[item].comment_time!)
+                timec.textAlignment = .Right
+                timec.textColor = timeColor
+                timec.font=UIFont.systemFontOfSize(12)
+                pinglunView.addSubview(timec)
+                
                 let contentL = UILabel(frame: CGRectMake(60,30,frame.width-70,20))
                 contentL.textColor=pinglunColor
                 contentL.numberOfLines=0
@@ -238,12 +290,12 @@ class PhotoViewController: UIViewController ,UITableViewDelegate,UITableViewData
                 pinglunView.frame = CGRectMake(5,y,frame.width-10,commentHeight-oldCommentHeight)
                 pinglunView.addSubview(contentL)
             }
-            tableview.rowHeight=titleL_h+image_h+20+40+commentHeight+40+20
+            tableview.rowHeight=titleL_h+image_h+20+40+commentHeight+40+20+dzHeight
             
             
         }else{
         
-            tableview.rowHeight=titleL_h+image_h+20+40+40+20
+            tableview.rowHeight=titleL_h+image_h+20+40+40+20+dzHeight
             
         }
         let view = UIView(frame: CGRectMake(0,tableView.rowHeight-20,frame.width,20))

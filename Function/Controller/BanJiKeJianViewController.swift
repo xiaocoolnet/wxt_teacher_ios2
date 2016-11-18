@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 
 class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -17,6 +17,10 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
     
     let kejianTableview = UITableView()
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.GetDate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "宝宝课件"
@@ -35,9 +39,11 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func DropDownUpdate(){
-        self.kejianTableview.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.kejianTableview.reloadData()
-        self.kejianTableview.headerView?.beginRefreshing()
+        self.kejianTableview.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.GetDate()
+            self.kejianTableview.mj_header.endRefreshing()
+        })
+        self.kejianTableview.mj_header.beginRefreshing()
     }
     
     func GetDate(){
@@ -72,7 +78,7 @@ class BanJiKeJianViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(status.status == "success"){
                     self.keJianSource = KeJianList(status.data!)
                     self.kejianTableview.reloadData()
-                    self.kejianTableview.headerView?.endRefreshing()
+    
                     print("1")
                 }
             }

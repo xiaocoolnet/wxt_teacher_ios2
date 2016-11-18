@@ -14,7 +14,7 @@ class NewsTableViewCell: UITableViewCell {
     var contextLabel = UILabel()
     var avatorImage = UIImageView()
     var nameLabel = UILabel()
-    
+    var timeLabel = UILabel()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,9 +30,13 @@ class NewsTableViewCell: UITableViewCell {
         self.avatorImage.frame = CGRectMake(13, 11, 45, 45)
         self.avatorImage.layer.cornerRadius = 22.5
         self.avatorImage.layer.masksToBounds = true
-        self.nameLabel.frame = CGRectMake(72, 17, 100, 20)
+        self.nameLabel.frame = CGRectMake(72, 15, 100, 20)
         self.nameLabel.font = UIFont.systemFontOfSize(17)
         self.nameLabel.textColor = UIColor.blackColor()
+        self.timeLabel.frame = CGRectMake(WIDTH-160, 15, 150, 20)
+        self.timeLabel.textAlignment = .Right
+        self.timeLabel.font = timefont
+        self.timeLabel.textColor = timeColor
         self.contextLabel.frame = CGRectMake(0, 0, 250, 30)
         self.contextLabel.font = UIFont.systemFontOfSize(13)
         self.contextLabel.center.x = self.contentView.center.x + 38
@@ -41,6 +45,8 @@ class NewsTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.avatorImage)
         self.contentView.addSubview(self.contextLabel)
         self.contentView.addSubview(self.nameLabel)
+        self.contentView.addSubview(self.timeLabel)
+
         
         
     }

@@ -1,15 +1,17 @@
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
+#endif
 
 #import "YYCache.h"
 #import "YYDiskCache.h"
 #import "YYKVStorage.h"
 #import "YYMemoryCache.h"
-#import "_YYWebImageSetter.h"
 #import "CALayer+YYWebImage.h"
 #import "MKAnnotationView+YYWebImage.h"
 #import "UIButton+YYWebImage.h"
 #import "UIImage+YYWebImage.h"
 #import "UIImageView+YYWebImage.h"
+#import "_YYWebImageSetter.h"
 #import "YYAnimatedImageView.h"
 #import "YYFrameImage.h"
 #import "YYImage.h"

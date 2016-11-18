@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 import IQKeyboardManagerSwift
-
+import MJRefresh
 class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     var tableview = UITableView()
@@ -20,13 +20,17 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "在线请假"
-        loadData()
         self.view.backgroundColor = UIColor.whiteColor()
         tableview.frame=CGRectMake(0, 0, frame.width, frame.height-64)
         tableview.delegate=self
         tableview.dataSource=self
         tableview.separatorStyle = .None
         self.view.addSubview(tableview)
+        self.tableview.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.loadData()
+            self.tableview.mj_header.endRefreshing()
+        })
+        self.tableview.mj_header.beginRefreshing()
     }
     //MARK: -    获取数据
     func loadData(){
@@ -64,7 +68,7 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 if(status.status == "success"){
                     self.QingJiaSource=QingjiaModel(status.data!)
                     self.tableview.reloadData()
-                    self.tableview.headerView?.endRefreshing()
+                 
                 }
             }
         }
@@ -101,194 +105,36 @@ class QingJiaViewController: UIViewController,UITableViewDelegate,UITableViewDat
         contentL.frame.size.height=content_h
         cell.contentView.addSubview(contentL)
         
-        
-        var blogimage:UIImageView?
-        var image_h = CGFloat()
+    
+       
         
         //判断图片张数显示
-        if(qingjiainfo.picCount>0&&qingjiainfo.picCount<=3){
-            image_h=80
-            for i in 1...qingjiainfo.picCount{
-                var x = 8
-                let pciInfo = qingjiainfo.pic[i-1]
-                let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
-                let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        x = x+((i-1)*85)
-                        blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
-                        let imgTmp = UIImage(data: data!)
-                        //self.imageCache[imgUrl] = imgTmp
-                        blogimage!.image = imgTmp
-                        if blogimage?.image==nil{
-                            blogimage?.image=UIImage(named: "Logo")
-                        }
-                        cell.contentView.addSubview(blogimage!)
-                        
-                    }
-                })
-                
-            }
+        var image_h = CGFloat()
+        var pics = Array<String>()
+        for item in qingjiainfo.pic {
+            pics.append(item.pictureurl!)
         }
-        if(qingjiainfo.picCount>3&&qingjiainfo.picCount<=6){
-            image_h=170
-            for i in 1...qingjiainfo.picCount{
-                if i <= 3 {
-                    var x = 8
-                    let pciInfo = qingjiainfo.pic[i-1]
-                    if pciInfo.pictureurl != nil {
-                        
-                        
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                if blogimage?.image==nil{
-                                    blogimage?.image=UIImage(named: "Logo")
-                                }
-                                
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                    }}else{
-                    var x = 8
-                    let pciInfo = qingjiainfo.pic[i-1]
-                    if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+content_h+10, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                if blogimage?.image==nil{
-                                    blogimage?.image=UIImage(named: "Logo")
-                                }
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }
-                }
-            }}
-        if(qingjiainfo.picCount>6&&qingjiainfo.picCount<=9){
-            image_h=260
-            for i in 1...qingjiainfo.picCount{
-                if i <= 3 {
-                    var x = 8
-                    let pciInfo = qingjiainfo.pic[i-1]
-                    if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+content_h+10, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                if blogimage?.image==nil{
-                                    blogimage?.image=UIImage(named: "Logo")
-                                }
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }}else if (i>3&&i<=6){
-                    var x = 8
-                    let pciInfo = qingjiainfo.pic[i-1]
-                    if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+content_h+10, 80, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                if blogimage?.image==nil{
-                                    blogimage?.image=UIImage(named: "Logo")
-                                }
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    } }else{
-                    var x = 8
-                    let pciInfo = qingjiainfo.pic[i-1]
-                    if pciInfo.pictureurl != nil {
-                        let imgUrl = pictureUrl+(pciInfo.pictureurl)!
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
-                        let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-7)*85)
-                                blogimage = UIImageView(frame: CGRectMake(CGFloat(x), 80+85+85, 80+content_h+10, 80))
-                                let imgTmp = UIImage(data: data!)
-                                //self.imageCache[imgUrl] = imgTmp
-                                blogimage!.image = imgTmp
-                                if blogimage?.image==nil{
-                                    blogimage?.image=UIImage(named: "Logo")
-                                }
-                                cell.contentView.addSubview(blogimage!)
-                            }
-                        })
-                        
-                    }
-                    
-                }
-                
-            }}
-        
+        let picView = NinePicView(frame:CGRectMake(0, contentL.frame.maxY + 10, frame.width,0),pic:pics,vc:self)
+        cell.contentView.addSubview(picView)
+        image_h = picView.image_h
+  
 
         
        //MARK: -  下面的评论视图
         
-                let senderL = UILabel(frame: CGRectMake(10,80+image_h+15+content_h,frame.width-50,20))
-                if qingjiainfo.teachername != nil {
-                    senderL.text="受理人："+qingjiainfo.teachername!
-                }
-                senderL.font=timefont
-                senderL.textColor=timeColor
-                cell.contentView.addSubview(senderL)
-                let timeL = UILabel(frame: CGRectMake(frame.width-150,80+image_h+5+content_h,140,20))
-                timeL.textAlignment = .Right
-                timeL.textColor=timeColor
-                timeL.font=timefont
-                timeL.text=changeTimeTwo(qingjiainfo.begintime!)+"到"+changeTimeTwo(qingjiainfo.endtime!)
-                cell.contentView.addSubview(timeL)
+        let senderL = UILabel(frame: CGRectMake(10,80+image_h+15+content_h,frame.width-50,20))
+        if qingjiainfo.teachername != nil {
+            senderL.text="受理人："+qingjiainfo.teachername!
+        }
+        senderL.font=timefont
+        senderL.textColor=timeColor
+        cell.contentView.addSubview(senderL)
+        let timeL = UILabel(frame: CGRectMake(frame.width-150,80+image_h+15+content_h,140,20))
+        timeL.textAlignment = .Right
+        timeL.textColor=timeColor
+        timeL.font=timefont
+        timeL.text=changeTimeTwo(qingjiainfo.begintime!)+"到"+changeTimeTwo(qingjiainfo.endtime!)
+        cell.contentView.addSubview(timeL)
         let textField = UITextField(frame: CGRectMake(10,90+image_h+40+content_h,frame.width-20,30))
         textField.placeholder="回复一下家长吧～"
         textField.layer.masksToBounds=true

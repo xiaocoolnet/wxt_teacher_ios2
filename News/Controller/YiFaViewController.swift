@@ -9,14 +9,13 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-
+import MJRefresh
 class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource{
  let DaiBanTableView = UITableView()
       var DaibanSource = DaiBanModel()
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadData()
         self.title="已发代办事项"
         
         self.view.backgroundColor=UIColor.whiteColor()
@@ -27,12 +26,16 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
         DaiBanTableView.tableFooterView = UIView(frame: CGRectZero)
        
         self.view.addSubview(DaiBanTableView)
-
+        DaiBanTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.loadData()
+            self.DaiBanTableView.mj_header.endRefreshing()
+        })
+        self.DaiBanTableView.mj_header.beginRefreshing()
         // Do any additional setup after loading the view.
     }
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         loadData()
-        DaiBanTableView.reloadData()
     }
     //MARK: -    获取数据
     func loadData(){
@@ -71,7 +74,7 @@ class YiFaViewController: UIViewController ,UITableViewDelegate,UITableViewDataS
                     self.DaiBanTableView.reloadData()
                     
                 }
-                self.DaiBanTableView.headerView?.endRefreshing()
+     
             }
         }
     }

@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import YYWebImage
-import XWSwiftRefresh
 import MBProgressHUD
 
 class QCDetailsClassActiveVC: UIViewController,UITableViewDelegate,UITableViewDataSource {

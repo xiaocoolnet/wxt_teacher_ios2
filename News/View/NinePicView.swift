@@ -19,7 +19,7 @@ class NinePicView: UIView {
     init(frame: CGRect,pic:Array<String>,vc:UIViewController) {
         super.init(frame:frame)
         self.backgroundColor = UIColor.whiteColor()
-        var button:CustomBtn?
+        var button:UIImageView?
         self.pic = pic
         self.vc = vc
         //判断图片张数显示
@@ -29,22 +29,12 @@ class NinePicView: UIView {
                 let pciInfo = pic[0]
                 let imgUrl = pictureUrl+(pciInfo)
                 let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        button = CustomBtn(frame:CGRectMake(12, 0, frame.size.width - 24, 300))
-                        let imgTmp = UIImage(data: data!)
-                        button!.setImage(imgTmp, forState: .Normal)
-                        if button?.imageView?.image == nil{
-                            
-                            button?.setBackgroundImage(UIImage(named: "4"), forState: .Normal)
-                        }
-                        button?.tag = 0
-                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                        self.addSubview(button!)
-                        
-                    }
-                })
+                let imv = UIImageView(frame:CGRectMake(12, 0, frame.size.width - 24, 300))
+                imv.tag = 0
+                imv.userInteractionEnabled = true
+                imv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                imv.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                self.addSubview(imv)
             }
         }
         if(pic.count>1&&pic.count<=3){
@@ -55,29 +45,15 @@ class NinePicView: UIView {
                 let pciInfo = pic[i-1]
                 let imgUrl = pictureUrl+(pciInfo)
                 print(imgUrl)
-                
-                //let image = self.imageCache[imgUrl] as UIImage?
                 let avatarUrl = NSURL(string: imgUrl)
-                let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
                 
-                NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                    if(data != nil){
-                        x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
-                        
-                        button = CustomBtn(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                        let imgTmp = UIImage(data: data!)
-                        
-                        button!.setImage(imgTmp, forState: .Normal)
-                        if button?.imageView?.image == nil{
-                            
-                            button?.setBackgroundImage(UIImage(named: "Logo"), forState: .Normal)
-                        }
-                        button?.tag = i-1
-                        button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                        self.addSubview(button!)
-                        
-                    }
-                })
+                let imv = UIImageView(frame:CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                imv.tag = i-1
+                imv.userInteractionEnabled = true
+                imv.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                imv.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                self.addSubview(imv)
                 
             }
         }
@@ -89,54 +65,31 @@ class NinePicView: UIView {
                     var x = 12
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
-                        
-                        
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
+                        let button = UIImageView(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button.userInteractionEnabled = true
+                        button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                        button.tag = i-1
+                        self.addSubview(button)
                         
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
                     }}else{
                     var x = 12
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
+                        x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
+                       
                         
                     }
                 }
@@ -150,26 +103,17 @@ class NinePicView: UIView {
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+            
+                        x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
                         
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
                         
                     }}else if (i>3&&i<=6){
                     var x = 12
@@ -179,49 +123,31 @@ class NinePicView: UIView {
                         
                         //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
+                        x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
+                      
                         
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-7)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
+                        x = x+((i-7)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
+                       
                         
                     }
                     
@@ -236,54 +162,32 @@ class NinePicView: UIView {
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        //let image = self.imageCache[imgUrl] as UIImage?
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
+                        x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
+                        print(x)
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
                         
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-1)*Int((frame.size.width - 40)/3.0 + 10))
-                                print(x)
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
                         
                     }}else if (i>3&&i<=6){
                     var x = 12
                     let pciInfo = pic[i-1]
                     if pciInfo != "" {
                         let imgUrl = pictureUrl+(pciInfo)
-                        
-                        
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
-                        
+                        x = x+((i-4)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
                     } }else{
                     var x = 12
                     let pciInfo = pic[i-1]
@@ -292,23 +196,15 @@ class NinePicView: UIView {
                         
                         
                         let avatarUrl = NSURL(string: imgUrl)
-                        let request: NSURLRequest = NSURLRequest(URL: avatarUrl!)
-                        
-                        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue(), completionHandler: {(response: NSURLResponse?,data: NSData?,error: NSError?)-> Void in
-                            if(data != nil){
-                                x = x+((i-7)*Int((frame.size.width - 40)/3.0 + 10))
-                                button = CustomBtn(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
-                                let imgTmp = UIImage(data: data!)
-                                
-                                button!.setImage(imgTmp, forState: .Normal)
-                                if button?.imageView?.image == nil{
-                                    button!.setImage(UIImage(named: "Logo"), forState: .Normal)
-                                }
-                                button?.tag = i-1
-                                button?.addTarget(self, action: #selector(self.clickBtn(_:)), forControlEvents: .TouchUpInside)
-                                self.addSubview(button!)
-                            }
-                        })
+                    
+                        x = x+((i-7)*Int((frame.size.width - 40)/3.0 + 10))
+                        button = UIImageView(frame : CGRectMake(CGFloat(x), 0+(frame.size.width - 40)/3.0 + 5+(frame.size.width - 40)/3.0 + 5, (frame.size.width - 40)/3.0, (frame.size.width - 40)/3.0))
+                        button!.userInteractionEnabled = true
+                        button!.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.tapclickBtn)))
+                        button!.yy_setImageWithURL(avatarUrl, placeholder: UIImage(named: "图片默认加载"))
+                   
+                        button!.tag = i-1
+                        self.addSubview(button!)
                         
                     }
                     
@@ -341,6 +237,15 @@ class NinePicView: UIView {
         
     }
     
+    
+    func tapclickBtn(tap:UITapGestureRecognizer) -> Void {
+        let imgVc = ImagesViewController()
+        imgVc.arrayInfo = self.pic
+        imgVc.count = tap.view!.tag
+        self.vc.navigationController?.pushViewController(imgVc, animated: true)
+        
+    }
+
     func AppRootViewController() -> UIViewController? {
         var topVC = UIApplication.sharedApplication().keyWindow?.rootViewController
         while topVC?.presentedViewController != nil {

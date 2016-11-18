@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
 class ChooseClassViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource{
 
     let tableView = UITableView()
@@ -85,9 +84,7 @@ class ChooseClassViewController: UIViewController ,UITableViewDelegate,UITableVi
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.tableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadStudentData))
-        self.tableView.reloadData()
-        self.tableView.headerView?.beginRefreshing()
+   
     }
     
     
@@ -125,7 +122,7 @@ class ChooseClassViewController: UIViewController ,UITableViewDelegate,UITableVi
                     self.dataSource = ChooseUserList(status.data!)
                     
                     self.tableView.reloadData()
-                    self.tableView.headerView?.endRefreshing()
+            
                 }
             }
         }

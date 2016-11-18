@@ -9,8 +9,8 @@
 import UIKit
 import Alamofire
 import YYWebImage
-import XWSwiftRefresh
 import MBProgressHUD
+import MJRefresh
 class YiFaQunFaViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let table = UITableView()
@@ -25,7 +25,8 @@ class YiFaQunFaViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
-                self.DropDownUpdate()
+//                self.DropDownUpdate()
+        self.loadData()
     }
     
     override func viewDidLoad() {
@@ -38,9 +39,11 @@ class YiFaQunFaViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadData))
-        self.table.reloadData()
-        self.table.headerView?.beginRefreshing()
+        self.table.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadData()
+            self.table.mj_header.endRefreshing()
+        })
+        self.table.mj_header.beginRefreshing()
     }
     //    创建表
     func createTable(){
@@ -92,7 +95,7 @@ class YiFaQunFaViewController: UIViewController,UITableViewDelegate,UITableViewD
                     self.dataSource = NSendList(status.data!)
                     
                     self.table.reloadData()
-                    self.table.headerView?.endRefreshing()
+                   
                 }
             }
         }

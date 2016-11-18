@@ -9,8 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
-
+import MJRefresh
 class TeacherDianPingViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var startday = Int()
     //  结束时间戳
@@ -175,14 +174,16 @@ class TeacherDianPingViewController: UIViewController,UITableViewDelegate,UITabl
         
     }
     func DropDownUpdate(){
-        self.DianPingView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TeacherDianPingViewController.GetDate))
-        self.DianPingView.reloadData()
-        self.DianPingView.headerView?.beginRefreshing()
+        self.DianPingView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.GetDate()
+            self.DianPingView.mj_header.endRefreshing()
+        })
+        self.DianPingView.mj_header.beginRefreshing()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        DropDownUpdate()
+        self.GetDate()
     }
     func GetDate(){
         
@@ -197,7 +198,7 @@ class TeacherDianPingViewController: UIViewController,UITableViewDelegate,UITabl
         ]
         Alamofire.request(.GET, url, parameters: param as! [String : String]).response { request, response, json, error in
             if(error != nil){
-                  self.DianPingView.headerView?.endRefreshing()
+               
             }else{
                 print("request是")
                 print(request!)
@@ -211,14 +212,14 @@ class TeacherDianPingViewController: UIViewController,UITableViewDelegate,UITabl
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    self.DianPingView.headerView?.endRefreshing()
+               
                     print("0")
                 }
                 if(status.status == "success"){
                     self.dianPingSource.objectlist.removeAll()
                     self.dianPingSource = DianPingList(status.data!)
                     self.DianPingView.reloadData()
-                    self.DianPingView.headerView?.endRefreshing()
+               
                     print("1")
                 }
             }

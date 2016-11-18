@@ -139,7 +139,7 @@
  
  @b Default: JGProgressHUDStyleExtraLight.
  */
-@property (nonatomic, assign, readonly) JGProgressHUDStyle stylea;
+@property (nonatomic, assign, readonly) JGProgressHUDStyle style;
 
 /**
  If the HUD should always have the same width and height.

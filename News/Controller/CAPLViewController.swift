@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import XWSwiftRefresh
 import MBProgressHUD
 class CAPLViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
     
@@ -38,9 +37,7 @@ class CAPLViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     //    开始刷新
     func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(CAPLViewController.GetDate))
-        self.table.reloadData()
-        self.table.headerView?.beginRefreshing()
+     
     }
     func GetDate(){
         //http://wxt.xiaocool.net/index.php?g=apps&m=school&a=GetCommentlist&userid=597&refid=1&type=5
@@ -75,7 +72,7 @@ class CAPLViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if(status.status == "success"){
                     self.commentSource = ACommentList(status.data!)
                     self.table.reloadData()
-                    self.table.headerView?.endRefreshing()
+                 
                 }
             }
         }

@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 class ReciveAnnounceViewController: UIViewController,UITableViewDelegate,UITableViewDataSource  {
 
     let TongZhiTableView = UITableView()
@@ -18,6 +18,14 @@ class ReciveAnnounceViewController: UIViewController,UITableViewDelegate,UITable
     var activitySource = ReciveNoticeList()
     var commentSource = ACommentList()
     let arrayPeople = NSMutableArray()
+    
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.GetDate()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         DropDownUpdate()
@@ -38,9 +46,11 @@ class ReciveAnnounceViewController: UIViewController,UITableViewDelegate,UITable
     }
     //    开始刷新
     func DropDownUpdate(){
-        self.TongZhiTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(TongZhiGonggaoViewController.GetDate))
-        self.TongZhiTableView.reloadData()
-        self.TongZhiTableView.headerView?.beginRefreshing()
+        self.TongZhiTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.GetDate()
+            self.TongZhiTableView.mj_header.endRefreshing()
+        })
+        self.TongZhiTableView.mj_header.beginRefreshing()
     }
     //MARK: -    获取活动列表
     func GetDate(){
@@ -73,7 +83,7 @@ class ReciveAnnounceViewController: UIViewController,UITableViewDelegate,UITable
                 if(status.status == "success"){
                     self.activitySource = ReciveNoticeList(status.data!)
                     self.TongZhiTableView.reloadData()
-                    self.TongZhiTableView.headerView?.endRefreshing()
+                   
                 }
             }
         }
@@ -135,8 +145,7 @@ class ReciveAnnounceViewController: UIViewController,UITableViewDelegate,UITable
         cell.contentView.addSubview(picView)
         image_h = picView.image_h
 
-        
-        
+    
         
         let imageView = UIImageView()
         imageView.frame = CGRectMake(10, height + image_h + 10, 18, 18)

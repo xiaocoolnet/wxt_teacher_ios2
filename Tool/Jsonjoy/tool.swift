@@ -46,14 +46,19 @@ func changeTimeTwo(string:String)->String{
     return str
 }
 func changeTimeThree(string:String)->String{
-     let str = string
-     let dateformate = NSDateFormatter()
-     dateformate.dateFormat = "yyyy-MM-dd"
-     let date = dateformate.dateFromString(str)
-     let time:NSTimeInterval = (date?.timeIntervalSince1970)!
-    return String(time)
+    let dateformate = NSDateFormatter()
+    dateformate.dateFormat = "yyyy-MM-dd"//获得日期
+    let date = NSDate(timeIntervalSince1970: NSTimeInterval(string)!)
+    let str:String = dateformate.stringFromDate(date)
+    return str
 }
-
+func changeTimefour(string:String)->String{
+    let dateformate = NSDateFormatter()
+    dateformate.dateFormat = "HH:mm"//获得日期
+    let date = NSDate(timeIntervalSince1970: NSTimeInterval(string)!)
+    let str:String = dateformate.stringFromDate(date)
+    return str
+}
 /**
  :param: stringTime 时间为stirng
  

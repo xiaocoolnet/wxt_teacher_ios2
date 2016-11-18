@@ -21,6 +21,7 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
         //加载视图
         loadSubviews()
         
+        
     }
     
     
@@ -58,7 +59,7 @@ class ZhouPlanViewController: UIViewController,UITableViewDataSource,UITableView
                  print(status.data)
                     self.planList = PlanList(status.data!)
                     self.zhouPlanTableView.reloadData()
-                    self.zhouPlanTableView.headerView?.endRefreshing()
+          
                 }
             }
         }

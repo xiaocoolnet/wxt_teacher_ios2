@@ -312,9 +312,10 @@ class FoodMenuViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if info.photo != nil {
             image_h=100
             let foodIV = UIImageView(frame: CGRectMake(90, 40, 80, 80))
-            let str = pictureUrl+info.photo!
+            let str = "http://wxt.xiaocool.net/data/upload/"+info.photo!
+            print(str)
             let url = NSURL(string: str)
-            foodIV.yy_setImageWithURL(url, placeholder: UIImage(named: "Logo"))
+            foodIV.yy_setImageWithURL(url, placeholder: UIImage(named: "图片默认加载"))
             cell.contentView.addSubview(foodIV)
         }
         tableView.rowHeight=40+CGFloat(image_h)

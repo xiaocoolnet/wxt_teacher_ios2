@@ -9,9 +9,8 @@
 import UIKit
 import Alamofire
 import YYWebImage
-import XWSwiftRefresh
 import MBProgressHUD
-
+import MJRefresh
 class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDataSource{
 
     let table = UITableView()
@@ -21,7 +20,8 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
     let arrayPeople = NSMutableArray()
     var heightrow = CGFloat()
     override func viewWillAppear(animated: Bool) {
-        self.DropDownUpdate()
+        super.viewWillAppear(animated)
+        self.loadData()
         let user = NSUserDefaults.standardUserDefaults()
         user.removeObjectForKey("homeworkArr")
     }
@@ -29,13 +29,16 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         self.title = "我的作业"
         self.createTable()
-        
+        self.DropDownUpdate()
+
     }
 //MARK: -   开始刷新
     func DropDownUpdate(){
-        self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(HomeworkViewController.loadData))
-        self.table.reloadData()
-        self.table.headerView?.beginRefreshing()
+       self.table.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.loadData()
+            self.table.mj_header.endRefreshing()
+       })
+        self.table.mj_header.beginRefreshing()
     }
 //MARK: -    创建表
     func createTable(){
@@ -83,7 +86,7 @@ class HomeworkViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 if(status.status == "success"){
                     self.homeworkSource = HomeworkList(status.data!)
                     self.table.reloadData()
-                    self.table.headerView?.endRefreshing()
+                 
                 }
             }
         }

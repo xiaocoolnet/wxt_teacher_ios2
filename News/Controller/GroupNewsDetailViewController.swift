@@ -11,7 +11,7 @@ import BSImagePicker
 import Photos
 import Alamofire
 import YYWebImage
-import XWSwiftRefresh
+
 import MBProgressHUD
 
 class GroupNewsDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {

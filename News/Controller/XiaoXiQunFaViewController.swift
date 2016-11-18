@@ -9,9 +9,8 @@
 import UIKit
 import Alamofire
 import YYWebImage
-import XWSwiftRefresh
 import MBProgressHUD
-
+import MJRefresh
 
 class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
@@ -27,8 +26,8 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
-                self.DropDownUpdate()
-//        self.loadData()
+//                self.DropDownUpdate()
+        self.loadData()
     }
     
     override func viewDidLoad() {
@@ -41,12 +40,14 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
 
         DropDownUpdate()
     }
-        //    开始刷新
-        func DropDownUpdate(){
-            self.table.headerView = XWRefreshNormalHeader(target: self, action: #selector(self.loadData))
-//            self.table.reloadData()
-            self.table.headerView?.beginRefreshing()
-        }
+    //    开始刷新
+    func DropDownUpdate(){
+        self.table.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadData()
+            self.table.mj_header.endRefreshing()
+        })
+         self.table.mj_header.beginRefreshing()
+    }
     //    创建表
     func createTable(){
         table.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-64-40)
@@ -100,7 +101,7 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }
             }
-            self.table.headerView?.endRefreshing()
+
         }
     }
 
@@ -195,7 +196,8 @@ class XiaoXiQunFaViewController: UIViewController,UITableViewDelegate,UITableVie
         cell.contentView.addSubview(picView)
         image_h = picView.image_h
 
-
+            
+       
         //设置各个控件的位置及其宽高
         contentLabel.frame = CGRectMake(10, 10, WIDTH - 20, contentheight)
         fromimageView.frame = CGRectMake(10, contentLabel.frame.height + 10 + image_h + 10, 18, 18)

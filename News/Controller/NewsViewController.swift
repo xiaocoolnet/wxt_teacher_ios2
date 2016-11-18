@@ -9,8 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
-
+import MJRefresh
 class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
     var dataTableView = UITableView()
@@ -76,17 +75,20 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
     
 
     func DropDownUpdate(){
-        self.dataTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.dataTableView.reloadData()
-        self.dataTableView.headerView?.beginRefreshing()
+        self.dataTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.GetDate()
+            self.dataTableView.mj_header.endRefreshing()
+        })
+        self.dataTableView.mj_header.beginRefreshing()
     }
     
     func GetDate(){
-        let url = apiUrl+"ReceiveidMessage"
+//        http://wxt.xiaocool.net/index.php?g=apps&m=message&a=xcGetChatListData&uid=
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=xcGetChatListData"
         let userid = NSUserDefaults.standardUserDefaults()
         let uid = userid.stringForKey("userid")
         let param = [
-            "userid":uid!
+            "uid":uid!
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -113,7 +115,7 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
                 }
                 
             }
-            self.dataTableView.headerView?.endRefreshing()
+      
         }
     }
     
@@ -397,9 +399,11 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
         }
         if(indexPath.section == 1){
             let newsInfo = newsSource.objectlist[indexPath.row]
-            cell.contextLabel.text = newsInfo.message_content!
-            cell.nameLabel.text = newsInfo.sendName!
-            cell.avatorImage.image = UIImage(named: "Logo")
+            cell.contextLabel.text = newsInfo.last_content
+            cell.nameLabel.text = newsInfo.other_nickname
+            cell.timeLabel.text = newsInfo.create_time
+            let imgurl = NSURL(string: imageUrl+newsInfo.other_face!)
+            cell.avatorImage.yy_setImageWithURL(imgurl, placeholder: UIImage(named:"4"))
             return cell
         }
         return cell
@@ -445,11 +449,19 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
             }
         }
         if(indexPath.section == 1){
-            self.dataTableView.deselectRowAtIndexPath(indexPath, animated: true)
-            let newsInfo = NewsInfoViewController()
-            self.navigationController?.pushViewController(newsInfo, animated: true)
-            newsInfo.newsInfo = self.newsSource.objectlist[indexPath.row]
-            newsInfo.tabBarController?.tabBar.hidden = true
+//            self.dataTableView.deselectRowAtIndexPath(indexPath, animated: true)
+//            let newsInfo = NewsInfoViewController()
+//            self.navigationController?.pushViewController(newsInfo, animated: true)
+//            newsInfo.newsInfo = self.newsSource.objectlist[indexPath.row]
+//            newsInfo.tabBarController?.tabBar.hidden = true
+            
+            let model = self.newsSource.objectlist[indexPath.row]
+            let vc = ChetNewsViewController()
+            vc.usertype = model.receive_type;
+            vc.title = model.other_nickname;
+            vc.receive_uid = model.chat_uid;
+            self.navigationController?.pushViewController(vc, animated: true)
+
         }
     }
     

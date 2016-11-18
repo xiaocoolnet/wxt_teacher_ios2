@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
+import MJRefresh
 //老师点评
 class TeacherCommentsTableViewController: UITableViewController{
     
@@ -35,8 +35,13 @@ class TeacherCommentsTableViewController: UITableViewController{
         initUI()
 //        self.createView()
         createTableView()
-        self.GET(endday, begindate: startday)
         
+        
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.GET(self.endday, begindate: self.startday)
+            self.tableView.mj_header.endRefreshing()
+        })
+        self.tableView.mj_header.beginRefreshing()
     }
     
     override func viewWillAppear(animated: Bool) {

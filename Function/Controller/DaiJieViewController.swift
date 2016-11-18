@@ -9,8 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
-
+import MJRefresh
 class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let dataTableView = UITableView()
@@ -19,7 +18,6 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadData()
         self.title = "代接确认"
         self.view.backgroundColor = UIColor.whiteColor()
         dataTableView.frame = CGRectMake(0, 0, self.view.bounds.width, self.view.bounds.height - 104)
@@ -28,7 +26,11 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.automaticallyAdjustsScrollViewInsets = false
         self.tabBarController?.tabBar.hidden = true
         self.view.addSubview(dataTableView)
-        
+        self.dataTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
+            self.loadData()
+            self.dataTableView.mj_header.endRefreshing()
+        })
+        self.dataTableView.mj_header.beginRefreshing()
     }
     //MARK: -    获取数据
     func loadData(){
@@ -70,7 +72,7 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
                
                         }}
                     self.dataTableView.reloadData()
-                    self.dataTableView.headerView?.endRefreshing()
+    
                 }
             }
         }
@@ -198,7 +200,8 @@ class DaiJieViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     override func viewWillAppear(animated: Bool) {
-        dataTableView.reloadData()
+        super.viewWillAppear(animated)
+        self.loadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

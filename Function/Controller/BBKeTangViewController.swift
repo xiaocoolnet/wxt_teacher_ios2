@@ -9,7 +9,6 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-import XWSwiftRefresh
 
 class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
@@ -49,9 +48,7 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
     }
     
     func DropDownUpdate(){
-        self.ketangTableView.headerView = XWRefreshNormalHeader(target: self, action: #selector(NewsViewController.GetDate))
-        self.ketangTableView.reloadData()
-        self.ketangTableView.headerView?.beginRefreshing()
+ 
     }
     
     func GetDate(){
@@ -106,7 +103,7 @@ class BBKeTangViewController: UIViewController,UITableViewDataSource,UITableView
 
                     }
                     self.ketangTableView.reloadData()
-                    self.ketangTableView.headerView?.endRefreshing()
+       
                 }
             }
         }

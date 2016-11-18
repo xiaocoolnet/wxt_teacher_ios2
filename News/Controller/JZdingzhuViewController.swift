@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
+import MJRefresh
 class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate{
 
     let JZdingzhuTableView = UITableView()
@@ -27,7 +28,6 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
         JZdingzhuTableView.dataSource = self
         JZdingzhuTableView.tableFooterView = UIView(frame: CGRectZero)
         self.view.addSubview(JZdingzhuTableView)
-        loadData()
         //MARK: -  添加手势，点击空白处收回键盘
         let tap = UITapGestureRecognizer(target: self, action: #selector(viewtap))
         tap.cancelsTouchesInView=false
@@ -36,6 +36,12 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
 
         XKeyBoard.registerKeyBoardHide(self)
         XKeyBoard.registerKeyBoardShow(self)
+        self.JZdingzhuTableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadData()
+            self.JZdingzhuTableView.mj_header.endRefreshing()
+        })
+        self.JZdingzhuTableView.mj_header.beginRefreshing()
+
 
     }
 //MARK: -    获取数据
@@ -71,7 +77,7 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
                 if(status.status == "success"){
                     self.parentsExhortSource = JZdingzhuModel(status.data!)
                     self.JZdingzhuTableView.reloadData()
-                    self.JZdingzhuTableView.headerView?.endRefreshing()
+                
                 }
             }
         }
@@ -563,6 +569,7 @@ class JZdingzhuViewController: UIViewController ,UITableViewDelegate,UITableView
     override func viewWillAppear(animated: Bool) {
         let user = NSUserDefaults.standardUserDefaults()
         user.removeObjectForKey("trustArr")
+        loadData()
     }
     override func viewWillDisappear(animated: Bool) {
         let user = NSUserDefaults.standardUserDefaults()
