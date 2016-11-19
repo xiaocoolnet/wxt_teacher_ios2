@@ -120,7 +120,7 @@ class LoginViewController: UIViewController,UITextFieldDelegate {
                     classid.setValue(status.data?.classid, forKey: "classid")
                     let photo = NSUserDefaults.standardUserDefaults()
                     photo.setValue(status.data?.photo, forKey: "photo")
-                    
+                    photo.setValue(status.data?.school_name, forKey: "school_name")
                     let studentid = userid.stringForKey("userid")
                     JPUSHService.setTags(nil, aliasInbackground: studentid)
                     self.GetUserInfo()

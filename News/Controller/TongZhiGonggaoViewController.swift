@@ -165,7 +165,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         cell.contentView.addSubview(imageView)
         
         let senderLbl = UILabel()
-        senderLbl.frame = CGRectMake(35, height + image_h + 10, 60, 20)
+        senderLbl.frame = CGRectMake(35, height + image_h + 10, 150, 20)
         senderLbl.font = timefont
         senderLbl.textColor=timeColor
         senderLbl.text = model.username
@@ -201,13 +201,7 @@ class TongZhiGonggaoViewController: UIViewController,UITableViewDelegate,UITable
         all.font = timefont
         cell.contentView.addSubview(all)
         
-        let wei = UILabel()
-        wei.frame = CGRectMake(110, height + image_h + 45, 60, 20)
-        wei.text = "未读\(array.count)"
-        wei.textColor = UIColor.orangeColor()
-        wei.font = timefont
-        cell.contentView.addSubview(wei)
-        
+    
         let view = UIView()
         view.frame = CGRectMake(0, height + image_h + 75, WIDTH, 20)
         view.backgroundColor = RGBA(242.0, g: 242.0, b: 242.0, a: 1)

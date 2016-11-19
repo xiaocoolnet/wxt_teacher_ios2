@@ -16,8 +16,8 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
 
     var tableview = UITableView()
     var nameL = UILabel()
-    var titleTF = UITextField()
-    var contentTV = UITextView()
+    var titleTF = BRPlaceholderTextView()
+    var contentTV = BRPlaceholderTextView()
     var idStr = String()
     var addPictureBtn = UIButton()
     var collectV:UICollectionView?
@@ -43,6 +43,7 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
         tableview.frame=CGRectMake(0, 0, frame.width, frame.height)
         tableview.delegate=self
         tableview.dataSource=self
+        tableview.separatorStyle = .None
         self.view.addSubview(tableview)
         let rightItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: #selector(addDaijie))
         self.navigationItem.rightBarButtonItem = rightItem
@@ -56,33 +57,35 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
         let cell = UITableViewCell()
         cell.selectionStyle = .None
         if indexPath.row==0 {
-            cell.textLabel?.text="选择接收人"
             cell.accessoryType = .DisclosureIndicator
-            nameL.frame=CGRectMake(frame.width-200, 10, 90, 20)
+            nameL.frame=CGRectMake(10, 10, 90, 20)
             nameL.textAlignment = .Left
+            nameL.font = neirongfont
             nameL.text="选择接收人"
             nameL.textColor=wenziColor
             numL.frame=CGRectMake(frame.width-110, 10, 70, 20)
             numL.textColor=wenziColor
             cell.contentView.addSubview(numL)
             cell.contentView.addSubview(nameL)
+            addDividerLine(cell.contentView, y: 35, height: 10)
             tableView.rowHeight=40
         }else if indexPath.row==1{
-            cell.textLabel?.text="公告标题"
-            titleTF.frame=CGRectMake(100, 10, frame.width-120, 20)
+            titleTF.frame=CGRectMake(10, 10, frame.width-120, 30)
             titleTF.textColor=wenziColor
+            titleTF.font = neirongfont
+            titleTF.textAlignment = .Left
+            titleTF.placeholder = "公告标题"
             cell.contentView.addSubview(titleTF)
-            tableView.rowHeight=40
+            addDividerLine(cell.contentView, y: 49, height: 1)
+            tableView.rowHeight=50
             
         }else if indexPath.row==2{
-            let lable = UILabel(frame: CGRectMake(15,10,100,20))
-            lable.text="公告内容"
-            cell.contentView.addSubview(lable)
-            contentTV.frame=CGRectMake(5, 40, frame.width-10, 100)
-            contentTV.layer.borderWidth=1
-            contentTV.layer.cornerRadius=5
+            contentTV.frame=CGRectMake(10, 10, frame.width-10, 140)
             contentTV.layer.borderColor=UIColor.grayColor().CGColor
+            contentTV.placeholder = "公告内容"
+            contentTV.font = neirongfont
             cell.contentView.addSubview(contentTV)
+            addDividerLine(cell.contentView, y: 150-10, height: 10)
             tableView.rowHeight=150
         }else{
             addPictureBtn.frame = CGRectMake(8, 15, 80, 80)
@@ -100,8 +103,6 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
             cell.addSubview(self.contentTextView)
             cell.addSubview(self.collectV!)
             cell.addSubview(addPictureBtn)
-
-
             tableView.rowHeight=359
         }
         return cell
@@ -298,6 +299,14 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
     //http://wxt.xiaocool.net/index.php?g=apps&m=school&a=publishnotice&userid=597&type=1&title=标题&content=内容&photo=11.jpg&reciveid=12
     //MARK: - 发布通知公告
     func GETDate(id:String){
+        if id.isEmpty {
+            messageHUD(self.view, messageData: "请选择接收人！")
+            return
+        }
+        if contentTV.text.isEmpty||titleTF.text.isEmpty {
+            messageHUD(self.view, messageData: "请输入标题或内容！")
+            return
+        }
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=publishnotice"
         let defalutid = NSUserDefaults.standardUserDefaults()
         let userid = defalutid.stringForKey("userid")

@@ -12,8 +12,8 @@ import Alamofire
 class HuoDongXqViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,sendnameidDelegate,sendTimeDelegate {
     
     var tableview = UITableView()
-    var titleTF = UITextField()
-    var contentTV = UITextView()
+    var titleTF = BRPlaceholderTextView()
+    var contentTV = BRPlaceholderTextView()
     var startBT = UIButton()
     var endBT = UIButton()
     var peopleTF = UITextField()
@@ -68,18 +68,16 @@ class HuoDongXqViewController: UIViewController,UITableViewDelegate,UITableViewD
             cell.contentView.addSubview(nameL)
             tableview.rowHeight=44
         }else if indexPath.section==1{
-            cell.textLabel?.text="活动标题"
-            titleTF.frame=CGRectMake(100, 10, frame.width-110, 20)
+            titleTF.frame=CGRectMake(10, 10, frame.width-110, 20)
+            titleTF.placeholder = "活动标题"
             titleTF.textColor=wenziColor
             cell.contentView.addSubview(titleTF)
             tableview.rowHeight=44
         }else if indexPath.section==2{
-            let lable = UILabel(frame: CGRectMake(15,5,frame.width,20))
-            lable.text="活动内容"
-            contentTV.frame=CGRectMake(5, 30, frame.width-10, 100)
+            contentTV.frame=CGRectMake(10, 10, frame.width-10, 100)
             contentTV.textColor=wenziColor
+            contentTV.placeholder = "活动内容"
             cell.contentView.addSubview(contentTV)
-            cell.contentView.addSubview(lable)
             let textview = UITextView(frame: CGRectMake(5, 30, frame.width-10, 100))
             cell.contentView.addSubview(textview)
             tableview.rowHeight=140

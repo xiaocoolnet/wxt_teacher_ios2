@@ -8,12 +8,16 @@
 //
 
 import UIKit
+import Alamofire
 import MBProgressHUD
 class FunctionViewController: UIViewController,UITableViewDataSource,UITableViewDelegate{
 
     let avatorImage = UIImageView()
     let nameLabel = UILabel()
     let schoolLabel = UILabel()
+    let addressLabel = UILabel()
+    let chooseBtn = UIButton()
+    
     let funTableView = UITableView()
     let paiMingImage = UIImageView()
     let jiFenImage = UIImageView()
@@ -82,7 +86,11 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     var activityL = UILabel()
     var commentL = UILabel()
     
+    //班级选择
+    let chooseClassBtn = UIButton()
+    var classDataSource = ClassInfoList()
     
+    let chooseClassScrollView = UIScrollView()
     
     
     
@@ -101,7 +109,67 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
 
          NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.gameOver(_:)), name: "push", object: nil)
         
+        loadClassData()
+        funTableView.reloadData()
+        
+        createAlertChooseClassView()
+        
     }
+    
+    //班级切换
+    
+    func loadClassData(){
+        //http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getteacherclasslist&teacherid=605
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let chid = defalutid.stringForKey("userid")
+        
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=getteacherclasslist&teacherid="
+        let param = [
+            "teacherid":chid!,
+            ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                
+            }else{
+                let status = Http(JSONDecoder(json!))
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    self.classDataSource.objectlist.removeAll()
+                    self.classDataSource = ClassInfoList(status.data!)
+                    
+                    if self.classDataSource.objectlist.count > 0{
+                        self.schoolLabel.text = self.classDataSource.objectlist.first?.classname
+                    }
+                    
+                    
+                    for index in 0..<self.classDataSource.objectlist.count{
+                        
+                        let button = UIButton()
+                        
+                        button.frame = CGRectMake(0, CGFloat(index) + CGFloat(index) * CGFloat(40), frame.width, 40)
+                        button.setTitle(self.classDataSource.objectlist[index].classname, forState: UIControlState.Normal)
+                        button .setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+                        button.tag = index
+                        button.addTarget(self, action: #selector(self.chooseBtnClicked(_:
+                            )), forControlEvents: UIControlEvents.TouchUpInside)
+                        self.chooseClassScrollView.addSubview(button)
+                        
+                    }
+                    self.chooseClassScrollView.contentSize = CGSizeMake(0, CGFloat(self.classDataSource.objectlist.count * 40))
+                    
+                    
+                }
+            }
+        }
+    }
+
     func gameOver(title:NSNotification){
         if title.object as! String == "leave"{
             let vc = QingJiaViewController()
@@ -272,6 +340,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
         return 0
     }
     
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let user = NSUserDefaults.standardUserDefaults()
         let cell = UITableViewCell(style:.Value1, reuseIdentifier:"userInfoCell")
@@ -285,6 +354,7 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             bt.addTarget(self, action: #selector(changeInfo), forControlEvents: .TouchUpInside)
             
             let photo = user.stringForKey("photo")
+            print(user.stringForKey("userid"))
             let url = imageUrl+photo!
             avatorImage.yy_setImageWithURL(NSURL(string: url), placeholder: UIImage(named: "Logo"))
             
@@ -294,14 +364,27 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
             
             let username = user.stringForKey("username")
             nameLabel.text = username
-            schoolLabel.frame = CGRectMake(100, 105, 200, 15)
-            schoolLabel.font = UIFont.systemFontOfSize(11)
+            schoolLabel.frame = CGRectMake(100, 105, 60, 15)
+            schoolLabel.font = UIFont.systemFontOfSize(13)
             schoolLabel.textColor = UIColor.grayColor()
-            schoolLabel.text = "清华幼儿园·大班三班"
+            let school_name = user.stringForKey("school_name")
+            addressLabel.frame = CGRectMake(180, 105, 160, 15)
+            addressLabel.text=school_name
+            addressLabel.font = UIFont.systemFontOfSize(13)
+            addressLabel.textColor = UIColor.grayColor()
+            chooseBtn.frame = CGRectMake(140, 95, 30, 30)
+            chooseBtn.setImage(UIImage(named: "qh.png"), forState: UIControlState.Normal)
+            //班级选择按钮
+            chooseClassBtn.frame = CGRectMake(CGRectGetMinX(schoolLabel.frame), CGRectGetMinY(nameLabel.frame), 300, 50)
+            chooseClassBtn.addTarget(self, action: #selector(FunctionViewController.chooseClassBtnClicked), forControlEvents: .TouchUpInside)
             cell.contentView.addSubview(avatorImage)
             cell.contentView.addSubview(bt)
             cell.contentView.addSubview(nameLabel)
             cell.contentView.addSubview(schoolLabel)
+            cell.contentView.addSubview(addressLabel)
+            cell.contentView.addSubview(chooseBtn)
+            cell.contentView.addSubview(chooseClassBtn)
+            
             return cell
         }
         if(indexPath.section == 1){
@@ -682,12 +765,41 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
 
         return cell
     }
+   
     
     func SchoolView(){
         let school = SchoolViewController()
         self.navigationController?.pushViewController(school, animated: true)
     }
-    
+    @objc private func chooseClassBtnClicked(){
+       
+        
+        if chooseClassScrollView.hidden == true {
+            chooseClassScrollView.hidden = false
+        }else {
+            chooseClassScrollView.hidden = true
+
+        }
+        
+    }
+    @objc private func chooseBtnClicked(sender: UIButton?){
+        schoolLabel.text = self.classDataSource.objectlist[(sender?.tag)!].classname
+        chooseClassScrollView.hidden = true
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "切换成功！"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+
+    }
+    private func createAlertChooseClassView(){
+        chooseClassScrollView.frame=CGRectMake(0,120, frame.width, 40)
+        chooseClassScrollView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        chooseClassScrollView.hidden = true
+        self.view.addSubview(chooseClassScrollView)
+
+    }
     func DaiJieView(){
         let DaiJie = DJViewController()
         self.navigationController?.pushViewController(DaiJie, animated: true)

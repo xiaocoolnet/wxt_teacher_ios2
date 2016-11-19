@@ -30,7 +30,7 @@ class UserInfo: JSONJoy {
     var schoolid:String?
     var classid:String?
     var photo : String?
-    
+    var school_name : String?
     init(){
     }
     required init(_ decoder:JSONDecoder){
@@ -38,6 +38,6 @@ class UserInfo: JSONJoy {
         classid = decoder["classid"].string
         schoolid = decoder["schoolid"].string
         photo=decoder["photo"].string
-        
+        school_name = decoder["school_name"].string
     }
 }

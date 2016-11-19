@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
-
+import MJRefresh
 protocol sendnameidArray:NSObjectProtocol {
     func sendnameid(name:NSMutableArray,id:NSMutableArray)
 }
@@ -89,7 +89,11 @@ class ChooseReciveViewController: UIViewController,UITableViewDelegate,UITableVi
     }
     //    开始刷新
     func DropDownUpdate(){
-      
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadStudentData()
+            self.tableView.mj_header.endRefreshing()
+        })
+        self.tableView.mj_header.beginRefreshing()
     }
 
     
@@ -194,7 +198,7 @@ class ChooseReciveViewController: UIViewController,UITableViewDelegate,UITableVi
         
         //组头全选按钮
         let select_all_btn = UIButton()
-        select_all_btn.frame = CGRectMake(WIDTH - 30, 10, 20, 20)
+        select_all_btn.frame = CGRectMake(WIDTH - 40, 10, 30, 30)
         select_all_btn.setBackgroundImage(UIImage(named: "deseleted"), forState: UIControlState.Normal)
         select_all_btn.setBackgroundImage(UIImage(named: "selected"), forState: UIControlState.Selected)
         select_all_btn.tag = section
@@ -234,14 +238,43 @@ class ChooseReciveViewController: UIViewController,UITableViewDelegate,UITableVi
         cell.select.tag = indexPath.row
         cell.select.sections = indexPath.section
         cell.selectionStyle = UITableViewCellSelectionStyle.None
+        cell.select.addTarget(self, action: #selector(self.selectBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
-         cell.select.addTarget(self, action: #selector(self.selectBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        
+  
         
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let currentCell = tableView.cellForRowAtIndexPath(indexPath) as! ChooseUserTableViewCell
+        let model = self.dataSource.objectlist[indexPath.section].studentlist[indexPath.row]
+        if currentCell.select.selected {
+            currentCell.select.selected = false
+            model.isChecked = false
+            nameAry.removeAllObjects()
+            idAry.removeAllObjects()
+        }else{
+            currentCell.select.selected = true
+            model.isChecked = true
+            nameAry.removeAllObjects()
+            idAry.removeAllObjects()
+        }
+        var i = 0
+        for user in self.dataSource.objectlist[currentCell.select.sections!].studentlist {
+            if user.isChecked {
+                i += 1
+            }
+        }
+        if i < self.dataSource.objectlist[currentCell.select.sections!].studentlist.count{
+            self.dataSource.objectlist[currentCell.select.sections!].isSelected = false
+        }else if i == self.dataSource.objectlist[currentCell.select.sections!].studentlist.count{
+            self.dataSource.objectlist[currentCell.select.sections!].isSelected = true
+        }
+        
+        self.reloadDataFooterUI()
+        tableView.reloadData()
+
+    }
 
     
     

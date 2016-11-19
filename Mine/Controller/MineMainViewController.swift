@@ -24,8 +24,9 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
     let footview = UIView()
     let phoneBtn = UIButton()
     var ServiceBtn = UIButton()
+    var servicePhone = ""
     
-    let vip = "Lv.2"
+    let vip = ""
     
     
     
@@ -42,12 +43,44 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
        button1.addTarget(self,action:#selector(setup),forControlEvents:.TouchUpInside)
         let barButton1 = UIBarButtonItem(customView: button1)
         self.navigationItem.rightBarButtonItem=barButton1
-
-
-       
-        
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.addSubview(mineTableView)
+        //获取在线客服电话
+        getOnlinePhone()
+    }
+    func getOnlinePhone(){
+        let defalutid = NSUserDefaults.standardUserDefaults()
+        let chid = defalutid.stringForKey("schoolid")
+        let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=service_phone"
+        let param = [
+            "schoolid":chid!,
+            ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+            }
+            else{
+                print("request是")
+                print(request!)
+                print("====================")
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    //  self.messageSource = sendMessageList(status.data!)
+                   self.servicePhone = ChooseTeacherInfo(status.data!).phone!
+                    self.mineTableView.reloadData()
+                }
+            }
+        }
+
     }
     //MARK: - 跳转设置
     func setup(){
@@ -112,7 +145,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 let bt = UIButton(frame: CGRectMake(10, 62, 80, 80))
                 bt.addTarget(self, action: #selector(changeInfo), forControlEvents: .TouchUpInside)
                 
-                self.nameLabel.frame = CGRectMake(104, 90, frame.width-120, 16)
+                self.nameLabel.frame = CGRectMake(104, 80, frame.width-120, 16)
                 self.nameLabel.font = UIFont.systemFontOfSize(16)
                 self.nameLabel.textColor = UIColor.whiteColor()
                 
@@ -137,6 +170,12 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     cell.textLabel?.text="维护人员"
                     ServiceBtn.frame=CGRectMake(frame.width-200,10,170,20)
                     cell.contentView.addSubview(ServiceBtn)
+                    let phoneLabl = UILabel(frame: CGRectMake(100,0,WIDTH-150,cell.frame.height))
+                    phoneLabl.textColor = timeColor
+                    phoneLabl.font = neirongfont
+                    phoneLabl.text = self.servicePhone
+                    phoneLabl.textAlignment = .Right
+                    cell.contentView.addSubview(phoneLabl)
                     
                 }else if indexPath.row==2{
                     cell.textLabel?.text="在线留言"
@@ -169,7 +208,11 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
             hud.hide(true, afterDelay: 1)
 
         }else if indexPath.row==1{
-            
+            let url = NSURL(string: "tel://"+self.servicePhone)
+            if self.servicePhone != "" {
+                UIApplication.sharedApplication().openURL(url!)
+            }
+
         }else if indexPath.row==2{
             let vc = QCOnlineHelpVC()
             self.navigationController?.pushViewController(vc, animated: true)
@@ -184,6 +227,8 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
 
         }}
+    
+    
     func ExitLogin(){
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("确认注销？", comment: "empty message"), preferredStyle: .Alert)
         let cancelAction = UIAlertAction(title: "取消", style: UIAlertActionStyle.Cancel, handler: nil)

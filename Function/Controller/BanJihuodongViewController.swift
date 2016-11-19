@@ -155,16 +155,13 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         cell.contentView.addSubview(imageView)
         
         let senderLbl = UILabel()
-        senderLbl.frame = CGRectMake(40, 80 + image_h + 10, 60, 20)
-        senderLbl.font = UIFont.systemFontOfSize(16)
-    
-      
-        
-            senderLbl.textColor = UIColor.lightGrayColor()
-            senderLbl.text = activityInfo.teacher_name
-            cell.contentView.addSubview(senderLbl)
-            print("aaaaaaaaaaa")
-            print(senderLbl.text)
+        senderLbl.frame = CGRectMake(40, 80 + image_h + 10, 100, 20)
+        senderLbl.font = timefont
+        senderLbl.textColor = timeColor
+        senderLbl.text = activityInfo.teacher_name
+        cell.contentView.addSubview(senderLbl)
+        print("aaaaaaaaaaa")
+        print(senderLbl.text)
        
   
 
@@ -177,8 +174,8 @@ class BanJihuodongViewController: UIViewController,UITableViewDelegate,UITableVi
         let timeLbl = UILabel()
         timeLbl.frame = CGRectMake(110, 80+image_h+10, WIDTH - 120, 20)
         timeLbl.textAlignment = NSTextAlignment.Right
-        timeLbl.font = UIFont.systemFontOfSize(15)
-        timeLbl.textColor = UIColor.lightGrayColor()
+        timeLbl.font = timefont
+        timeLbl.textColor = timeColor
         timeLbl.text = changeTime(activityInfo.create_time!)
         cell.contentView.addSubview(timeLbl)
         

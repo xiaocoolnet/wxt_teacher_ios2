@@ -12,14 +12,13 @@ import BSImagePicker
 import Photos
 import Alamofire
 
-class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UICollectionViewDataSource{
-
+class NewPhotoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDelegate,UICollectionViewDataSource{
+    
+    var tableview = UITableView()
     let nameView = UIView()
-    let nameLabel = UILabel()
-    let nameContent = UITextField()
+    let nameContent = BRPlaceholderTextView()
     let miaoshuView = UIView()
-    let miaoshiLabel = UILabel()
-    let miaoshuContent = UITextField()
+    let miaoshuContent = BRPlaceholderTextView()
     let finishBtn = UIButton()
     var addPictureBtn = UIButton()
     var collectV:UICollectionView?
@@ -36,53 +35,16 @@ class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UIColle
         self.view.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         self.title = "新建相册"
         super.viewDidLoad()
+        
         let rightItem = UIBarButtonItem(title: "上传", style: .Done, target: self, action: #selector(NewBlogViewController.UpdateBlog))
         self.navigationItem.rightBarButtonItem = rightItem
-        nameView.frame = CGRectMake(5, 10, self.view.bounds.width - 10, 46)
-        nameView.backgroundColor = UIColor.whiteColor()
-        nameView.layer.cornerRadius = 5
-        nameView.layer.masksToBounds = true
-        nameView.layer.borderWidth = 1
-        nameView.layer.borderColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1).CGColor
-        miaoshuView.frame = CGRectMake(5, 55, self.view.bounds.width - 10, 46)
-        miaoshuView.backgroundColor = UIColor.whiteColor()
-        miaoshuView.layer.cornerRadius = 5
-        miaoshuView.layer.masksToBounds = true
-        miaoshuView.layer.borderWidth = 1
-        miaoshuView.layer.borderColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1).CGColor
-        nameLabel.frame = CGRectMake(10, 25, 70, 15)
-        nameLabel.font = UIFont.systemFontOfSize(16)
-        nameLabel.text = "相册名称"
-        nameContent.frame = CGRectMake(82, 25, 140, 17)
-        nameContent.borderStyle = .None
-        miaoshiLabel.frame = CGRectMake(10, 71, 70, 15)
-        miaoshiLabel.font = UIFont.systemFontOfSize(16)
-        miaoshiLabel.text = "相册描述"
-        miaoshuContent.frame = CGRectMake(82, 71, 140, 17)
-        miaoshuContent.borderStyle = .None
-        addPictureBtn.frame = CGRectMake(8, 150, 80, 80)
-        addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
-        addPictureBtn.layer.borderWidth = 1.0
-        addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
-        addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
-        flowLayout.itemSize = CGSizeMake(80,80)
-        self.collectV = UICollectionView(frame: CGRectMake(8, 150, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
-        self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
-        self.collectV?.delegate = self
-        self.collectV?.dataSource = self
-        self.collectV?.backgroundColor = UIColor.clearColor()
-        self.view.addSubview(self.collectV!)
-        self.view.addSubview(addPictureBtn)
-
-        self.view.addSubview(nameView)
-        self.view.addSubview(miaoshuView)
-        self.view.addSubview(nameLabel)
-        self.view.addSubview(miaoshiLabel)
-        self.view.addSubview(finishBtn)
-        self.view.addSubview(nameContent)
-        self.view.addSubview(miaoshuContent)
         // Do any additional setup after loading the view.
+        tableview.frame=CGRectMake(0, 0, frame.width, frame.height)
+        tableview.delegate=self
+        tableview.dataSource=self
+        tableview.separatorStyle = .None
+        self.view.addSubview(tableview)
+        
     }
     
     func UpLoadPicView(){
@@ -109,6 +71,60 @@ class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UIColle
         uploadPic.photoContent=miaoshuContent.text!
         self.navigationController?.pushViewController(uploadPic, animated: true)
     }
+    
+    
+    
+    //返回行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return 4
+    }
+    //cell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        cell.selectionStyle = .None
+        
+        if indexPath.row==0 {
+            addDividerLine(cell.contentView, y: 0, height: 10)
+            nameContent.frame = CGRectMake(10, 10, WIDTH-20, 30)
+            nameContent.textColor = neirongColor
+            nameContent.font = neirongfont
+            nameContent.placeholder = "相册标题"
+            cell.addSubview(nameContent)
+            addDividerLine(cell.contentView, y: 49, height: 1)
+            tableView.rowHeight = 50
+        
+        }else if indexPath.row==1{
+            miaoshuContent.frame = CGRectMake(10, 10, WIDTH - 20, 150)
+            miaoshuContent.textColor = neirongColor
+            miaoshuContent.font = neirongfont
+            miaoshuContent.placeholder = "相册内容"
+            cell.addSubview(miaoshuContent)
+            addDividerLine(cell.contentView, y: 160, height: 10)
+            tableView.rowHeight = 170
+        }else if indexPath.row==2{
+            addPictureBtn.frame = CGRectMake(8, 10, 80, 80)
+            addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
+            addPictureBtn.layer.borderWidth = 1.0
+            addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
+            addPictureBtn.addTarget(self, action: #selector(self.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
+            flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
+            flowLayout.itemSize = CGSizeMake(80,80)
+            self.collectV = UICollectionView(frame: CGRectMake(8, 10, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
+            self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
+            self.collectV?.delegate = self
+            self.collectV?.dataSource = self
+            self.collectV?.backgroundColor = UIColor.clearColor()
+            cell.contentView.addSubview(self.collectV!)
+            cell.contentView.addSubview(addPictureBtn)
+            tableView.rowHeight = 400
+        }else if indexPath.row==3{
+         
+        }
+      
+        return cell
+        
+    }
+
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemCount
@@ -201,9 +217,10 @@ class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UIColle
     func UpdateBlog(){
         if(i != 0){
             self.UpdatePic()
+        }else{
+            self.PutBlog()
         }
-        self.PutBlog()
-        self.navigationController?.popViewControllerAnimated(true)
+        
     }
     
     func UpdatePic(){
@@ -235,9 +252,18 @@ class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UIColle
         hud.labelText = "上传完成"
         hud.hide(true, afterDelay: 1)
         self.isuploading = false
+        PutBlog()
     }
     
     func PutBlog(){
+        if self.nameContent.text.isEmpty {
+            messageHUD(self.view, messageData: "请输入相册标题")
+            return
+        }
+        if self.miaoshuContent.text.isEmpty {
+            messageHUD(self.view, messageData: "请输入相册内容")
+            return
+        }
         let url = apiUrl+"WriteMicroblog"
         let schoolid = NSUserDefaults.standardUserDefaults()
         let scid = schoolid.stringForKey("schoolid")
@@ -277,6 +303,7 @@ class NewPhotoViewController: UIViewController ,UICollectionViewDelegate,UIColle
                 
                 if(result.status == "success"){
                     print("Success")
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
                 
             }

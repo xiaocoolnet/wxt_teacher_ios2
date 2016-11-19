@@ -50,6 +50,7 @@ class SetUpViewController: UIViewController,UITableViewDataSource,UITableViewDel
             useDefaults.removeObjectForKey("classid")
             useDefaults.removeObjectForKey("chid")
             useDefaults.removeObjectForKey("chidname")
+            useDefaults.removeObjectForKey("school_name")
             useDefaults.synchronize()
             //            退出环信
 //            EaseMob.sharedInstance().chatManager.asyncLogoffWithUnbindDeviceToken(false)
@@ -76,13 +77,13 @@ class SetUpViewController: UIViewController,UITableViewDataSource,UITableViewDel
     }
     //    MARK: - UITableViewDataSource,UITableViewdeleGate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         self.indexPath = indexPath
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         self.cell = cell
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
         }else{
             cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         }
@@ -100,15 +101,12 @@ class SetUpViewController: UIViewController,UITableViewDataSource,UITableViewDel
             self.navigationController?.pushViewController(useHelpVC, animated: true)
         }
         if indexPath.row == 1 {
-           
-        }
-        if indexPath.row == 2 {
             let aboutWeVC = QCAboutWeVC()
             aboutWeVC.row = indexPath.row
             self.navigationController?.pushViewController(aboutWeVC, animated: true)
             
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             // 取出cache文件夹路径
             let cachePath = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).first
             // 打印路径,需要测试的可以往这个路径下放东西
@@ -163,12 +161,9 @@ class SetUpViewController: UIViewController,UITableViewDataSource,UITableViewDel
             getLabel("使用帮助")
         }
         if indexPath.row == 1 {
-            getLabel("意见反馈")
-        }
-        if indexPath.row == 2 {
             getLabel("关于我们")
         }
-        if indexPath.row == 3 {
+        if indexPath.row == 2 {
             getLabel("清除缓存")
         }
     }

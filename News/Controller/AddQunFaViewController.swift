@@ -42,6 +42,7 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tabBarController?.tabBar.hidden = true
         self.view.backgroundColor=bkColor
         self.title="消息群发"
         createUI()
@@ -74,8 +75,9 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
         let btn1 = UIButton(type: .Custom)
         btn1.frame = CGRectMake(WIDTH-30, 20, 20, 20)
         btn1.setImage(UIImage(named: "箭头"), forState: .Normal)
-        btn1.addTarget(self, action: #selector(AddQunFaViewController.choosePeople), forControlEvents: .TouchUpInside)
+//        btn1.addTarget(self, action: #selector(AddQunFaViewController.choosePeople), forControlEvents: .TouchUpInside)
         v1.addSubview(btn1)
+        v1.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(AddQunFaViewController.choosePeople)))
         
         
         
@@ -300,7 +302,14 @@ class AddQunFaViewController: UIViewController ,UICollectionViewDataSource,UICol
         self.isuploading = false    }
     
     func addqunfa(){
-        
+        if idStr.isEmpty {
+            messageHUD(self.view, messageData: "请选择接受人")
+            return
+        }
+        if contentTextView.text.isEmpty {
+            messageHUD(self.view, messageData: "请输入内容！")
+            return
+        }
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=message&a=send_message"
         let defalutid = NSUserDefaults.standardUserDefaults()
         let userid = defalutid.stringForKey("userid")

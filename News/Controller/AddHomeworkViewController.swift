@@ -16,6 +16,7 @@ class AddHomeworkViewController: UIViewController ,UITableViewDelegate,UITableVi
 
     var  HWtableview = UITableView()
     var addPictureBtn = UIButton()
+    let titleLabl = BRPlaceholderTextView()
     let contentTextView = BRPlaceholderTextView()
     var flowLayout = UICollectionViewFlowLayout()
     var collectV:UICollectionView?
@@ -35,6 +36,7 @@ class AddHomeworkViewController: UIViewController ,UITableViewDelegate,UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.tabBarController?.tabBar.hidden = true
         HWtableview.frame=CGRectMake(0, 0, frame.width, frame.height)
         HWtableview.delegate=self
         HWtableview.dataSource=self
@@ -56,46 +58,60 @@ class AddHomeworkViewController: UIViewController ,UITableViewDelegate,UITableVi
         
         if indexPath.row==0 {
             cell.accessoryType = .DisclosureIndicator
-            cell.textLabel?.text="选择课程"
-            cell.accessoryType = .DisclosureIndicator
-            kechengL.frame=CGRectMake(frame.width-120, 10, 90, 20)
-            kechengL.textAlignment = .Right
-            kechengL.text="选择课程"
-            kechengL.textColor=wenziColor
-            cell.contentView.addSubview(kechengL)
-            tableView.rowHeight=40
-
-        }else if indexPath.row==1{
-            cell.accessoryType = .DisclosureIndicator
             cell.textLabel?.text="选择接收人"
+            cell.textLabel?.font = neirongfont
             cell.accessoryType = .DisclosureIndicator
             nameL.frame=CGRectMake(frame.width-120, 10, 90, 20)
             nameL.textAlignment = .Right
             nameL.text="接收人"
             nameL.textColor=wenziColor
+            nameL.font = neirongfont
             cell.contentView.addSubview(nameL)
+            addDividerLine(cell.contentView, y: 39, height: 1)
+            tableView.rowHeight=40
+        }else if indexPath.row==1{
+            cell.accessoryType = .DisclosureIndicator
+            cell.textLabel?.text="选择课程"
+            cell.textLabel?.font = neirongfont
+            cell.accessoryType = .DisclosureIndicator
+            kechengL.frame=CGRectMake(frame.width-120, 10, 90, 20)
+            kechengL.textAlignment = .Right
+            kechengL.text="选择课程"
+            kechengL.textColor=wenziColor
+            kechengL.font = neirongfont
+            cell.contentView.addSubview(kechengL)
             tableView.rowHeight=40
         }else if indexPath.row==2{
-            self.contentTextView.frame = CGRectMake(0, 0, frame.width , 150)
+            addDividerLine(cell.contentView, y: 0, height: 10)
+            titleLabl.frame = CGRectMake(10, 15, frame.width , 30)
+            titleLabl.textColor = neirongColor
+            titleLabl.font = neirongfont
+            titleLabl.placeholder = "作业标题"
+            cell.contentView.addSubview(titleLabl)
+            addDividerLine(cell.contentView, y: 49, height: 1)
+            tableView.rowHeight = 50
+        }else if indexPath.row==3{
+            self.contentTextView.frame = CGRectMake(10, 0, frame.width , 150)
             self.contentTextView.font = UIFont.systemFontOfSize(15)
-            self.contentTextView.placeholder = "请输入内容～不能超过200字啦"
-            self.contentTextView.addMaxTextLengthWithMaxLength(200) { (contentTextView) -> Void in
+            self.contentTextView.placeholder = "请输入作业内容～"
+            self.contentTextView.addMaxTextLengthWithMaxLength(300) { (contentTextView) -> Void in
                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                 hud.mode = MBProgressHUDMode.Text
-                hud.labelText = "超过200字啦"
+                hud.labelText = "超过300字啦"
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
                 hud.hide(true, afterDelay: 3)
             }
          
-            addPictureBtn.frame = CGRectMake(10,160, 80, 80)
+            addPictureBtn.frame = CGRectMake(10,170, 80, 80)
             addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
             addPictureBtn.layer.borderWidth = 1.0
             addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
             addPictureBtn.addTarget(self, action: #selector(self.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
             flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
             flowLayout.itemSize = CGSizeMake(80,80)
-            self.collectV = UICollectionView(frame: CGRectMake(10, 160, UIScreen.mainScreen().bounds.width-20, 359), collectionViewLayout: flowLayout)
+            addDividerLine(cell.contentView, y: 150, height: 10)
+            self.collectV = UICollectionView(frame: CGRectMake(10, 170, UIScreen.mainScreen().bounds.width-20, 369), collectionViewLayout: flowLayout)
             self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
             self.collectV?.delegate = self
             self.collectV?.dataSource = self
@@ -123,14 +139,14 @@ class AddHomeworkViewController: UIViewController ,UITableViewDelegate,UITableVi
         
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row==0 {
+        if indexPath.row==1 {
             let vc = SubjectListViewController()
             vc.delegate=self
             self.navigationController?.pushViewController(vc, animated: true)
             
             
             
-        }else if indexPath.row==1{
+        }else if indexPath.row==0{
             let vc = ChooseReciveViewController()
             vc.delegate=self
             self.navigationController?.pushViewController(vc, animated: true)

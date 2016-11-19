@@ -13,7 +13,7 @@ import Alamofire
 import MBProgressHUD
 
 
-class NewBlogViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate {
+class NewBlogViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate {
     var imageData:[NSData] = []
     var isuploading = false
     var imageUrl:String?
@@ -26,40 +26,89 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
     var itemCount = 0
     var collectV:UICollectionView?
     var flowLayout = UICollectionViewFlowLayout()
+     var tableview = UITableView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.whiteColor()
         self.title = "发表动态"
         let rightItem = UIBarButtonItem(title: "发表", style: .Done, target: self, action: #selector(NewBlogViewController.UpdateBlog))
         self.navigationItem.rightBarButtonItem = rightItem
-        self.contentTextView.frame = CGRectMake(8, 5, self.view.bounds.width - 16, 200)
-        self.contentTextView.font = UIFont.systemFontOfSize(15)
-        self.contentTextView.placeholder = "请输入内容～不能超过200字啦"
-        self.contentTextView.addMaxTextLengthWithMaxLength(200) { (contentTextView) -> Void in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "超过200字啦"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 3)
-        }
-        addPictureBtn.frame = CGRectMake(8, 215, 80, 80)
-        addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
-        addPictureBtn.layer.borderWidth = 1.0
-        addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
-        addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
-        flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
-        flowLayout.itemSize = CGSizeMake(80,80)
-        self.collectV = UICollectionView(frame: CGRectMake(8, 215, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
-        self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
-        self.collectV?.delegate = self
-        self.collectV?.dataSource = self
-        self.collectV?.backgroundColor = UIColor.clearColor()
-        self.view.addSubview(self.contentTextView)
-        self.view.addSubview(self.collectV!)
-        self.view.addSubview(addPictureBtn)
+        
+        tableview.frame=CGRectMake(0, 0, frame.width, frame.height)
+        tableview.delegate=self
+        tableview.dataSource=self
+        tableview.separatorStyle = .None
+        self.view.addSubview(tableview)
+        
+        
+//        addPictureBtn.frame = CGRectMake(8, 215, 80, 80)
+//        addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
+//        addPictureBtn.layer.borderWidth = 1.0
+//        addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
+//        addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
+//        flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
+//        flowLayout.itemSize = CGSizeMake(80,80)
+//        self.collectV = UICollectionView(frame: CGRectMake(8, 215, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
+//        self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
+//        self.collectV?.delegate = self
+//        self.collectV?.dataSource = self
+//        self.collectV?.backgroundColor = UIColor.clearColor()
+//        self.view.addSubview(self.contentTextView)
+//        self.view.addSubview(self.collectV!)
+//        self.view.addSubview(addPictureBtn)
         // Do any additional setup after loading the view.
     }
+    
+    //返回行数
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return 4
+    }
+    //cell
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "cell")
+        cell.selectionStyle = .None
+        
+        if indexPath.row==0 {
+            addDividerLine(cell.contentView, y: 0, height: 10)
+            self.contentTextView.frame = CGRectMake(10, 10, WIDTH - 20, 200)
+            self.contentTextView.font = UIFont.systemFontOfSize(15)
+            self.contentTextView.placeholder = "请输入内容～不能超过300字啦"
+            self.contentTextView.addMaxTextLengthWithMaxLength(300) { (contentTextView) -> Void in
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = "超过300字啦"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 3)
+            }
+            addDividerLine(cell.contentView, y: 210, height: 10)
+            cell.contentView.addSubview(self.contentTextView)
+            tableView.rowHeight = 220
+        }else if indexPath.row==1{
+            addPictureBtn.frame = CGRectMake(8, 10, 80, 80)
+            addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
+            addPictureBtn.layer.borderWidth = 1.0
+            addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
+            addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
+            flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
+            flowLayout.itemSize = CGSizeMake(80,80)
+            self.collectV = UICollectionView(frame: CGRectMake(8, 10, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
+            self.collectV?.registerClass(ImageCollectionViewCell.self, forCellWithReuseIdentifier: "PhotoCell")
+            self.collectV?.delegate = self
+            self.collectV?.dataSource = self
+            self.collectV?.backgroundColor = UIColor.clearColor()
+            cell.contentView.addSubview(self.collectV!)
+            cell.contentView.addSubview(addPictureBtn)
+            tableView.rowHeight = 400
+        }else if indexPath.row==3{
+            
+        }
+        
+        return cell
+        
+    }
+    
+
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return itemCount
@@ -153,12 +202,17 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         if(i != 0){
             self.UpdatePic()
             print("执行这个方法")
+        }else{
+             self.PutBlog()
         }
-        self.PutBlog()
-        self.navigationController?.popViewControllerAnimated(true)
+       
     }
     
     func PutBlog(){
+        if self.contentTextView.text.isEmpty {
+            messageHUD(self.view, messageData: "请输入动态内容")
+            return
+        }
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=WriteMicroblog"
         let schoolid = NSUserDefaults.standardUserDefaults()
         let scid = schoolid.stringForKey("schoolid")
@@ -198,6 +252,7 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
                 
                 if(result.status == "success"){
                     print("Success")
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
                 
             }
@@ -234,6 +289,7 @@ class NewBlogViewController: UIViewController,UICollectionViewDataSource,UIColle
         hud.labelText = "上传完成"
         hud.hide(true, afterDelay: 1)
         self.isuploading = false
+        PutBlog()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {

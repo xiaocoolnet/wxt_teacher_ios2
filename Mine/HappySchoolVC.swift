@@ -23,7 +23,7 @@ class HappySchoolVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "乐园"
         self.view.backgroundColor = UIColor.whiteColor()
         
         //  类似清华幼儿园界面设计

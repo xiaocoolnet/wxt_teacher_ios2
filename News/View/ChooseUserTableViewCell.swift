@@ -40,7 +40,7 @@ class ChooseUserTableViewCell: UITableViewCell {
         nameLabel.font = UIFont.systemFontOfSize(15)
         self.contentView.addSubview(nameLabel)
        
-        select.frame = CGRectMake(WIDTH - 40, 10, 30, 30)
+        select.frame = CGRectMake(WIDTH - 40, 10, 20, 20)
 
         select.setBackgroundImage(UIImage(named: "deseleted"), forState: UIControlState.Normal)
         select.setBackgroundImage(UIImage(named: "selected"), forState: UIControlState.Selected)

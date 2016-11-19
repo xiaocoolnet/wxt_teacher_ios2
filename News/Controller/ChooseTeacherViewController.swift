@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import MBProgressHUD
+import MJRefresh
 protocol sendteachernameidArray:NSObjectProtocol {
     func sendteachernameid(name:NSMutableArray,id:NSMutableArray)
 }
@@ -89,7 +90,12 @@ class ChooseTeacherViewController: UIViewController,UITableViewDelegate,UITableV
     }
     //    开始刷新
     func DropDownUpdate(){
-      
+        self.tableView.mj_header = MJRefreshNormalHeader(refreshingBlock: {
+            self.loadStudentData()
+            self.tableView.mj_header.endRefreshing()
+        })
+        self.tableView.mj_header.beginRefreshing()
+
     }
     
     
@@ -164,6 +170,7 @@ class ChooseTeacherViewController: UIViewController,UITableViewDelegate,UITableV
         
         let headerView = UIView()
         headerView.frame = CGRectMake(0, 0, WIDTH, 40)
+        headerView.backgroundColor = UIColor.whiteColor()
         
         //展开折叠按钮
         let big_select_btn = UIButton()
@@ -235,7 +242,36 @@ class ChooseTeacherViewController: UIViewController,UITableViewDelegate,UITableV
     }
     
     
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let currentCell = tableView.cellForRowAtIndexPath(indexPath) as! ChooseUserTableViewCell
+        let model = self.dataSource.objectlist[indexPath.row]
+        if currentCell.select.selected {
+            currentCell.select.selected = false
+            model.isSelected = false
+            nameAry.removeAllObjects()
+            idAry.removeAllObjects()
+        }else{
+            currentCell.select.selected = true
+            model.isSelected = true
+            nameAry.removeAllObjects()
+            idAry.removeAllObjects()
+        }
+        var i = 0
+        for user in self.dataSource.objectlist {
+            if user.isSelected {
+                i += 1
+            }
+        }
+        //        if i < self.dataSource.objectlist.count{
+        //            self.dataSource.objectlist[sender.sections!].isSelected = false
+        //        }else if i == self.dataSource.objectlist[sender.sections!].studentlist.count{
+        //            self.dataSource.objectlist[sender.sections!].isSelected = true
+        //        }
+        
+        self.reloadDataFooterUI()
+        tableView.reloadData()
+
+    }
     
     
             //单选Btn

@@ -16,8 +16,8 @@ class AddDaiBanViewController: UIViewController ,UITableViewDelegate,UITableView
     
     var tableview = UITableView()
     var nameL = UILabel()
-    var titleTF = UITextField()
-    var contentTV = UITextView()
+    var titleTF = BRPlaceholderTextView()
+    var contentTV = BRPlaceholderTextView()
     var idStr = String()
     var addPictureBtn = UIButton()
     var collectV:UICollectionView?
@@ -39,6 +39,7 @@ class AddDaiBanViewController: UIViewController ,UITableViewDelegate,UITableView
         tableview.frame=CGRectMake(0, 0, frame.width, frame.height)
         tableview.delegate=self
         tableview.dataSource=self
+        tableview.separatorStyle = .None
         self.view.addSubview(tableview)
         let rightItem = UIBarButtonItem(title: "发送", style: UIBarButtonItemStyle.Done, target: self, action: #selector(addDaijie))
         self.navigationItem.rightBarButtonItem = rightItem
@@ -52,30 +53,32 @@ class AddDaiBanViewController: UIViewController ,UITableViewDelegate,UITableView
         let cell = UITableViewCell()
         cell.selectionStyle = .None
         if indexPath.row==0 {
-            cell.textLabel?.text="选择待办人"
-            cell.accessoryType = .DisclosureIndicator
-            nameL.frame=CGRectMake(frame.width-120, 10, 90, 20)
-            nameL.textAlignment = .Right
+            nameL.frame=CGRectMake(10, 10, 90, 20)
+            nameL.textAlignment = .Left
             nameL.text="选择待办人"
+            nameL.font = neirongfont
             nameL.textColor=wenziColor
             cell.contentView.addSubview(nameL)
+            cell.accessoryType = .DisclosureIndicator
+            addDividerLine(cell.contentView, y: 40-5, height: 5)
             tableView.rowHeight=40
         }else if indexPath.row==1{
-            cell.textLabel?.text="待办标题"
-            titleTF.frame=CGRectMake(100, 10, frame.width-120, 20)
+            titleTF.frame=CGRectMake(10, 10, frame.width-120, 30)
+            titleTF.placeholder = "待办标题"
             titleTF.textColor=wenziColor
+            titleTF.font = neirongfont
             cell.contentView.addSubview(titleTF)
+            addDividerLine(cell.contentView, y: 39, height: 1)
             tableView.rowHeight=40
             
         }else if indexPath.row==2{
-            let lable = UILabel(frame: CGRectMake(15,10,100,20))
-            lable.text="待办内容"
-            cell.contentView.addSubview(lable)
-            contentTV.frame=CGRectMake(5, 40, frame.width-10, 100)
-            contentTV.layer.borderWidth=1
-            contentTV.layer.cornerRadius=5
+            contentTV.frame=CGRectMake(10, 40, frame.width-10, 100)
             contentTV.layer.borderColor=UIColor.grayColor().CGColor
+            contentTV.placeholder = "待办内容"
+            contentTV.textColor = neirongColor
+            contentTV.font = neirongfont
             cell.contentView.addSubview(contentTV)
+            addDividerLine(cell.contentView, y: 140, height: 10)
             tableView.rowHeight=150
         }else{
             addPictureBtn.frame = CGRectMake(8, 15, 80, 80)
@@ -124,7 +127,7 @@ class AddDaiBanViewController: UIViewController ,UITableViewDelegate,UITableView
         idStr=id
     }
     func PandKong()->Bool{
-        if(nameL.text=="选择接收人"){
+        if(nameL.text=="选择待办人"){
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text
             hud.labelText = "请选择接收人"

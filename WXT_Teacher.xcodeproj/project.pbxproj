@@ -104,7 +104,6 @@
 		EAFAE6AA1C82E50900A8BAF2 /* BlogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EE1C82E50900A8BAF2 /* BlogTableViewCell.swift */; };
 		EAFAE6AB1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5EF1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift */; };
 		EAFAE6AC1C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5F01C82E50900A8BAF2 /* Readme */; };
-		EAFAE6AD1C82E50900A8BAF2 /* FunctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5F31C82E50900A8BAF2 /* FunctionViewController.swift */; };
 		EAFAE6AE1C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5F41C82E50900A8BAF2 /* Readme */; };
 		EAFAE6B01C82E50900A8BAF2 /* Readme in Resources */ = {isa = PBXBuildFile; fileRef = EAFAE5F71C82E50900A8BAF2 /* Readme */; };
 		EAFAE6B11C82E50900A8BAF2 /* FunSecondTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFAE5F91C82E50900A8BAF2 /* FunSecondTableViewCell.swift */; };
@@ -424,6 +423,7 @@
 		F6DF2C001CFEE4CC00ADD1EB /* JZdingzhuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DF2BFF1CFEE4CC00ADD1EB /* JZdingzhuModel.swift */; };
 		F6DF2C031CFEE51E00ADD1EB /* ParentsExhortTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6DF2C011CFEE51E00ADD1EB /* ParentsExhortTableViewCell.swift */; };
 		F6DF2C041CFEE51E00ADD1EB /* ParentsExhortTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6DF2C021CFEE51E00ADD1EB /* ParentsExhortTableViewCell.xib */; };
+		F6E3440D1DE048CB00B14A77 /* FunctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E3440C1DE048CB00B14A77 /* FunctionViewController.swift */; };
 		F6F4C5401CB4A91900D4B6D9 /* EditOtherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F4C53E1CB4A91900D4B6D9 /* EditOtherViewController.swift */; };
 		F6F4C5411CB4A91900D4B6D9 /* EditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F4C53F1CB4A91900D4B6D9 /* EditTableViewController.swift */; };
 		F6F4C5441CB4DE4D00D4B6D9 /* FoodList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F4C5431CB4DE4D00D4B6D9 /* FoodList.swift */; };
@@ -540,7 +540,6 @@
 		EAFAE5EE1C82E50900A8BAF2 /* BlogTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlogTableViewCell.swift; sourceTree = "<group>"; };
 		EAFAE5EF1C82E50900A8BAF2 /* PhotoBrowserCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserCollectionCell.swift; sourceTree = "<group>"; };
 		EAFAE5F01C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
-		EAFAE5F31C82E50900A8BAF2 /* FunctionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionViewController.swift; sourceTree = "<group>"; };
 		EAFAE5F41C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EAFAE5F71C82E50900A8BAF2 /* Readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Readme; sourceTree = "<group>"; };
 		EAFAE5F91C82E50900A8BAF2 /* FunSecondTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunSecondTableViewCell.swift; sourceTree = "<group>"; };
@@ -923,6 +922,7 @@
 		F6DF2BFF1CFEE4CC00ADD1EB /* JZdingzhuModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JZdingzhuModel.swift; sourceTree = "<group>"; };
 		F6DF2C011CFEE51E00ADD1EB /* ParentsExhortTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentsExhortTableViewCell.swift; sourceTree = "<group>"; };
 		F6DF2C021CFEE51E00ADD1EB /* ParentsExhortTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParentsExhortTableViewCell.xib; sourceTree = "<group>"; };
+		F6E3440C1DE048CB00B14A77 /* FunctionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionViewController.swift; sourceTree = "<group>"; };
 		F6F4C53E1CB4A91900D4B6D9 /* EditOtherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditOtherViewController.swift; sourceTree = "<group>"; };
 		F6F4C53F1CB4A91900D4B6D9 /* EditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditTableViewController.swift; sourceTree = "<group>"; };
 		F6F4C5431CB4DE4D00D4B6D9 /* FoodList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodList.swift; sourceTree = "<group>"; };
@@ -1402,8 +1402,8 @@
 		EAFAE5F21C82E50900A8BAF2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F6E3440C1DE048CB00B14A77 /* FunctionViewController.swift */,
 				EAFAE5F41C82E50900A8BAF2 /* Readme */,
-				EAFAE5F31C82E50900A8BAF2 /* FunctionViewController.swift */,
 				EAA2CDF51CACB32E00766CCB /* Plan */,
 				EAA2CDF41CACB30000766CCB /* Kejian */,
 				EA2D401F1CABB510000DEAF6 /* DianPing */,
@@ -2493,7 +2493,6 @@
 				F6579FEE1D77D0710049932E /* ClassKaoqinViewController.swift in Sources */,
 				EAFAE6DE1C82E50900A8BAF2 /* ConstraintRelation.swift in Sources */,
 				EA43502F1C93F51F0040F56D /* BanJiKeJianViewController.swift in Sources */,
-				EAFAE6AD1C82E50900A8BAF2 /* FunctionViewController.swift in Sources */,
 				F66292FF1CB9F29F0022EEC3 /* YuErListTableViewController.swift in Sources */,
 				EAFAE7261C82E50900A8BAF2 /* CollectionView.swift in Sources */,
 				F6564FD61D683A1700E276EF /* BirthdayViewController.swift in Sources */,
@@ -2560,6 +2559,7 @@
 				EAFAE6E31C82E50900A8BAF2 /* SourceLocation.swift in Sources */,
 				F63F68E11DB8AC1400C8B03B /* SystemDetailViewController.swift in Sources */,
 				F6DF2C001CFEE4CC00ADD1EB /* JZdingzhuModel.swift in Sources */,
+				F6E3440D1DE048CB00B14A77 /* FunctionViewController.swift in Sources */,
 				EA4402831C9BED87009D1890 /* YiJianFanKuiViewController.swift in Sources */,
 				F61F709D1CFFD5DE00A4BFB9 /* CAWriteCommentViewController.swift in Sources */,
 				EAFAE6DF1C82E50900A8BAF2 /* Debugging.swift in Sources */,
