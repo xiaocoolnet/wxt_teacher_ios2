@@ -18,5 +18,5 @@ pod 'ShareSDK3/ShareSDKUI'
 pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 pod 'MOBFoundation'
 pod 'SDWebImage'
-
+pod 'TZImagePickerController'
 end

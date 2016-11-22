@@ -184,7 +184,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         if application.applicationState == .Active {
-            
+           NSNotificationCenter.defaultCenter().postNotificationName("tongzhi", object: userInfo)
          
         }else if application.applicationState == .Inactive{
             goToMssageViewControllerWith(userInfo)
@@ -350,7 +350,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func goToMssageViewControllerWith(userInfo:NSDictionary){
         let type = userInfo["type"] as? String
        
-        NSNotificationCenter.defaultCenter().postNotificationName("push", object: type)
+        NSNotificationCenter.defaultCenter().postNotificationName("push", object: userInfo)
         
     }
     

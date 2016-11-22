@@ -11,7 +11,8 @@ import MBProgressHUD
 import Alamofire
 import BSImagePicker
 import Photos
-class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate,sendnameidArray,sendSubiectDelegate {
+import TZImagePickerController
+class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UICollectionViewDataSource,UICollectionViewDelegate,sendnameidArray,sendSubiectDelegate,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
     var  HWtableview = UITableView()
     var addPictureBtn = UIButton()
@@ -104,11 +105,6 @@ class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewD
                 hud.hide(true, afterDelay: 3)
             }
             
-            addPictureBtn.frame = CGRectMake(10,160, 80, 80)
-            addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
-            addPictureBtn.layer.borderWidth = 1.0
-            addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
-            addPictureBtn.addTarget(self, action: #selector(self.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
             flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
             flowLayout.itemSize = CGSizeMake(80,80)
             self.collectV = UICollectionView(frame: CGRectMake(10, 160, UIScreen.mainScreen().bounds.width-20, 359), collectionViewLayout: flowLayout)
@@ -167,128 +163,86 @@ class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     override func viewWillAppear(animated: Bool) {
         //        HWtableview.reloadData()
-        if(self.i>9){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "最多选择9张图片哦"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
-        }
+       
     }
     func AddPictrures(){
-        let vc = BSImagePickerViewController()
-        vc.maxNumberOfSelections = 9
-        bs_presentImagePickerController(vc, animated: true,
-                                        select: { (asset: PHAsset) -> Void in
-            }, deselect: { (asset: PHAsset) -> Void in
-            }, cancel: { (assets: [PHAsset]) -> Void in
-            }, finish: { (assets: [PHAsset]) -> Void in
-                self.getAssetThumbnail(assets)
-                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    self.collectV!.reloadData()
-                }
-            }, completion: nil)
+        let imagePickerVc = TZImagePickerController.init(maxImagesCount: 9, delegate:self)
+        
+        print(pictureArray.count)
+        print("上传图片")
+        let imagePicker = UIImagePickerController();
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(imagePickerVc, animated: true, completion: nil)
     }
-    
-    func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
-        var thumbnail = UIImage()
-        i+=asset.count
-        if(i>9){
+    func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool, infos: [[NSObject : AnyObject]]!) {
+        //        self.photoArray.removeAllObjects()
+        for imagess in photos {
+            pictureArray.addObject(imagess)
         }
-        else{
-            print("选择的图片有\(i)张")
-            if(itemCount == 0){
-                itemCount = asset.count + 1
-                self.pictureArray.insertObject("", atIndex: 0)
-            }
-            else{
-                itemCount += asset.count
-            }
-            let manager = PHImageManager.defaultManager()
-            let option = PHImageRequestOptions()
-            option.synchronous = true
-            for j in 0..<asset.count{
-                //  这里的参数应该喝照片的大小一致（需要进行判断）
-                manager.requestImageForAsset(asset[j], targetSize: PHImageManagerMaximumSize, contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
-                    //  设置像素
-                    option.resizeMode = PHImageRequestOptionsResizeMode.Exact
-                    let downloadFinined = !((info!["PHImageResultIsDegradedKey"]?.boolValue)!)
-                    
-                    //                let downloadFinined:Bool = !((info!["PHImageCancelledKey"]?.boolValue)! ?? false) && !((info!["PHImageErrorKey"]?.boolValue)! ?? false) && !((info!["PHImageResultIsDegradedKey"]?.boolValue)! ?? false)
-                    if downloadFinined == true {
-                        thumbnail = result!
-                        print(" print(result?.images)")
-                        //  改变frame
-                        print(result)
-                        print("图片是")
-                        var temImage:CGImageRef = thumbnail.CGImage!
-                        //                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 1000, 1000))!
-                        let newImage = UIImage(CGImage: temImage)
-                        //  压缩最多1  最少0
-                        self.imageData.append(UIImageJPEGRepresentation(newImage, 0)!)
-                        self.pictureArray.addObject(newImage)
-                        
-                    }
-                    //                thumbnail = result!
-                    
-                    //
-                    
-                })
-            }
-        }
-        return thumbnail
-    }
-    func byScalingToSize(image:UIImage,targetSize:CGSize) ->(UIImage){
-        let sourceImage = image
-        var newImage = UIImage()
-        UIGraphicsBeginImageContext(targetSize)
-        var thumbnailRect = CGRectZero;
-        thumbnailRect.origin = CGPointZero;
-        thumbnailRect.size.width  = targetSize.width;
-        thumbnailRect.size.height = targetSize.height;
-        sourceImage.drawInRect(thumbnailRect)
-        newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
+        print(self.pictureArray.count)
+        self.collectV?.reloadData()
+        
+        
     }
     
     func UpdatePic(){
-        for i in 0..<self.imageData.count{
-            let userid = NSUserDefaults.standardUserDefaults()
-            let uid = userid.stringForKey("userid")
-            let RanNumber = String(arc4random_uniform(1000) + 1000)
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let dateStr = dateFormatter.stringFromDate(NSDate())
-            let imageName = uid! + RanNumber + dateStr
+        if titleTextView.text!.isEmpty {
+            messageHUD(self.view, messageData: "请输入标题")
+            return
+        }
+        if contentTextView.text!.isEmpty {
+            messageHUD(self.view, messageData: "请输入内容")
+            return
+        }
+        if self.id.isEmpty {
+            messageHUD(self.view, messageData: "请选择班级")
+            return
+        }
+        if self.subjectid!.isEmpty {
+            messageHUD(self.view, messageData: "请选择课程")
+            return
+        }
+        for ima in pictureArray{
             
-            isuploading = true
+            let dataPhoto:NSData = UIImageJPEGRepresentation(ima as! UIImage, 1.0)!
+            var myImagess = UIImage()
+            myImagess = UIImage.init(data: dataPhoto)!
+            
+            let data = UIImageJPEGRepresentation(myImagess, 0.1)!
+            let chid = NSUserDefaults.standardUserDefaults()
+            let studentid = chid.stringForKey("userid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
+            let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let name = "\(studentid!)baby\(time)\(RanNumber)"
+            
+            //上传图片
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(imageName, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                ConnectModel.uploadWithImageName(name, imageData:data, URL: "WriteMicroblog_upload", finish: { (data) -> Void in
                     print("返回值")
                     print(data)
-                })}
-            //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
-            
-            self.imagePath.addObject(imageName + ".png")
+                    
+                })
+            }
+            self.imagePath.addObject(name + ".png")
         }
         self.imageUrll = self.imagePath.componentsJoinedByString(",")
         print(self.imageUrll!)
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.margin = 10
-        hud.removeFromSuperViewOnHide = true
-        hud.labelText = "上传完成"
-        hud.hide(true, afterDelay: 1)
-        self.isuploading = false    }
+        GETDate()
+    }
+    
+    
     func addHomework(){
         UpdatePic()
-        GETDate(self.id)
+        
     }
     //http://wxt.xiaocool.net/index.php?g=apps&m=teacher&a=addhomework&teacherid=597&title=周四作业&content=作业内容，快来看&subject=语文&receiverid=597&picture_url=1.png,2.png
     //MARK: - 发布作业
-    func GETDate(id:String){
+    func GETDate(){
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a=AddSchoolCourseware"
         let defalutid = NSUserDefaults.standardUserDefaults()
         let schoolid = defalutid.stringForKey("schoolid")
@@ -335,7 +289,7 @@ class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     //    行数
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemCount
+        return self.pictureArray.count+1
     }
     //    分区数
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -344,8 +298,15 @@ class AddKeJianViewController: UIViewController,UITableViewDelegate,UITableViewD
     //    单元格
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         print("显示")
-        print(self.pictureArray[indexPath.row])
+      
         let cell:ImageCollectionViewCell  = collectV!.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as! ImageCollectionViewCell
+        if indexPath.row==self.pictureArray.count {
+            cell.imageView.frame = CGRectMake(0, 0, 80, 80)
+            cell.imageView.image = UIImage(named: "add2")
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.AddPictrures)))
+            cell.contentView.addSubview(cell.imageView)
+            return cell
+        }
         if(self.pictureArray.count != 0){
             cell.imageView.frame = CGRectMake(0, 0, 80, 80)
             cell.imageView.image = self.pictureArray[indexPath.row] as? UIImage

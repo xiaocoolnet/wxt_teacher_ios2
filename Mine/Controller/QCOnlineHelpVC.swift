@@ -80,7 +80,7 @@ class QCOnlineHelpVC: UIViewController {
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                     
-//                    self.navigationController?.popViewControllerAnimated(true)
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
                 
             }

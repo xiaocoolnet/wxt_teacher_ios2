@@ -11,8 +11,8 @@ import BSImagePicker
 import Photos
 import Alamofire
 import MBProgressHUD
-
-class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,sendnameidArray,UICollectionViewDataSource,UICollectionViewDelegate,sendteachernameidArray{
+import TZImagePickerController
+class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableViewDataSource,sendnameidArray,UICollectionViewDataSource,UICollectionViewDelegate,sendteachernameidArray,TZImagePickerControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
     var tableview = UITableView()
     var nameL = UILabel()
@@ -88,11 +88,11 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
             addDividerLine(cell.contentView, y: 150-10, height: 10)
             tableView.rowHeight=150
         }else{
-            addPictureBtn.frame = CGRectMake(8, 15, 80, 80)
-            addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
-            addPictureBtn.layer.borderWidth = 1.0
-            addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
-            addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
+//            addPictureBtn.frame = CGRectMake(8, 15, 80, 80)
+//            addPictureBtn.setBackgroundImage(UIImage(named: "add2"), forState: UIControlState.Normal)
+//            addPictureBtn.layer.borderWidth = 1.0
+//            addPictureBtn.layer.borderColor = UIColor.grayColor().CGColor
+//            addPictureBtn.addTarget(self, action: #selector(NewBlogViewController.AddPictrures), forControlEvents: UIControlEvents.TouchUpInside)
             flowLayout.scrollDirection = UICollectionViewScrollDirection.Vertical
             flowLayout.itemSize = CGSizeMake(80,80)
             self.collectV = UICollectionView(frame: CGRectMake(8, 15, UIScreen.mainScreen().bounds.width-30, 359), collectionViewLayout: flowLayout)
@@ -169,7 +169,7 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
     }
 
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return itemCount
+        return self.pictureArray.count+1
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -178,8 +178,16 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         print("显示")
-        print(self.pictureArray[indexPath.row])
         let cell:ImageCollectionViewCell  = collectV!.dequeueReusableCellWithReuseIdentifier("PhotoCell", forIndexPath: indexPath) as! ImageCollectionViewCell
+        
+        if indexPath.row==self.pictureArray.count {
+            cell.imageView.frame = CGRectMake(0, 0, 80, 80)
+            cell.imageView.image = UIImage(named: "add2")
+            cell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.AddPictrures)))
+            cell.contentView.addSubview(cell.imageView)
+            return cell
+        }
+
         if(self.pictureArray.count != 0){
             cell.imageView.frame = CGRectMake(0, 0, 80, 80)
             cell.imageView.image = self.pictureArray[indexPath.row] as? UIImage
@@ -198,108 +206,37 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
         return CGFloat(6)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        if(self.i>9){
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "最多选择9张图片哦"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
-        }
-    }
     
+    func imagePickerController(picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [AnyObject]!, isSelectOriginalPhoto: Bool, infos: [[NSObject : AnyObject]]!) {
+        //        self.photoArray.removeAllObjects()
+        for imagess in photos {
+            pictureArray.addObject(imagess)
+        }
+        print(self.pictureArray.count)
+        self.collectV?.reloadData()
+        
+        
+    }
+
     func AddPictrures(){
-        let vc = BSImagePickerViewController()
-        vc.maxNumberOfSelections = 9
-        bs_presentImagePickerController(vc, animated: true,
-                                        select: { (asset: PHAsset) -> Void in
-            }, deselect: { (asset: PHAsset) -> Void in
-            }, cancel: { (assets: [PHAsset]) -> Void in
-            }, finish: { (assets: [PHAsset]) -> Void in
-                self.getAssetThumbnail(assets)
-                dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                    self.collectV!.reloadData()
-                }
-            }, completion: nil)
-    }
-    
-    func getAssetThumbnail(asset: [PHAsset]) -> UIImage {
-        var thumbnail = UIImage()
-        i+=asset.count
-        if(i>9){
-        }
-        else{
-            print("选择的图片有\(i)张")
-            if(itemCount == 0){
-                itemCount = asset.count + 1
-                self.pictureArray.insertObject("", atIndex: 0)
-            }
-            else{
-                itemCount += asset.count
-            }
-            let manager = PHImageManager.defaultManager()
-            let option = PHImageRequestOptions()
-            option.synchronous = true
-            for j in 0..<asset.count{
-                manager.requestImageForAsset(asset[j], targetSize: CGSize(width: 80.0, height: 80.0), contentMode: .AspectFit, options: option, resultHandler: {(result, info)->Void in
-                    thumbnail = result!
-                    print("图片是")
-                    var temImage:CGImageRef = thumbnail.CGImage!
-                    temImage = CGImageCreateWithImageInRect(temImage, CGRectMake(0, 0, 80, 80))!
-                    let newImage = UIImage(CGImage: temImage)
-                    self.imageData.append(UIImageJPEGRepresentation(newImage, 1)!)
-                    self.pictureArray.addObject(newImage)
-                })
-            }
-        }
-        return thumbnail
+        let imagePickerVc = TZImagePickerController.init(maxImagesCount: 9, delegate:self)
+        
+        print(pictureArray.count)
+        print("上传图片")
+        let imagePicker = UIImagePickerController();
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        self.presentViewController(imagePickerVc, animated: true, completion: nil)
     }
     
     func addDaijie(){
-        if(i != 0){
+       
             self.UpdatePic()
-        }
-        if PandKong() {
-            GETDate(self.idStr)
-            self.navigationController?.popViewControllerAnimated(true)
-        }
+       
     }
     func UpdatePic(){
-        for i in 0..<self.imageData.count{
-            let userid = NSUserDefaults.standardUserDefaults()
-            let uid = userid.stringForKey("userid")
-            let RanNumber = String(arc4random_uniform(1000) + 1000)
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let dateStr = dateFormatter.stringFromDate(NSDate())
-            let imageName = uid! + RanNumber + dateStr
-            
-            isuploading = true
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
-                ConnectModel.uploadWithImageName(imageName, imageData:self.imageData[i], URL: "WriteMicroblog_upload", finish: { (data) -> Void in
-                    print("返回值")
-                    print(data)
-                })}
-            //self.imagePath.addObject("uploads/microblog/" + RanNumber + ".png")
-            
-            self.imagePath.addObject(imageName + ".png")
-        }
-        self.imageUrl = self.imagePath.componentsJoinedByString(",")
-        print(self.imageUrl!)
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.margin = 10
-        hud.removeFromSuperViewOnHide = true
-        hud.labelText = "上传完成"
-        hud.hide(true, afterDelay: 1)
-        self.isuploading = false
-    }
-    
-    //http://wxt.xiaocool.net/index.php?g=apps&m=school&a=publishnotice&userid=597&type=1&title=标题&content=内容&photo=11.jpg&reciveid=12
-    //MARK: - 发布通知公告
-    func GETDate(id:String){
-        if id.isEmpty {
+        if self.idStr.isEmpty {
             messageHUD(self.view, messageData: "请选择接收人！")
             return
         }
@@ -307,12 +244,48 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
             messageHUD(self.view, messageData: "请输入标题或内容！")
             return
         }
+        for ima in pictureArray{
+            
+            let dataPhoto:NSData = UIImageJPEGRepresentation(ima as! UIImage, 1.0)!
+            var myImagess = UIImage()
+            myImagess = UIImage.init(data: dataPhoto)!
+            
+            let data = UIImageJPEGRepresentation(myImagess, 0.1)!
+            let chid = NSUserDefaults.standardUserDefaults()
+            let studentid = chid.stringForKey("userid")
+            let date = NSDate()
+            let dateformate = NSDateFormatter()
+            dateformate.dateFormat = "yyyy-MM-dd HH:mm"//获得日期
+            let time:NSTimeInterval = (date.timeIntervalSince1970)
+            let RanNumber = String(arc4random_uniform(1000) + 1000)
+            let name = "\(studentid!)baby\(time)\(RanNumber)"
+            
+            //上传图片
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { () -> Void in
+                ConnectModel.uploadWithImageName(name, imageData:data, URL: "WriteMicroblog_upload", finish: { (data) -> Void in
+                    print("返回值")
+                    print(data)
+                    
+                })
+            }
+            self.imagePath.addObject(name + ".png")
+        }
+        self.imageUrl = self.imagePath.componentsJoinedByString(",")
+        print(self.imageUrl!)
+        GETDate()
+
+    }
+    
+    //http://wxt.xiaocool.net/index.php?g=apps&m=school&a=publishnotice&userid=597&type=1&title=标题&content=内容&photo=11.jpg&reciveid=12
+    //MARK: - 发布通知公告
+    func GETDate(){
+       
         let url = "http://wxt.xiaocool.net/index.php?g=apps&m=school&a=publishnotice"
         let defalutid = NSUserDefaults.standardUserDefaults()
         let userid = defalutid.stringForKey("userid")
         let param = [
             "userid" : userid,
-            "reciveid" : id,
+            "reciveid" : self.idStr,
             "photo" : imageUrl,
             "content" : contentTV.text!,
             "type":"1",
@@ -339,7 +312,7 @@ class AddJZGongGaoViewController: UIViewController ,UITableViewDelegate,UITableV
                 }
                 if(status.status == "success"){
                     print("Success")
-                    
+                    self.navigationController?.popViewControllerAnimated(true)
                 }
             }
         }

@@ -84,6 +84,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>TZImagePickerController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>UIImageViewModeScaleAspect.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -137,6 +142,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>5635B2BD5003EFC195F631A0FAA5378D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>6930D5D0C3440426432777093903702D</key>
 		<dict>
 			<key>primary</key>
@@ -162,22 +172,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8DE0AAD39F0910E33C75530D66AD9A71</key>
+		<key>7DDB1E67BA8DD33753C25811DF6BAE3C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>929803CD258B46754BBDCFF7FF8E9A13</key>
+		<key>7ED37A5B6833E925B81C4C9C12FDAFFF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>809935F08A30BBD6E152D6BED004B612</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>9DF75B967B499250F0CC41966147F9E3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BB039930C237766B04E3DC37752EEEE0</key>
 		<dict>
 			<key>primary</key>
 			<true/>

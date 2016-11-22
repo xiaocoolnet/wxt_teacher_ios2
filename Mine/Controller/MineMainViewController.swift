@@ -214,7 +214,7 @@ class MineMainViewController: UIViewController,UITableViewDelegate,UITableViewDa
             }
 
         }else if indexPath.row==2{
-            let vc = QCOnlineHelpVC()
+            let vc = QOnlineHelpVC()
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else if indexPath.row==3{

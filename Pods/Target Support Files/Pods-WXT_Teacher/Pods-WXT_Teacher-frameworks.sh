@@ -96,6 +96,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/MJRefresh/MJRefresh.framework"
   install_framework "$BUILT_PRODUCTS_DIR/PagingMenuController/PagingMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UIImageViewModeScaleAspect/UIImageViewModeScaleAspect.framework"
   install_framework "$BUILT_PRODUCTS_DIR/YYWebImage/YYWebImage.framework"
 fi
@@ -112,6 +113,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/MJRefresh/MJRefresh.framework"
   install_framework "$BUILT_PRODUCTS_DIR/PagingMenuController/PagingMenuController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/SDWebImage/SDWebImage.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/TZImagePickerController/TZImagePickerController.framework"
   install_framework "$BUILT_PRODUCTS_DIR/UIImageViewModeScaleAspect/UIImageViewModeScaleAspect.framework"
   install_framework "$BUILT_PRODUCTS_DIR/YYWebImage/YYWebImage.framework"
 fi

@@ -415,6 +415,8 @@
 		F66AA0AF1D42024F0092E636 /* DaiBanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66AA0AE1D42024F0092E636 /* DaiBanModel.swift */; };
 		F6879A121CB75059009C06FC /* EditPhoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6879A111CB75059009C06FC /* EditPhoneViewController.swift */; };
 		F6889E621D4CA1D10004E903 /* PingLunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6889E611D4CA1D10004E903 /* PingLunView.swift */; };
+		F69397FF1DE2F738006E8BA3 /* QOnlineHelpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69397FE1DE2F738006E8BA3 /* QOnlineHelpVC.swift */; };
+		F69398011DE2F85C006E8BA3 /* SendMessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69398001DE2F85C006E8BA3 /* SendMessageModel.swift */; };
 		F6C057E11DDC603C00C3121C /* ImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C057E01DDC603C00C3121C /* ImagesViewController.swift */; };
 		F6D802D31D3DCBCB0054682B /* SchoolListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D802D21D3DCBCB0054682B /* SchoolListCell.swift */; };
 		F6D802D51D3E01420054682B /* SchoolListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D802D41D3E01420054682B /* SchoolListModel.swift */; };
@@ -914,6 +916,8 @@
 		F66AA0AE1D42024F0092E636 /* DaiBanModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaiBanModel.swift; sourceTree = "<group>"; };
 		F6879A111CB75059009C06FC /* EditPhoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPhoneViewController.swift; sourceTree = "<group>"; };
 		F6889E611D4CA1D10004E903 /* PingLunView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PingLunView.swift; sourceTree = "<group>"; };
+		F69397FE1DE2F738006E8BA3 /* QOnlineHelpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QOnlineHelpVC.swift; sourceTree = "<group>"; };
+		F69398001DE2F85C006E8BA3 /* SendMessageModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendMessageModel.swift; sourceTree = "<group>"; };
 		F6C057E01DDC603C00C3121C /* ImagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagesViewController.swift; sourceTree = "<group>"; };
 		F6D802D21D3DCBCB0054682B /* SchoolListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolListCell.swift; sourceTree = "<group>"; };
 		F6D802D41D3E01420054682B /* SchoolListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchoolListModel.swift; sourceTree = "<group>"; };
@@ -1626,6 +1630,7 @@
 				18B368F81CB5E7C3007DC602 /* MaintainViewController.swift */,
 				18B368FA1CB5E7D9007DC602 /* ErWeiMaDownViewController.swift */,
 				F63618991D96832A0020D56E /* QCAboutWeVC.swift */,
+				F69397FE1DE2F738006E8BA3 /* QOnlineHelpVC.swift */,
 				F636189B1D96846E0020D56E /* QCOnlineHelpVC.swift */,
 				F65357C91D9A4F1F00FA9474 /* 二维码 */,
 				18B368FC1CB5E899007DC602 /* CardSet */,
@@ -1639,6 +1644,7 @@
 		EAFAE61B1C82E50900A8BAF2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F69398001DE2F85C006E8BA3 /* SendMessageModel.swift */,
 				F63F68DC1DB89AB200C8B03B /* ServiceModel.swift */,
 				EAEA5F011C86C51A00DD362E /* MineModel.swift */,
 				EAFAE61C1C82E50900A8BAF2 /* Readme */,
@@ -2659,6 +2665,7 @@
 				EA6D2D3F1C9512F20092F09A /* AvatorCollectionViewCell.swift in Sources */,
 				F657A0221D7809FB0049932E /* CalendarMonthHeaderView.m in Sources */,
 				F60F5D851D22742F00CEFC30 /* HomeworkViewController.swift in Sources */,
+				F69397FF1DE2F738006E8BA3 /* QOnlineHelpVC.swift in Sources */,
 				F63D75981DD705ED00D118B5 /* MJFoundation.m in Sources */,
 				EAFAE6ED1C82E50900A8BAF2 /* Fetcher.swift in Sources */,
 				F657A0061D77FFF60049932E /* BanLiViewController.swift in Sources */,
@@ -2683,6 +2690,7 @@
 				F657A0001D77D5900049932E /* TeacherCommentsTableViewController.swift in Sources */,
 				18B369221CB5F66F007DC602 /* YSQingKuangViewController.swift in Sources */,
 				EAFAE6FA1C82E50900A8BAF2 /* NVActivityIndicatorAnimationBallBeat.swift in Sources */,
+				F69398011DE2F85C006E8BA3 /* SendMessageModel.swift in Sources */,
 				EA715B281CA3796F00E37519 /* YuanquJieShaoViewController.swift in Sources */,
 				F64198C51D4B348000E6A935 /* YDaiJieViewController.swift in Sources */,
 				EAFAE6F61C82E50900A8BAF2 /* UIButton+Haneke.swift in Sources */,
@@ -3024,8 +3032,6 @@
 					"-framework",
 					"\"UIImageViewModeScaleAspect\"",
 					"-framework",
-					"\"XWSwiftRefresh\"",
-					"-framework",
 					"\"YYWebImage\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = xiaocool.cn.wxtteacher;
@@ -3158,8 +3164,6 @@
 					"\"PagingMenuController\"",
 					"-framework",
 					"\"UIImageViewModeScaleAspect\"",
-					"-framework",
-					"\"XWSwiftRefresh\"",
 					"-framework",
 					"\"YYWebImage\"",
 				);

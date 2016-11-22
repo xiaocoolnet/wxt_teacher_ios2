@@ -171,16 +171,17 @@ class FunctionViewController: UIViewController,UITableViewDataSource,UITableView
     }
 
     func gameOver(title:NSNotification){
-        if title.object as! String == "leave"{
+        let message = title.object!.valueForKey("type") as! String
+        if message == "leave"{
             let vc = QingJiaViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "deliery"{
+        }else if message == "deliery"{
             let vc = DJViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "activity"{
+        }else if message == "activity"{
             let vc = BanJihuodongViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "comment"{
+        }else if message == "comment"{
             let vc = TeacherDianPingViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }

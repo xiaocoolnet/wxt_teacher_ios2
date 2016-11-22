@@ -53,21 +53,26 @@ class NewsViewController: UIViewController,UITableViewDataSource,UITableViewDele
         self.DropDownUpdate()
     }
     func gameOver(title:NSNotification){
-        if title.object as! String == "message"{
+        let message = title.object!.valueForKey("type") as! String
+        if message == "message"{
             let vc = QFListViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "trust"{
+        }else if message == "trust"{
             let vc = JZdingzhuViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "notice"{
+        }else if message == "notice"{
             let vc = AnnounceViewController()
             self.navigationController?.pushViewController(vc, animated: true)
-        }else if title.object as! String == "schedule"{
+        }else if message == "schedule"{
             let vc = DaiBanViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        else if title.object as! String == "homework"{
+        else if message == "homework"{
             let vc = HomeworkViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else if message == "newMessage"{
+            let vc = ChetNewsViewController()
+            vc.receive_uid = title.object!.valueForKey("txt") as! String
             self.navigationController?.pushViewController(vc, animated: true)
         }
 
