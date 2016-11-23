@@ -11,7 +11,7 @@
 #import "ConnectModel.h"
 #import "BRPlaceholderTextView.h"
 #import "NirKxMenu.h"
-
+#import <Bugtags/Bugtags.h>
 #import <ShareSDK/ShareSDK.h>
 #import <ShareSDKConnector/ShareSDKConnector.h>
 #import "WXApi.h"

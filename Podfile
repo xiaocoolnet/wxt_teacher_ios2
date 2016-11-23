@@ -19,4 +19,5 @@ pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
 pod 'MOBFoundation'
 pod 'SDWebImage'
 pod 'TZImagePickerController'
+pod 'Bugtags'
 end

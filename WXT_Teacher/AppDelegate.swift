@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let scheduleArr = NSMutableArray()
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-   
+   Bugtags.startWithAppKey("310f38447ac2ad3501e27e614523508d", invocationEvent: BTGInvocationEventBubble)
          UIApplication.sharedApplication().statusBarStyle = .LightContent
         
         // Override point for customization after application launch.
